@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <style>
+    body { margin: 0; background: #111; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: 'Segoe UI', system-ui, sans-serif; }
+
+    .card {
+      width: 1200px;
+      height: 630px;
+      position: relative;
+      overflow: hidden;
+      background: #0d0d0d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    /* Engineering grid */
+    .grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(153,0,0,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(153,0,0,0.07) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+
+    /* Red glow left */
+    .glow-left {
+      position: absolute;
+      top: -100px; left: -150px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(153,0,0,0.35) 0%, transparent 65%);
+    }
+
+    /* Gold glow right */
+    .glow-right {
+      position: absolute;
+      bottom: -100px; right: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(255,204,0,0.2) 0%, transparent 65%);
+    }
+
+    /* Diagonal accent line */
+    .accent-line {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, transparent 45%, rgba(153,0,0,0.08) 45%, rgba(153,0,0,0.08) 55%, transparent 55%);
+    }
+
+    /* Top red bar */
+    .top-bar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #990000, #FFCC00, #990000);
+    }
+
+    /* Bottom bar */
+    .bottom-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #990000, #FFCC00, #990000);
+    }
+
+    /* Corner brackets */
+    .corner { position: absolute; width: 40px; height: 40px; }
+    .corner.tl { top: 20px; left: 20px; border-top: 2px solid rgba(153,0,0,0.6); border-left: 2px solid rgba(153,0,0,0.6); }
+    .corner.tr { top: 20px; right: 20px; border-top: 2px solid rgba(153,0,0,0.6); border-right: 2px solid rgba(153,0,0,0.6); }
+    .corner.bl { bottom: 20px; left: 20px; border-bottom: 2px solid rgba(153,0,0,0.6); border-left: 2px solid rgba(153,0,0,0.6); }
+    .corner.br { bottom: 20px; right: 20px; border-bottom: 2px solid rgba(153,0,0,0.6); border-right: 2px solid rgba(153,0,0,0.6); }
+
+    /* Content */
+    .content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 13px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #FFCC00;
+      border: 1px solid rgba(255,204,0,0.4);
+      padding: 5px 18px;
+      margin-bottom: 28px;
+    }
+
+    .monogram {
+      font-size: 100px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .monogram span { color: #990000; }
+
+    .title {
+      font-size: 22px;
+      color: #888;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 300;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: #FFCC00;
+      letter-spacing: 0.1em;
+      font-weight: 400;
+    }
+
+    /* USC tag bottom left */
+    .usc-tag {
+      position: absolute;
+      bottom: 30px;
+      left: 40px;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+      z-index: 10;
+    }
+
+    /* URL bottom right */
+    .url-tag {
+      position: absolute;
+      bottom: 30px;
+      right: 40px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.3);
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="grid"></div>
+    <div class="glow-left"></div>
+    <div class="glow-right"></div>
+    <div class="accent-line"></div>
+    <div class="top-bar"></div>
+    <div class="bottom-bar"></div>
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+
+    <div class="content">
+      <div class="tag">USC Viterbi · Aerospace Engineer</div>
+      <div class="monogram">Henry <span>Glover</span></div>
+      <div class="title">Aerospace &amp; Mechanical Engineer</div>
+      <div class="subtitle">FEA · CAD · Composite Structures · Aerospace Design</div>
+    </div>
+
+    <div class="usc-tag">University of Southern California</div>
+  </div>
+</body>
+</html>
