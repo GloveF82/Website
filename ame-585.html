@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Graduate Aerospace Structures — AME 585 | Henry Glover</title>
+  <style>
+    :root {
+      --red: #990000;
+      --gold: #FFCC00;
+      --dark: #0d0d0d;
+      --darker: #080808;
+      --card: #141414;
+      --border: #222;
+      --text: #e8e8e8;
+      --muted: #888;
+      --accent: #b30000;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      background: rgba(8,8,8,0.93);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 5%;
+      height: 60px;
+    }
+
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .back-btn:hover { color: var(--gold); }
+    .back-btn svg { width: 16px; height: 16px; }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 5% 80px;
+    }
+
+    /* ── HEADER ── */
+    .project-header { margin-bottom: 2.5rem; }
+
+    .project-number-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .project-header h1 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-course-label {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .project-tag {
+      background: rgba(153,0,0,0.15);
+      border: 1px solid rgba(153,0,0,0.35);
+      color: var(--gold);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 2.5rem 0;
+    }
+
+    /* ── OVERVIEW GRID ── */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .ov-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.1rem;
+    }
+
+    .ov-card h4 {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .ov-card p {
+      font-size: 0.9rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ── TOC ── */
+    .toc {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--red);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .toc h3 {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .toc-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.3rem 1.5rem;
+      list-style: none;
+    }
+
+    .toc-list li a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.15s;
+    }
+
+    .toc-list li a:hover { color: var(--gold); }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── ASSIGNMENT SECTION ── */
+    .assignment {
+      margin-bottom: 4rem;
+      scroll-margin-top: 80px;
+    }
+
+    .assignment-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hw-num {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 700;
+    }
+
+    .assignment h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .assignment-desc {
+      font-size: 0.93rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.7;
+      max-width: 800px;
+    }
+
+    /* ── IMAGE GALLERY ── */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 0.85rem;
+    }
+
+    .gallery-item {
+      background: #111;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s;
+      position: relative;
+    }
+
+    .gallery-item:hover {
+      border-color: rgba(153,0,0,0.6);
+      transform: translateY(-2px);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      background: #1a1a1a;
+    }
+
+    .gallery-item .img-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(153,0,0,0.0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .gallery-item:hover .img-overlay {
+      background: rgba(153,0,0,0.18);
+    }
+
+    .zoom-icon {
+      opacity: 0;
+      transition: opacity 0.2s;
+      color: #fff;
+    }
+
+    .gallery-item:hover .zoom-icon { opacity: 1; }
+
+    .zoom-icon svg { width: 28px; height: 28px; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.8)); }
+
+    /* ── LIGHTBOX ── */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0,0,0,0.92);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      cursor: zoom-out;
+    }
+
+    #lightbox.open { display: flex; }
+
+    #lightbox img {
+      max-width: 92vw;
+      max-height: 88vh;
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.7);
+      cursor: default;
+    }
+
+    #lightbox-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      line-height: 1;
+      opacity: 0.7;
+      background: none;
+      border: none;
+      padding: 0.25rem 0.5rem;
+      transition: opacity 0.15s;
+    }
+
+    #lightbox-close:hover { opacity: 1; }
+
+    #lightbox-prev,
+    #lightbox-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    #lightbox-prev:hover,
+    #lightbox-next:hover { background: rgba(153,0,0,0.5); }
+
+    #lightbox-prev { left: 1.5rem; }
+    #lightbox-next { right: 1.5rem; }
+
+    #lightbox-prev svg,
+    #lightbox-next svg { width: 20px; height: 20px; }
+
+    #lightbox-caption {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.82rem;
+      margin-top: 0.75rem;
+      text-align: center;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem 5%;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    footer a { color: var(--gold); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">HG</a>
+  <a href="index.html#projects" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    Back to Projects
+  </a>
+</nav>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button id="lightbox-close">&times;</button>
+  <button id="lightbox-prev">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <img id="lightbox-img" src="" alt="" />
+  <p id="lightbox-caption"></p>
+  <button id="lightbox-next">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- HEADER -->
+  <div class="project-header">
+    <p class="project-number-label">Project 08 &nbsp;·&nbsp; AME 585 · Graduate Aerospace Structures</p>
+    <h1>Graduate Aerospace Structures — 11-Part Assignment Series</h1>
+    <p class="project-course-label">AME 585 &nbsp;·&nbsp; Graduate Aerospace Structures &nbsp;·&nbsp; University of Southern California</p>
+    <div class="project-tags">
+      <span class="project-tag">ANSYS Mechanical</span>
+      <span class="project-tag">FEA / FEM</span>
+      <span class="project-tag">Fracture Mechanics</span>
+      <span class="project-tag">Composite Structures</span>
+      <span class="project-tag">Fatigue Analysis</span>
+      <span class="project-tag">Buckling</span>
+      <span class="project-tag">Modal Analysis</span>
+      <span class="project-tag">Bolted Joints</span>
+      <span class="project-tag">Weld Analysis</span>
+      <span class="project-tag">Structural Dynamics</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- OVERVIEW CARDS -->
+  <div class="overview-grid">
+    <div class="ov-card">
+      <h4>Course</h4>
+      <p>AME 585 — Grad Aerospace Structures</p>
+    </div>
+    <div class="ov-card">
+      <h4>Assignments</h4>
+      <p>11 Projects</p>
+    </div>
+    <div class="ov-card">
+      <h4>Primary Tool</h4>
+      <p>ANSYS Mechanical</p>
+    </div>
+    <div class="ov-card">
+      <h4>Team</h4>
+      <p>Group 4 — USC Viterbi</p>
+    </div>
+    <div class="ov-card">
+      <h4>Level</h4>
+      <p>Graduate (M.S. Aerospace)</p>
+    </div>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <h3>Jump to Assignment</h3>
+    <ul class="toc-list">
+      <li><a href="#hw01">01 — Heat Transfer Analysis</a></li>
+      <li><a href="#hw02">02 — Composite Pressure Vessels</a></li>
+      <li><a href="#hw03">03 — Buckling Analysis</a></li>
+      <li><a href="#hw04">04 — FEA Design Problems</a></li>
+      <li><a href="#hw05">05 — Fatigue Analysis</a></li>
+      <li><a href="#hw06">06 — Bellows Structural Analysis</a></li>
+      <li><a href="#hw07">07 — Fracture Mechanics</a></li>
+      <li><a href="#hw08">08 — Honeycomb Sandwich Structures</a></li>
+      <li><a href="#hw09">09 — Bolted Joints Analysis</a></li>
+      <li><a href="#hw10">10 — Weld Analysis</a></li>
+      <li><a href="#hw11">11 — Structural Dynamics &amp; Modal Analysis</a></li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── ASSIGNMENT 1 ── -->
+  <div class="assignment" id="hw01">
+    <div class="assignment-header">
+      <span class="hw-num">Assignment 01</span>
+      <h2>Heat Transfer Analysis in Aerospace Structures</h2>
+    </div>
+    <p class="assignment-desc">
+      Investigated the role of heat transfer in aerospace structures including launch vehicles, aircraft engines,
+      and spacecraft thermal protection systems. Performed thermal simulations using ANSYS to analyze temperature
+      distributions, thermal stress, and cyclic thermal fatigue in structural components subjected to extreme
+      aerospace operating environments.
+    </p>
+    <div class="gallery" data-hw="hw01">
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw01/image48.png" alt="HW1 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw01/image50.png" alt="HW1 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw01/image51.png" alt="HW1 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw01/image49.png" alt="HW1 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw01/image44.png" alt="HW1 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw01/image47.png" alt="HW1 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ASSIGNMENT 2 ── -->
+  <div class="assignment" id="hw02">
+    <div class="assignment-header">
+      <span class="hw-num">Assignment 02</span>
+      <h2>Composite Overwrapped Pressure Vessels (COPVs)</h2>
+    </div>
+    <p class="assignment-desc">
+      Analyzed Composite Overwrapped Pressure Vessels (COPVs) used in spaceflight applications including SpaceX
+      Falcon 9 and NASA systems. Examined liner/wrapping construction, fiber winding patterns, and failure modes
+      compared to metallic pressure vessels. Performed ANSYS structural simulations to evaluate hoop stress,
+      burst pressure margins, and flaw sensitivity in COPV designs.
+    </p>
+    <div class="gallery" data-hw="hw02">
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw02/image53.png" alt="HW2 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw02/image40.png" alt="HW2 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw02/image39.png" alt="HW2 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw02/image37.png" alt="HW2 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw02/image38.png" alt="HW2 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw02/image50.png" alt="HW2 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ASSIGNMENT 3 ── -->
+  <div class="assignment" id="hw03">
+    <div class="assignment-header">
+      <span class="hw-num">Assignment 03</span>
+      <h2>Buckling Analysis of Aerospace Structures</h2>
+    </div>
+    <p class="assignment-desc">
+      Studied structural buckling as a failure mode caused by excessive displacement and loss of stiffness under
+      compressive loading. Examined shell sensitivity to geometric imperfections, thin-walled structures, and
+      column buckling in aerospace-grade materials. Used ANSYS to run linear and nonlinear buckling simulations,
+      extracting critical load factors and mode shapes.
+    </p>
+    <div class="gallery" data-hw="hw03">
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw03/image41.png" alt="HW3 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw03/image25.png" alt="HW3 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw03/image24.png" alt="HW3 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw03/image55.png" alt="HW3 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw03/image56.png" alt="HW3 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw03/image57.png" alt="HW3 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ASSIGNMENT 4 ── -->
+  <div class="assignment" id="hw04">
+    <div class="assignment-header">
+      <span class="hw-num">Assignment 04</span>
+      <h2>FEA Design Problems — ANSYS Mechanical</h2>
+    </div>
+    <p class="assignment-desc">
+      Multi-part ANSYS Mechanical design problem series applying finite element methods to complex structural
+      geometries. Developed mesh strategies, applied boundary conditions and loading scenarios, and post-processed
+      von Mises stress, deformation, and strain energy results to evaluate structural performance and identify
+      critical failure regions.
+    </p>
+    <div class="gallery" data-hw="hw04">
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw04/image67.png" alt="HW4 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw04/image65.png" alt="HW4 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw04/image55.png" alt="HW4 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw04/image70.png" alt="HW4 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw04/image64.png" alt="HW4 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw04/image66.png" alt="HW4 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ASSIGNMENT 5 ── -->
+  <div class="assignment" id="hw05">
+    <div class="assignment-header">
+      <span class="hw-num">Assignment 05</span>
+      <h2>Fatigue Analysis &amp; Failure Prediction</h2>
+    </div>
+    <p class="assignment-desc">
+      Performed visual fracture surface analysis to identify fatigue crack initiation, propagation, and final
+      overload failure zones. Applied S-N curve methodology, stress concentration factors, and cyclic loading
+      theory. Simulated fatigue life using ANSYS to predict crack growth under bending and torsional loading,
+      correlating analytical predictions with observed failure morphology.
+    </p>
+    <div class="gallery" data-hw="hw05">
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw05/image17.png" alt="HW5 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw05/image20.png" alt="HW5 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw05/image26.png" alt="HW5 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw05/image27.png" alt="HW5 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw05/image36.png" alt="HW5 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw05/image37.png" alt="HW5 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ASSIGNMENT 6 ── -->
+  <div class="assignment" id="hw06">
+    <div class="assignment-header">
+      <span class="hw-num">Assignment 06</span>
+      <h2>Bellows Structural Analysis</h2>
+    </div>
+    <p class="assignment-desc">
+      Analyzed metallic bellows — flexible expansion joints used across aerospace, propulsion, and thermal
+      management systems including the Boeing 787 ECS, SpaceX Falcon 9 engine, and F-22 exhaust system.
+      Performed ANSYS FEA to evaluate stress distributions, fatigue life, and pressure-flexibility tradeoffs
+      in bellows subjected to high-temperature, high-pressure, and corrosive operating environments.
+    </p>
+    <div class="gallery" data-hw="hw06">
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw06/image37.png" alt="HW6 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw06/image59.png" alt="HW6 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw06/image66.png" alt="HW6 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw06/image63.png" alt="HW6 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw06/image61.png" alt="HW6 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw06/image65.png" alt="HW6 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ASSIGNMENT 7 ── -->
+  <div class="assignment" id="hw07">
+    <div class="assignment-header">
+      <span class="hw-num">Assignment 07</span>
+      <h2>Fracture Mechanics &amp; Fracture Control</h2>
+    </div>
+    <p class="assignment-desc">
+      Applied NASA 5019A fracture control standards and NDE requirements to human-rated spaceflight hardware.
+      Developed fracture control plans (FCP), classified fracture-critical components, and evaluated flaw
+      tolerance using Linear Elastic Fracture Mechanics (LEFM). Computed stress intensity factors (K), critical
+      crack sizes, and remaining life using ANSYS and NASGRO-based crack growth frameworks.
+    </p>
+    <div class="gallery" data-hw="hw07">
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw07/image76.png" alt="HW7 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw07/image27.png" alt="HW7 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw07/image70.png" alt="HW7 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw07/image78.png" alt="HW7 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw07/image33.png" alt="HW7 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw07/image73.png" alt="HW7 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ASSIGNMENT 8 ── -->
+  <div class="assignment" id="hw08">
+    <div class="assignment-header">
+      <span class="hw-num">Assignment 08</span>
+      <h2>Unvented Honeycomb Sandwich Structures</h2>
+    </div>
+    <p class="assignment-desc">
+      Investigated failure mechanisms in unvented honeycomb sandwich panels caused by entrapped air expansion
+      during ascent and aeroheating. Analyzed facesheet-to-core adhesive disbonds, rupture loads, and the
+      cascade failure mode unique to closed-cell honeycomb. Performed ANSYS simulations to quantify internal
+      pressure buildup, peel stress at the facesheet-adhesive interface, and margin-of-safety under
+      combined pressure and compression loading.
+    </p>
+    <div class="gallery" data-hw="hw08">
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw08/image29.png" alt="HW8 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw08/image8.PNG" alt="HW8 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw08/image14.png" alt="HW8 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw08/image28.png" alt="HW8 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ASSIGNMENT 9 ── -->
+  <div class="assignment" id="hw09">
+    <div class="assignment-header">
+      <span class="hw-num">Assignment 09</span>
+      <h2>Bolted Joints Analysis</h2>
+    </div>
+    <p class="assignment-desc">
+      Analyzed bolted joint design for aerospace structural connections — covering imperial and metric fastener
+      standards, preload requirements, joint stiffness ratios, and torque-tension relationships. Performed
+      ANSYS contact simulations to evaluate bearing stress, shear-out, net section tension, and fastener
+      load distribution in multi-fastener lap joint configurations.
+    </p>
+    <div class="gallery" data-hw="hw09">
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw09/image44.png" alt="HW9 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw09/image50.png" alt="HW9 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw09/image46.png" alt="HW9 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw09/image49.png" alt="HW9 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw09/image45.png" alt="HW9 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw09/image47.png" alt="HW9 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ASSIGNMENT 10 ── -->
+  <div class="assignment" id="hw10">
+    <div class="assignment-header">
+      <span class="hw-num">Assignment 10</span>
+      <h2>Weld Analysis &amp; Joint Integrity</h2>
+    </div>
+    <p class="assignment-desc">
+      Evaluated fusion and solid-state welding processes — plasma arc, arc welding, resistance spot welding,
+      and friction welding — for aerospace structural applications. Performed ANSYS thermal-structural simulations
+      to analyze heat-affected zones (HAZ), residual stresses, distortion, and fatigue life of welded joints
+      under cyclic loading conditions representative of aerospace service.
+    </p>
+    <div class="gallery" data-hw="hw10">
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw10/image35.png" alt="HW10 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw10/image34.png" alt="HW10 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw10/image39.png" alt="HW10 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw10/image43.png" alt="HW10 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw10/image44.png" alt="HW10 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw10/image12.png" alt="HW10 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ASSIGNMENT 11 ── -->
+  <div class="assignment" id="hw11">
+    <div class="assignment-header">
+      <span class="hw-num">Assignment 11</span>
+      <h2>Structural Dynamics &amp; Modal Analysis</h2>
+    </div>
+    <p class="assignment-desc">
+      Performed modal analysis to identify natural frequencies, mode shapes, and vibration response of aerospace
+      structural components. Applied dynamic loading theory to piping systems, rocket engine attachments, and
+      structural panels susceptible to resonance-driven fatigue. Used ANSYS Mechanical to extract eigenvalues,
+      plot deformed mode shapes, and perform harmonic and transient response analyses under realistic
+      launch vibration environments.
+    </p>
+    <div class="gallery" data-hw="hw11">
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw11/image51.png" alt="HW11 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw11/image62.png" alt="HW11 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw11/image57.png" alt="HW11 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw11/image58.png" alt="HW11 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw11/image56.png" alt="HW11 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-585/hw11/image60.png" alt="HW11 FEA Result" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    <a href="index.html">← Back to Portfolio</a>
+    &nbsp;&nbsp;·&nbsp;&nbsp;
+    Henry Glover &nbsp;·&nbsp; University of Southern California
+  </p>
+</footer>
+
+<script>
+  // ── LIGHTBOX ──
+  let allImgs = [];
+  let currentIdx = 0;
+
+  function buildImageList() {
+    allImgs = Array.from(document.querySelectorAll('.gallery-item img'));
+  }
+
+  function openLightbox(item) {
+    const img = item.querySelector('img');
+    currentIdx = allImgs.indexOf(img);
+    showImage(currentIdx);
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function showImage(idx) {
+    const img = allImgs[idx];
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox-img').alt = img.alt;
+    const hw = img.closest('.assignment');
+    const title = hw ? hw.querySelector('h2').textContent : '';
+    document.getElementById('lightbox-caption').textContent =
+      title + ' · Image ' + (idx + 1) + ' of ' + allImgs.length;
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+  document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === this) closeLightbox();
+  });
+
+  document.getElementById('lightbox-prev').addEventListener('click', function(e) {
+    e.stopPropagation();
+    currentIdx = (currentIdx - 1 + allImgs.length) % allImgs.length;
+    showImage(currentIdx);
+  });
+
+  document.getElementById('lightbox-next').addEventListener('click', function(e) {
+    e.stopPropagation();
+    currentIdx = (currentIdx + 1) % allImgs.length;
+    showImage(currentIdx);
+  });
+
+  document.addEventListener('keydown', function(e) {
+    const lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') {
+      currentIdx = (currentIdx - 1 + allImgs.length) % allImgs.length;
+      showImage(currentIdx);
+    }
+    if (e.key === 'ArrowRight') {
+      currentIdx = (currentIdx + 1) % allImgs.length;
+      showImage(currentIdx);
+    }
+  });
+
+  buildImageList();
+</script>
+
+</body>
+</html>

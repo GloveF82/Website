@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MACH-0 — Wearable Hip Protection | Henry Glover</title>
+  <style>
+    :root {
+      --red: #990000; --gold: #FFCC00; --dark: #0d0d0d;
+      --card: #141414; --border: #222; --text: #e8e8e8;
+      --muted: #888; --accent: #b30000;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--dark); color: var(--text); line-height: 1.6; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(8,8,8,0.93); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 60px; }
+    .nav-logo { font-weight: 700; font-size: 1.1rem; color: var(--gold); letter-spacing: 0.05em; text-decoration: none; }
+    .back-btn { display: flex; align-items: center; gap: 0.5rem; color: var(--muted); text-decoration: none; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .back-btn:hover { color: var(--gold); }
+    .back-btn svg { width: 16px; height: 16px; }
+
+    main { max-width: 1000px; margin: 0 auto; padding: 100px 5% 80px; }
+
+    .project-number-label { font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+    .project-course-label { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .project-tag { background: rgba(153,0,0,0.15); border: 1px solid rgba(153,0,0,0.35); color: var(--gold); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.78rem; }
+
+    .divider { height: 1px; background: var(--border); margin: 2.5rem 0; }
+
+    .overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+    .ov-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem; }
+    .ov-card h4 { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .ov-card p { font-size: 0.9rem; font-weight: 500; }
+
+    /* Result callout */
+    .result-callout { background: rgba(153,0,0,0.12); border: 1px solid rgba(153,0,0,0.35); border-left: 4px solid var(--red); border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .result-num { font-size: 2.5rem; font-weight: 800; color: var(--gold); line-height: 1; white-space: nowrap; }
+    .result-desc { font-size: 0.92rem; color: var(--text); line-height: 1.6; }
+    .result-desc strong { color: var(--gold); }
+
+    .section-label { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
+    .description-block p { font-size: 0.97rem; color: var(--text); line-height: 1.8; margin-bottom: 1rem; }
+
+    .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.85rem; margin-bottom: 0.5rem; }
+    .gallery-item { background: #111; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; cursor: pointer; transition: border-color 0.2s, transform 0.15s; position: relative; }
+    .gallery-item:hover { border-color: rgba(153,0,0,0.6); transform: translateY(-2px); }
+    .gallery-item img { width: 100%; height: 210px; object-fit: cover; object-position: center; display: block; background: #1a1a1a; }
+    .img-overlay { position: absolute; inset: 0; background: rgba(153,0,0,0); display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+    .gallery-item:hover .img-overlay { background: rgba(153,0,0,0.18); }
+    .zoom-icon { opacity: 0; transition: opacity 0.2s; color: #fff; }
+    .gallery-item:hover .zoom-icon { opacity: 1; }
+    .zoom-icon svg { width: 28px; height: 28px; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.8)); }
+    .gallery-caption { font-size: 0.8rem; color: var(--muted); margin-bottom: 2rem; }
+
+    .pdf-block { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .pdf-info { display: flex; align-items: center; gap: 1rem; }
+    .pdf-icon { width: 44px; height: 44px; background: rgba(153,0,0,0.2); border: 1px solid rgba(153,0,0,0.4); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .pdf-icon svg { width: 22px; height: 22px; fill: var(--gold); }
+    .pdf-info h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.2rem; }
+    .pdf-info p { font-size: 0.8rem; color: var(--muted); }
+    .download-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.4rem; background: linear-gradient(135deg, var(--red), var(--accent)); color: #fff; text-decoration: none; border-radius: 6px; font-size: 0.85rem; font-weight: 600; transition: opacity 0.2s, transform 0.15s; white-space: nowrap; }
+    .download-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .download-btn svg { width: 16px; height: 16px; }
+
+    #lightbox { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.92); align-items: center; justify-content: center; flex-direction: column; cursor: zoom-out; }
+    #lightbox.open { display: flex; }
+    #lightbox img { max-width: 92vw; max-height: 88vh; object-fit: contain; border-radius: 6px; box-shadow: 0 20px 80px rgba(0,0,0,0.7); cursor: default; }
+    #lightbox-close { position: absolute; top: 1rem; right: 1.5rem; color: #fff; font-size: 2rem; cursor: pointer; background: none; border: none; padding: 0.25rem 0.5rem; opacity: 0.7; transition: opacity 0.15s; }
+    #lightbox-close:hover { opacity: 1; }
+    #lightbox-prev, #lightbox-next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #fff; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.15s; }
+    #lightbox-prev:hover, #lightbox-next:hover { background: rgba(153,0,0,0.5); }
+    #lightbox-prev { left: 1.5rem; } #lightbox-next { right: 1.5rem; }
+    #lightbox-prev svg, #lightbox-next svg { width: 20px; height: 20px; }
+    #lightbox-caption { color: rgba(255,255,255,0.5); font-size: 0.82rem; margin-top: 0.75rem; text-align: center; }
+
+    footer { text-align: center; padding: 2rem 5%; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.8rem; }
+    footer a { color: var(--gold); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">HG</a>
+  <a href="index.html#projects" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back to Projects
+  </a>
+</nav>
+
+<div id="lightbox">
+  <button id="lightbox-close">&times;</button>
+  <button id="lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <img id="lightbox-img" src="" alt="" />
+  <p id="lightbox-caption"></p>
+  <button id="lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+</div>
+
+<main>
+
+  <!-- HEADER -->
+  <div style="margin-bottom:2.5rem;">
+    <p class="project-number-label">Project 04 &nbsp;·&nbsp; AME 441A · Multidisciplinary Capstone</p>
+    <h1>MACH-0 — Wearable Hip Protection Device for Fall Prevention</h1>
+    <p class="project-course-label">AME 441A &nbsp;·&nbsp; Multidisciplinary Design &nbsp;·&nbsp; University of Southern California &nbsp;·&nbsp; Fall 2024</p>
+    <div class="project-tags">
+      <span class="project-tag">Mechanism Design</span>
+      <span class="project-tag">Spring Steel</span>
+      <span class="project-tag">Impact Analysis</span>
+      <span class="project-tag">Drop Tower Testing</span>
+      <span class="project-tag">OptiTrack Motion Capture</span>
+      <span class="project-tag">Prototyping</span>
+      <span class="project-tag">Beam Bending Theory</span>
+      <span class="project-tag">Wearable Tech</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- KEY RESULT CALLOUT -->
+  <div class="result-callout">
+    <div class="result-num">50 ± 20%</div>
+    <div class="result-desc">
+      <strong>Peak impact force reduction</strong> achieved by the spring steel deployment mechanism —
+      surpassing the 20% benchmark set by existing passive foam hip pad solutions on the market.
+      Validated via inverted pendulum testing with OptiTrack motion capture at 1000 FPS.
+    </div>
+  </div>
+
+  <div class="overview-grid">
+    <div class="ov-card"><h4>Course</h4><p>AME 441A — Capstone Design</p></div>
+    <div class="ov-card"><h4>Advisor</h4><p>Prof. Akshay Potnuru</p></div>
+    <div class="ov-card"><h4>Team</h4><p>4 Members — Group 5</p></div>
+    <div class="ov-card"><h4>Material</h4><p>1075 Spring Steel (0.025")</p></div>
+    <div class="ov-card"><h4>Testing</h4><p>Instron Drop Tower + Pendulum</p></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- OVERVIEW -->
+  <p class="section-label">Project Overview</p>
+  <div class="description-block" style="margin-bottom:2.5rem;">
+    <p>
+      MACH-0 is a novel <strong>deployable mechanical hip protection device</strong> designed for elderly fall
+      prevention. Falls are the leading cause of death among the 65+ population, contributing to 58.1% of
+      all deaths in 2020 — and hip fractures are involved in approximately 1 in 3 fall-related fatalities.
+      Current market solutions are either passive foam pads with limited effectiveness, or expensive airbag
+      devices (starting at $750) requiring gas cannister replacements after each use.
+    </p>
+    <p>
+      Inspired by the Phlat Ball toy, the device uses <strong>three 1075 spring steel leaf arches</strong>
+      arranged in a hexagonal pattern on a 3D-printed baseplate. In the stored state, the leaves are held flat
+      by a <strong>buckling rod release mechanism</strong> held just past the unstable equilibrium point. A
+      solenoid pushes the mechanism through equilibrium, releasing the leaves to deploy into their protective
+      arch configuration in milliseconds — fully reusable with no consumables.
+    </p>
+    <p>
+      Testing was performed using the <strong>Instron Dynatup 9250 HV drop tower</strong> for impact
+      characterization and a custom <strong>inverted pendulum jig</strong> to simulate a sideways fall.
+      Angular position, velocity, and acceleration were captured at 1000 FPS using the
+      <strong>OptiTrack 120X Prime</strong> motion capture system. The device achieved a
+      <strong>50 ± 20% peak force reduction</strong> — 2.5× the 20% target — and the spring constant
+      can be tuned simply by swapping leaf thickness, allowing the design to scale to real-world body weights.
+    </p>
+  </div>
+
+  <!-- PROTOTYPE & DESIGN IMAGES -->
+  <p class="section-label">Prototype &amp; Design</p>
+  <div class="gallery">
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/image32.png" alt="Full prototype assembly" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/image28.png" alt="Deployed device prototype" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/image30.png" alt="Device in stored state" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/image9.png" alt="Spring steel leaf assembly" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/image18.png" alt="Buckling release mechanism diagram" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/image19.png" alt="Full assembly stored and deployed" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+  </div>
+  <p class="gallery-caption">Click any image to view full size · Use arrow keys to navigate</p>
+
+  <!-- TESTING IMAGES -->
+  <p class="section-label">Testing &amp; Results</p>
+  <div class="gallery">
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/image24.png" alt="Instron drop tower test" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/image26.png" alt="Pendulum testing setup" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/image14.png" alt="Drop tower jig diagram" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/image17.png" alt="Spring steel under hydraulic press" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/image20.png" alt="Force vs displacement — hydraulic press" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/image22.png" alt="Drop tower force curves — spring thickness comparison" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+  </div>
+  <p class="gallery-caption">Instron Dynatup 9250 HV drop tower · Hydraulic press · Inverted pendulum OptiTrack setup</p>
+
+  <!-- PRESENTATION PHOTOS -->
+  <p class="section-label" style="margin-top:2rem;">Presentation &amp; Poster</p>
+  <div class="gallery">
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/G05-Presentation Picture.png" alt="MACH-0 final presentation" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/G05-Presentation Pciture Group.png" alt="Group 5 presentation" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)" style="grid-column: span 1;">
+      <img src="media/mach-0/poster.png" alt="MACH-0 project poster" loading="lazy" style="height:210px;object-fit:cover;object-position:top;" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+  </div>
+  <p class="gallery-caption">AME 441A final presentation &amp; project poster — December 2024</p>
+
+  <div class="divider"></div>
+
+  <!-- LAB & SETUP PHOTOS -->
+  <p class="section-label">Lab &amp; Testing Environment</p>
+  <div class="description-block" style="margin-bottom:1.5rem;">
+    <p>
+      Testing was conducted in the USC Quan Lab using a custom <strong>inverted pendulum jig</strong>
+      with rigid aluminum framing and an OptiTrack reflective marker mount. These photos document the
+      physical setup — the pendulum arm, baseplate fixture, solenoid wiring, and drop-release rig used
+      to capture the 50 ± 20% peak force reduction result.
+    </p>
+  </div>
+  <div class="gallery">
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/lab_IMG_9291.JPG" alt="Lab setup — pendulum jig overview" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/lab_IMG_9292.JPG" alt="Lab setup — fixture detail" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/lab_IMG_9293.JPG" alt="Lab setup — solenoid wiring" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/lab_IMG_9294.JPG" alt="Lab setup — arm close-up" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/lab_IMG_9295.JPG" alt="Lab setup — marker placement" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/lab_IMG_9296.JPG" alt="Lab setup — baseplate assembly" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/lab_IMG_9297.JPG" alt="Lab setup — release trigger" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/lab_IMG_9298.JPG" alt="Lab setup — spring steel arch" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/lab_IMG_9299.JPG" alt="Lab setup — full test rig" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/lab_IMG_9300.JPG" alt="Lab setup — device mounted" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/lab_IMG_9305.JPG" alt="Lab setup — OptiTrack camera array" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/lab_IMG_9306.JPG" alt="Lab setup — reflective marker detail" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+  </div>
+  <p class="gallery-caption">USC Quan Lab · Inverted pendulum test rig · OptiTrack 120X Prime setup · Spring 2024</p>
+
+  <div class="divider"></div>
+
+  <!-- OPTITRACK DATA -->
+  <p class="section-label">OptiTrack Motion Capture — Angular Kinematics</p>
+  <div class="description-block" style="margin-bottom:1.5rem;">
+    <p>
+      The <strong>OptiTrack 120X Prime</strong> system captured pendulum arm kinematics at 1000 FPS,
+      tracking reflective markers to extract angular position, velocity, and acceleration throughout
+      the drop event. Trials were run with and without the spring steel device to isolate the device's
+      contribution to impact attenuation. The combined plots directly compare spring vs. no-spring
+      conditions across all three kinematic channels simultaneously.
+    </p>
+  </div>
+  <div class="gallery">
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/optitrack_angular_acceleration.png" alt="OptiTrack — angular acceleration vs. time" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/optitrack_angular_velocity.png" alt="OptiTrack — angular velocity vs. time" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/optitrack_angular_rotation.png" alt="OptiTrack — angular rotation vs. time" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/optitrack_combined_plots.png" alt="OptiTrack — combined kinematic plots (spring vs. no-spring)" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+  </div>
+  <p class="gallery-caption" style="margin-bottom:1.25rem;">Overall kinematic channels — spring steel vs. bare pendulum arm baseline</p>
+
+  <div class="gallery">
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/optitrack_spring_trial1.png" alt="OptiTrack — with spring, trial 1" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/optitrack_spring_trial2.png" alt="OptiTrack — with spring, trial 2" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/optitrack_nospring_trial1.png" alt="OptiTrack — without spring, trial 1 (baseline)" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/optitrack_nospring_trial2.png" alt="OptiTrack — without spring, trial 2 (baseline)" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+  </div>
+  <p class="gallery-caption">Trial-by-trial comparison · With spring (left) vs. without spring baseline (right)</p>
+
+  <div class="divider"></div>
+
+  <!-- SPRING STEEL MATERIAL TESTING -->
+  <p class="section-label">Spring Steel Drop Tower Characterization</p>
+  <div class="description-block" style="margin-bottom:1.5rem;">
+    <p>
+      To select the optimal spring steel geometry, multiple leaf configurations were tested on the
+      <strong>Instron Dynatup 9250 HV drop tower</strong> at a controlled impact energy of 10 J.
+      Variables included arch angle (60° vs. 79°) and strip thickness (10 thou vs. 15–20 thou of
+      0.025" 1075 spring steel). Force-time traces show the attenuation bandwidth and peak force
+      for each configuration — the 79°, 15-thou strip at 10 J produced the best balance of
+      deployment reliability and force reduction for the final design.
+    </p>
+  </div>
+  <div class="gallery">
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/spring_60deg_10thou_trial1.png" alt="Drop tower — 60° arch, 10 thou strip, trial 1" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/spring_60deg_20thou_trial1.png" alt="Drop tower — 60° arch, 20 thou strip, trial 1" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/spring_79deg_15thou_trial1_10j.png" alt="Drop tower — 79° arch, 15 thou strip, 10 J, trial 1" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/spring_79deg_20thou_trial1_10j.png" alt="Drop tower — 79° arch, 20 thou strip, 10 J, trial 1" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+  </div>
+  <p class="gallery-caption">Instron Dynatup 9250 HV · 10 J impact energy · 60° and 79° arch angles · 10–20 thou strip thickness</p>
+
+  <div class="divider"></div>
+
+  <!-- CAD — SLOTTED BASEPLATE -->
+  <p class="section-label">CAD — Slotted Baseplate Design</p>
+  <div class="description-block" style="margin-bottom:1.5rem;">
+    <p>
+      The 3D-printed slotted baseplate was modeled in <strong>Siemens NX</strong> and iterated through
+      multiple revisions to optimize slot geometry for secure spring steel retention while minimizing
+      print mass. The slot angle and depth were tuned to ensure consistent arch deployment angle across
+      all three leaves, and the central boss was sized to interface with the buckling rod release
+      mechanism. The native <code>.prt</code> CAD files are available in the project archive.
+    </p>
+  </div>
+  <div class="gallery">
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/cad_baseplate_1.png" alt="CAD — slotted baseplate isometric view" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/cad_baseplate_2.png" alt="CAD — slotted baseplate top view" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/cad_baseplate_3.png" alt="CAD — slotted baseplate slot detail" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/mach-0/cad_baseplate_4.png" alt="CAD — slotted baseplate section cut" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+  </div>
+  <p class="gallery-caption">Siemens NX · Slotted baseplate — 4 views · Native .prt files available in project archive</p>
+
+  <div class="divider"></div>
+
+  <!-- REPORT DOWNLOAD -->
+  <p class="section-label">Downloads</p>
+  <div class="pdf-block" style="margin-bottom:1rem;">
+    <div class="pdf-info">
+      <div class="pdf-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+      </div>
+      <div>
+        <h4>G05 Project Poster</h4>
+        <p>Official poster presented at the AME 441A capstone showcase</p>
+      </div>
+    </div>
+    <a href="media/G05_Poster.pdf" target="_blank" class="download-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      View Poster
+    </a>
+  </div>
+  <div class="pdf-block" style="margin-bottom:1rem;">
+    <div class="pdf-info">
+      <div class="pdf-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+      </div>
+      <div>
+        <h4>G05 Lab Notebook</h4>
+        <p>Full group lab notebook — design iterations, test logs, and data records</p>
+      </div>
+    </div>
+    <a href="media/G05_Lab_Notebook.pdf" target="_blank" class="download-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      View Notebook
+    </a>
+  </div>
+  <div class="pdf-block">
+    <div class="pdf-info">
+      <div class="pdf-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/>
+        </svg>
+      </div>
+      <div>
+        <h4>MACH-0 — Fall Protection Device Final Report</h4>
+        <p>Group 5 · AME 441A · Advised by Prof. Akshay Potnuru · December 2024</p>
+      </div>
+    </div>
+    <a href="media/G05 Final Report MACH-0.docx" download class="download-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      Download Report
+    </a>
+  </div>
+
+</main>
+
+<footer>
+  <p><a href="index.html">← Back to Portfolio</a> &nbsp;·&nbsp; Henry Glover &nbsp;·&nbsp; University of Southern California</p>
+</footer>
+
+<script>
+  let allImgs = [], currentIdx = 0;
+  function buildImageList() { allImgs = Array.from(document.querySelectorAll('.gallery-item img')); }
+  function openLightbox(item) {
+    const img = item.querySelector('img');
+    currentIdx = allImgs.indexOf(img);
+    showImage(currentIdx);
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function showImage(idx) {
+    const img = allImgs[idx];
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox-img').alt = img.alt;
+    document.getElementById('lightbox-caption').textContent = img.alt + ' · ' + (idx+1) + ' of ' + allImgs.length;
+  }
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+  document.getElementById('lightbox').addEventListener('click', function(e) { if(e.target===this) closeLightbox(); });
+  document.getElementById('lightbox-prev').addEventListener('click', function(e) { e.stopPropagation(); currentIdx=(currentIdx-1+allImgs.length)%allImgs.length; showImage(currentIdx); });
+  document.getElementById('lightbox-next').addEventListener('click', function(e) { e.stopPropagation(); currentIdx=(currentIdx+1)%allImgs.length; showImage(currentIdx); });
+  document.addEventListener('keydown', function(e) {
+    const lb = document.getElementById('lightbox');
+    if(!lb.classList.contains('open')) return;
+    if(e.key==='Escape') closeLightbox();
+    if(e.key==='ArrowLeft') { currentIdx=(currentIdx-1+allImgs.length)%allImgs.length; showImage(currentIdx); }
+    if(e.key==='ArrowRight') { currentIdx=(currentIdx+1)%allImgs.length; showImage(currentIdx); }
+  });
+  buildImageList();
+</script>
+</body>
+</html>

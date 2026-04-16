@@ -1,0 +1,31 @@
+# Videos
+*.mp4
+*.MP4
+*.mov
+*.MOV
+*.avi
+*.mkv
+
+# Large archives
+*.zip
+*.7z
+*.rar
+
+# Large source folders (course files, not website)
+AME 485/
+AME 308/
+ame 585 all assignments/
+Tac 348/
+Mechops/
+Composites/
+Annealing Presentation/
+Physics 153/
+
+# Large media files
+media/Annealing_Presentation.pptx
+media/Senior Project-20260414T215001Z-3-001.zip
+media/smart-box/*.mp4
+media/smart-box/*.MP4
+
+# Git internals
+.git/

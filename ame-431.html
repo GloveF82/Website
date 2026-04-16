@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heat Transfer — AME 431 | Henry Glover</title>
+  <style>
+    :root {
+      --red: #990000; --gold: #FFCC00; --dark: #0d0d0d;
+      --card: #141414; --border: #222; --text: #e8e8e8;
+      --muted: #888; --accent: #b30000;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--dark); color: var(--text); line-height: 1.6; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(8,8,8,0.93); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 60px; }
+    .nav-logo { font-weight: 700; font-size: 1.1rem; color: var(--gold); letter-spacing: 0.05em; text-decoration: none; }
+    .back-btn { display: flex; align-items: center; gap: 0.5rem; color: var(--muted); text-decoration: none; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .back-btn:hover { color: var(--gold); }
+    .back-btn svg { width: 16px; height: 16px; }
+
+    main { max-width: 1000px; margin: 0 auto; padding: 100px 5% 80px; }
+
+    .project-number-label { font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+    .project-course-label { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .project-tag { background: rgba(153,0,0,0.15); border: 1px solid rgba(153,0,0,0.35); color: var(--gold); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.78rem; }
+
+    .divider { height: 1px; background: var(--border); margin: 2.5rem 0; }
+
+    .overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+    .ov-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem; }
+    .ov-card h4 { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .ov-card p { font-size: 0.9rem; font-weight: 500; }
+
+    /* callout */
+    .callout { background: rgba(153,0,0,0.08); border: 1px solid rgba(153,0,0,0.25); border-left: 4px solid var(--gold); border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 2.5rem; }
+    .callout-label { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .callout p { font-size: 0.93rem; line-height: 1.75; }
+
+    /* sections */
+    .section { margin-bottom: 2.5rem; scroll-margin-top: 80px; }
+    .section-label { display: inline-block; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); background: rgba(153,0,0,0.15); border: 1px solid rgba(153,0,0,0.3); border-radius: 4px; padding: 0.2rem 0.65rem; margin-bottom: 0.6rem; }
+    .section h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .section p { font-size: 0.93rem; color: #ccc; line-height: 1.8; margin-bottom: 0.75rem; }
+    .section p:last-of-type { margin-bottom: 0; }
+
+    /* inline formula */
+    .formula { background: rgba(255,255,255,0.04); border: 1px solid #2a2a2a; border-radius: 6px; padding: 0.7rem 1.1rem; font-family: 'Consolas', monospace; font-size: 0.87rem; color: #ddd; margin: 0.75rem 0; line-height: 2; }
+    .formula .var { color: var(--gold); }
+    .formula .result { color: #7ee8a2; font-weight: 700; }
+
+    /* results row */
+    .result-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
+    .result-item { background: rgba(153,0,0,0.07); border: 1px solid rgba(153,0,0,0.2); border-radius: 6px; padding: 0.75rem 1rem; }
+    .result-item .ri-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem; }
+    .result-item .ri-value { font-size: 1rem; font-weight: 700; color: var(--gold); font-family: 'Consolas', monospace; }
+    .result-item .ri-sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.1rem; }
+
+    /* comparison table */
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 1rem 0; }
+    .data-table th { background: rgba(153,0,0,0.18); color: var(--gold); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.6rem 0.9rem; text-align: left; border-bottom: 1px solid rgba(153,0,0,0.3); }
+    .data-table td { padding: 0.55rem 0.9rem; border-bottom: 1px solid #1e1e1e; color: #ccc; }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table .winner { background: rgba(255,204,0,0.06); }
+    .data-table .winner td { color: var(--text); }
+    .data-table .highlight { color: var(--gold); font-weight: 700; }
+    .data-table .dim { color: #555; }
+
+    /* winner badge */
+    .badge { display: inline-block; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.15rem 0.5rem; border-radius: 3px; font-weight: 700; }
+    .badge.selected { background: rgba(255,204,0,0.15); border: 1px solid rgba(255,204,0,0.35); color: var(--gold); }
+    .badge.elim { background: rgba(180,0,0,0.12); border: 1px solid rgba(180,0,0,0.25); color: #c06060; }
+
+    /* pdf block */
+    .pdf-block { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .pdf-info { display: flex; align-items: center; gap: 1rem; }
+    .pdf-icon { width: 44px; height: 44px; background: rgba(153,0,0,0.2); border: 1px solid rgba(153,0,0,0.4); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .pdf-icon svg { width: 22px; height: 22px; fill: var(--gold); }
+    .pdf-info h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.2rem; }
+    .pdf-info p { font-size: 0.8rem; color: var(--muted); }
+    .download-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.4rem; background: linear-gradient(135deg, var(--red), var(--accent)); color: #fff; text-decoration: none; border-radius: 6px; font-size: 0.85rem; font-weight: 600; transition: opacity 0.2s, transform 0.15s; white-space: nowrap; }
+    .download-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .download-btn svg { width: 16px; height: 16px; }
+
+    footer { text-align: center; padding: 2rem 5%; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.8rem; }
+    footer a { color: var(--gold); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">HG</a>
+  <a href="index.html#projects" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back to Projects
+  </a>
+</nav>
+
+<main>
+
+  <!-- HEADER -->
+  <div style="margin-bottom:2.5rem;">
+    <p class="project-number-label">Project 15 &nbsp;·&nbsp; AME 431</p>
+    <h1>Flight Computer Heat Sink Design</h1>
+    <p class="project-course-label">AME 431 · Heat Transfer · University of Southern California</p>
+    <div class="project-tags">
+      <span class="project-tag">Forced Convection</span>
+      <span class="project-tag">Extended Surfaces</span>
+      <span class="project-tag">Fin Efficiency</span>
+      <span class="project-tag">Turbulent Flow</span>
+      <span class="project-tag">Pressure Drop</span>
+      <span class="project-tag">Nusselt Number</span>
+      <span class="project-tag">Material Comparison</span>
+      <span class="project-tag">N₂ Coolant</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- STATS -->
+  <div class="overview-grid">
+    <div class="ov-card"><h4>Course</h4><p>AME 431 — Heat Transfer</p></div>
+    <div class="ov-card"><h4>Project</h4><p>Flight Computer Heat Sink</p></div>
+    <div class="ov-card"><h4>Team</h4><p>Suvorov · Jackle · Glover · Yamaguchi</p></div>
+    <div class="ov-card"><h4>Heat Load</h4><p>Q = 1,200 W</p></div>
+    <div class="ov-card"><h4>Selected Design</h4><p>Al 700 µm · η = 97.33%</p></div>
+  </div>
+
+  <!-- CALLOUT -->
+  <div class="callout">
+    <div class="callout-label">Final Design</div>
+    <p>
+      Designed and optimized a <strong>fin-array heat sink</strong> to cool a flight computer dissipating
+      1,200 W, using nitrogen gas at −20 °C as the coolant. Four candidate designs (aluminum and copper
+      at two thicknesses each) were analyzed for fin efficiency, pressure drop, weight, and cost.
+      The selected design — <strong>700 µm aluminum, 22 fins</strong> — achieves
+      <strong>97.33% fin efficiency</strong> at a system weight of only 90 g and a
+      cost-efficiency ratio of 46.3% per dollar, outperforming all copper alternatives on value.
+    </p>
+  </div>
+
+  <!-- ── PROBLEM SETUP ── -->
+  <div class="section" id="problem">
+    <span class="section-label">Problem Setup</span>
+    <h2>Design Constraints &amp; Mass Flow Calculation</h2>
+    <p>
+      The flight computer generates a continuous heat load of 1,200 W that must be rejected entirely
+      to a nitrogen gas coolant stream. The maximum allowable surface temperature is <strong>60 °C</strong>
+      and the inlet coolant temperature is <strong>−20 °C</strong>, establishing a temperature difference
+      ΔT = 80 °C across which all heat transfer must occur. The first step is finding the minimum
+      coolant mass flow rate needed to absorb the full load.
+    </p>
+
+    <div class="formula">
+      <span class="var">Q̇</span> = ṁ · c<sub>p</sub> · ΔT &nbsp;&nbsp; → &nbsp;&nbsp;
+      ṁ = Q̇ / (c<sub>p</sub> · ΔT)<br>
+      ṁ = 1200 W / (1003.92 J/kg·K × 80 K) = <span class="result">0.0149 kg/s</span><br>
+      <span style="color:#555;font-size:0.8rem;">c<sub>p</sub>(N₂ at −20 °C) = 1003.92 J/kg·K &nbsp;·&nbsp; Evaluated at inlet conditions</span>
+    </div>
+
+    <div class="result-grid">
+      <div class="result-item"><div class="ri-label">ΔT (design)</div><div class="ri-value">80 °C</div><div class="ri-sub">60°C surface − (−20°C) gas</div></div>
+      <div class="result-item"><div class="ri-label">Heat load</div><div class="ri-value">1,200 W</div><div class="ri-sub">Flight computer dissipation</div></div>
+      <div class="result-item"><div class="ri-label">Coolant</div><div class="ri-value">N₂ gas</div><div class="ri-sub">Evaluated at −20 °C inlet</div></div>
+      <div class="result-item"><div class="ri-label">ṁ required</div><div class="ri-value">0.0149 kg/s</div><div class="ri-sub">Minimum to absorb 1,200 W</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── APPROACH ── -->
+  <div class="section" id="approach">
+    <span class="section-label">Thermal Analysis</span>
+    <h2>Fin Analysis — Forced Convection Through Channels</h2>
+    <p>
+      Each fin design was analyzed as a set of <strong>rectangular fin channels</strong> with forced
+      convection. The workflow for each design: compute channel geometry → find flow velocity from
+      continuity → calculate hydraulic diameter D<sub>h</sub> → determine Reynolds number and flow
+      regime → apply the appropriate Nusselt correlation → compute convection coefficient h →
+      evaluate fin efficiency η and total heat transfer Q.
+    </p>
+    <p>
+      The detailed hand-calculation for <strong>Fin 1 (Al 350 µm)</strong> illustrates the full
+      methodology, carried by Henry and Sean:
+    </p>
+
+    <div class="formula">
+      <span style="color:#666;">// Channel geometry (50 fins, 0.47 m × 0.23 m base plate)</span><br>
+      <span class="var">A<sub>c</sub></span> = 0.05 × [(0.23 − 50×0.00035) / (50−1)] = <span class="result">2.17 × 10⁻⁴ m²</span><br>
+      <span class="var">V</span> = ṁ / (ρ · A<sub>c</sub>) = 0.0149 / (1.36 × 2.17×10⁻⁴) = <span class="result">50.5 m/s</span><br><br>
+      <span style="color:#666;">// Hydraulic diameter</span><br>
+      <span class="var">D<sub>h</sub></span> = 4A<sub>c</sub> / P = 4 × 2.17×10⁻⁴ / (2×0.00434 + 2×0.05) = <span class="result">7.98 × 10⁻³ m</span><br><br>
+      <span style="color:#666;">// Reynolds number → turbulent</span><br>
+      <span class="var">Re</span> = V · D<sub>h</sub> / μ = 50.5 × 7.98×10⁻³ / 1.54×10⁻⁵ = <span class="result">26,172</span> &nbsp;(turbulent)<br><br>
+      <span style="color:#666;">// Petukhov friction factor (smooth tube)</span><br>
+      <span class="var">f</span> = (0.790 ln Re − 1.64)⁻² = <span class="result">0.0244</span><br><br>
+      <span style="color:#666;">// Gnielinski Nusselt → convection coefficient</span><br>
+      <span class="var">Nu</span> = 65.8 &nbsp;→&nbsp; <span class="var">h</span> = k · Nu / D<sub>h</sub> = 0.0223 × 65.8 / 7.98×10⁻³ = <span class="result">183.8 W/m²·K</span><br><br>
+      <span style="color:#666;">// Pressure drop</span><br>
+      <span class="var">ΔP</span> = f · (L/D<sub>h</sub>) · (ρV²/2) = 0.0244 × (0.47/7.98×10⁻³) × (½ × 1.36 × 50.5²) = <span class="result">97 Pa</span>
+    </div>
+
+    <p>
+      After iterating the fin count down from 50 to the optimal <strong>33 fins</strong>, the
+      actual heat rejection was Q = 875.95 W with a fin efficiency of <strong>η = 73.0%</strong>
+      and a total weight of <strong>0.74 kg</strong>.
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── COMPARISON ── -->
+  <div class="section" id="comparison">
+    <span class="section-label">Design Comparison</span>
+    <h2>Four-Design Trade Study</h2>
+    <p>
+      Four fin configurations were evaluated in parallel — two aluminum thicknesses and two copper
+      thicknesses — each designed to the same heat load and boundary conditions. Performance metrics
+      included pressure drop (system pumping penalty), fin efficiency, weight, and material cost.
+    </p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Design</th>
+          <th>Material</th>
+          <th>Thickness</th>
+          <th>No. Fins</th>
+          <th>ΔP (Pa)</th>
+          <th>η (%)</th>
+          <th>Weight (kg)</th>
+          <th>Cost ($)</th>
+          <th>η / $</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Fin 1</td><td>Aluminum</td><td>350 µm</td><td>33</td><td>627.62</td><td>73.00</td><td>0.74</td><td>1.58</td><td>46.2% / $</td></tr>
+        <tr class="winner">
+          <td><strong>Fin 2 ✓</strong></td>
+          <td><strong>Aluminum</strong></td>
+          <td class="highlight">700 µm</td>
+          <td class="highlight">22</td>
+          <td>201.05</td>
+          <td class="highlight">97.33</td>
+          <td>0.99</td>
+          <td>2.10</td>
+          <td class="highlight">46.3% / $</td>
+        </tr>
+        <tr><td>Fin 3</td><td>Copper</td><td>80 µm</td><td>35</td><td>29.08</td><td class="dim">29.94</td><td>0.59</td><td class="dim">3.75</td><td class="dim">8.0% / $</td></tr>
+        <tr><td>Fin 4</td><td>Copper</td><td>160 µm</td><td>42</td><td>104.9</td><td>79.38</td><td>1.15</td><td class="dim">7.29</td><td class="dim">10.9% / $</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      <strong>Copper was eliminated</strong> on cost grounds — despite Fin 3's low pressure drop,
+      its 29.94% efficiency is unacceptably poor and costs 2.4× more than the aluminum 350 µm option.
+      Between the two aluminum designs, <strong>700 µm aluminum edges out the 350 µm design</strong>
+      on every key metric: higher efficiency (97.33% vs. 73.0%), lower pressure drop (201 vs. 628 Pa),
+      and marginally better efficiency-per-dollar (46.3% vs. 46.2%/$).
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── FINAL RESULT ── -->
+  <div class="section" id="result">
+    <span class="section-label">Final Design</span>
+    <h2>Selected Configuration — Aluminum 700 µm</h2>
+
+    <div class="result-grid">
+      <div class="result-item"><div class="ri-label">Material</div><div class="ri-value">Aluminum</div><div class="ri-sub">Lower cost than copper</div></div>
+      <div class="result-item"><div class="ri-label">Fin thickness</div><div class="ri-value">700 µm</div><div class="ri-sub">0.70 mm per fin</div></div>
+      <div class="result-item"><div class="ri-label">No. of fins</div><div class="ri-value">22 fins</div><div class="ri-sub">21 cooling channels</div></div>
+      <div class="result-item"><div class="ri-label">Channel width</div><div class="ri-value">10.2 mm</div><div class="ri-sub">0.0102 m spacing</div></div>
+      <div class="result-item"><div class="ri-label">Fin efficiency η</div><div class="ri-value">97.33%</div><div class="ri-sub">Near-isothermal fins</div></div>
+      <div class="result-item"><div class="ri-label">Pressure drop</div><div class="ri-value">201 Pa</div><div class="ri-sub">System pumping penalty</div></div>
+      <div class="result-item"><div class="ri-label">Total weight</div><div class="ri-value">90.1 g</div><div class="ri-sub">0.0901 kg heat sink</div></div>
+      <div class="result-item"><div class="ri-label">Coolant cost</div><div class="ri-value">$1,030/day</div><div class="ri-sub">N₂ at ṁ = 0.0149 kg/s</div></div>
+    </div>
+
+    <p style="margin-top:1rem;">
+      At 97.33% efficiency the fins are operating nearly isothermally — the fin tip temperature
+      is within 2.7% of the base temperature — meaning almost the entire fin surface is actively
+      contributing to heat transfer. The wider channel (10.2 mm vs. 6.8 mm for the 350 µm design)
+      reduces flow velocity, lowers the friction factor, and cuts pressure drop by 68%. The thicker
+      fin also raises the fin parameter m = √(h·P/k·A<sub>c</sub>) favorably for efficiency.
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DOWNLOAD -->
+  <div class="pdf-block">
+    <div class="pdf-info">
+      <div class="pdf-icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8" style="fill:none;stroke:var(--gold);stroke-width:1.5"/><line x1="16" y1="13" x2="8" y2="13" style="fill:none;stroke:var(--gold);stroke-width:1.5"/><line x1="16" y1="17" x2="8" y2="17" style="fill:none;stroke:var(--gold);stroke-width:1.5"/></svg>
+      </div>
+      <div>
+        <h4>AME 431 — Final Project Presentation</h4>
+        <p>Flight Computer Heat Sink Design · Team Suvorov, Jackle, Glover, Yamaguchi · 16 slides</p>
+      </div>
+    </div>
+    <a href="media/AME_431_Final_Project.pdf" class="download-btn" target="_blank">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download PDF
+    </a>
+  </div>
+
+</main>
+
+<footer>
+  <p>© 2025 Henry Glover · <a href="index.html">Portfolio</a></p>
+</footer>
+
+</body>
+</html>

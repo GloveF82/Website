@@ -1,0 +1,359 @@
+=== TOTAL PAGES: 16 ===
+
+
+============================================================
+PAGE 1 of 16
+============================================================
+AME 431: PROJECT 1
+Alex Suvorov, Karl Jackle, Henry Glover, Sean Yamaguchi
+
+--- TABLES ON PAGE 1 ---
+
+Table 1:
+AME 431: PROJECT 1
+Alex Suvorov, Karl Jackle, Henry Glover, Sean Yamaguchi
+
+
+============================================================
+PAGE 2 of 16
+============================================================
+Problem Statement
+Design a Heat Sink for Flight Computer Cooling
+
+--- TABLES ON PAGE 2 ---
+
+Table 1:
+Problem Statement
+Design a Heat Sink for Flight Computer Cooling
+
+
+Table 2:
+ | 
+Problem Statement | 
+ | 
+Design a Heat Sink for Flight Computer Cooling | 
+
+============================================================
+PAGE 3 of 16
+============================================================
+Approach
+
+--- TABLES ON PAGE 3 ---
+
+Table 1:
+Approach
+
+
+Table 2:
+ | 
+Approach | 
+
+============================================================
+PAGE 4 of 16
+============================================================
+Approach
+
+--- TABLES ON PAGE 4 ---
+
+Table 1:
+Approach
+
+
+Table 2:
+ | 
+Approach | 
+
+Table 3:
+
+
+
+============================================================
+PAGE 5 of 16
+============================================================
+Approach
+
+--- TABLES ON PAGE 5 ---
+
+Table 1:
+Approach
+
+
+Table 2:
+ | 
+Approach | 
+
+Table 3:
+
+
+
+============================================================
+PAGE 6 of 16
+============================================================
+Approach
+
+--- TABLES ON PAGE 6 ---
+
+Table 1:
+Approach
+
+
+Table 2:
+ | 
+Approach | 
+
+Table 3:
+
+
+
+============================================================
+PAGE 7 of 16
+============================================================
+Approach
+
+--- TABLES ON PAGE 7 ---
+
+Table 1:
+Approach
+
+
+Table 2:
+ | 
+Approach | 
+
+Table 3:
+
+
+
+============================================================
+PAGE 8 of 16
+============================================================
+STEP 1
+Step 1A: Find ΔT
+ΔT is determined by finding the max difference between the computer surface and bulk gas.
+The maximum computer surface temperature is 60℃ and the minimum bulk gas temperature is
+-20℃. Thus the ΔT we will use is (60 - (-20)) = 80 ℃
+Step 1B: Find Gas Flow given Q_fluid
+Q_fluid by definition must be 1200 W. Given ΔT and this, the gas flow can be calculated by
+Q_dot = m_dot ⋅ c_p ⋅ ΔT where c_p = 1003.92 J/kg⋅K (interpolated at N2 = -20℃)
+-> 0.0149 kg/s
+Assumptions:
+1.) Heat sinks square shaped
+2.) Take everything at the inlet temperature -20℃
+
+--- TABLES ON PAGE 8 ---
+
+Table 1:
+ | 
+STEP 1 | 
+
+============================================================
+PAGE 9 of 16
+============================================================
+FIN 1 - ALUMINIUM + 350 µm - Sean
+A_fin = n_fin * 4 * t * L (start with 50 fins) -> 50 * 4 * 0.00035 m * 0.47 m= 0.0329 m^2
+A_unfin = L_full*w_full - n_fin * (t^2) = (0.47m * 0.23 m) - (50 * 0.00035 m ^2) = 0.11 m^2
+A_c = 0.05 * ((0.23 m - 50 * 0.00035 m) / (50-1)) = 2.17 * 10^-4 m^2
+m_dot = ⲣ * A_c * V (where m_dot = 0.0149 kg/s and ⲣ = 1.36 kg/m^3) -> V = 50.5 m/s
+
+--- TABLES ON PAGE 9 ---
+
+Table 1:
+ | 
+FIN 1 - ALUMINIUM + 350 µm - Sean | 
+
+============================================================
+PAGE 10 of 16
+============================================================
+FIN 1 - ALUMINIUM + 350 µm
+L_channel = (0.23 m - 50 * 0.00035 m) / (50-1) = 0.00434 m
+D_h = 4A_c / p = 4 * 2.17 * 10^-4 m^2 / (2*0.00434 + 2 *0.05) = 0.00798 m
+Re = V*D / 𝜇 = (𝜇 = 1.54 * 10^-5, V = 50.5 m/s) = 26,172.18
+Thus flow is turbulent.
+f = (0.790 ln(Re) - 1.64)^(-2) = 0.0244 (for turbulent flow in smooth tubes)
+(Pr = 0.6934 by interpolation)
+= 65.8
+h = k*Nu / D (where k = 0.0223 by interpolation and A-16) = 183.8 W/m^2K
+
+--- TABLES ON PAGE 10 ---
+
+Table 1:
+ | 
+FIN 1 - ALUMINIUM + 350 µm | 
+
+Table 2:
+L_channel = (0.23 m - 50 * 0.00035 m) / (50-1) = 0.00434 m
+D_h = 4A_c / p = 4 * 2.17 * 10^-4 m^2 / (2*0.00434 + 2 *0.05) = 0.00798 m
+Re = V*D / 𝜇 = (𝜇 = 1.54 * 10^-5, V = 50.5 m/s) = 26,172.18
+Thus flow is turbulent.
+f = (0.790 ln(Re) - 1.64)^(-2) = 0.0244 (for turbulent flow in smooth tubes)
+(Pr = 0.6934 by interpolation)
+= 65.8
+h = k*Nu / D (where k = 0.0223 by interpolation and A-16) = 183.8 W/m^2K
+
+
+Table 3:
+= 4A_c / p = 4 * 2.17 * 10^-4 m
+= V*D / 𝜇 = (𝜇 = 1.54 * 10^-5, V
+s flow is turbulent.
+0.790 ln(Re) - 1.64)^(-2) = 0.02
+= 0.6934 by interpolation)
+
+
+============================================================
+PAGE 11 of 16
+============================================================
+FIN 1 - ALUMINIUM + 350 µm
+ΔP = f (L/D) (ⲣ * V^2/2) = 0.0244 * (0.47/0.00798)(1.36 * 50.5 m/s)= 97 Pa
+Assuming ideal efficiency Q_fin = Q_fin, max
+Q_surf = Q_fin = k_Aluminum * A_fin* (T_b - T_inf) / L_fin will be equal to 1327.2 W. Reworking
+all the previous values with various n_fin values, results in an ideal number of fins = 33
+Thus the Q_actual with 33 fins is 875.952 W. Knowing the ideal heat transfer rate is 1200 W,
+the real efficiency can be calculated by Q_actual / Q_ideal = η_fin =0.730.
+Weight = ⲣ_Al * (width * length * height) * n_fins = 2739 * (0.00035 * 0.47 * 0.05) * 33 = 0.74 kg
+
+--- TABLES ON PAGE 11 ---
+
+Table 1:
+ | 
+FIN 1 - ALUMINIUM + 350 µm | 
+
+============================================================
+PAGE 12 of 16
+============================================================
+FIN 2 - Aluminum 700 µm - Alex
+Material Aluminum
+Thickness (µm) 700
+Spacing (m) 0.0102
+ΔP (Pa) 201.05
+Number of Fins 22
+Efficiency 97.33%
+
+--- TABLES ON PAGE 12 ---
+
+Table 1:
+ | 
+FIN 2 - Aluminum 700 µm - Alex | 
+
+Table 2:
+Material | Aluminum
+Thickness (µm) | 700
+Spacing (m) | 0.0102
+ΔP (Pa) | 201.05
+Number of Fins | 22
+Efficiency | 97.33%
+
+============================================================
+PAGE 13 of 16
+============================================================
+FIN 3/4 - Copper - Henry/Karl
+Material Copper Material Copper
+Thickness (µm) 80 Thickness (µm) 160
+Spacing (m) 0.0067 Spacing (m) 0.001
+ΔP (Pa) 29.08 ΔP (Pa) 104.9
+Number of Fins 35 Number of Fins 42
+Efficiency 29.94% Efficiency 79.38%
+
+--- TABLES ON PAGE 13 ---
+
+Table 1:
+ | 
+FIN 3/4 - Copper - Henry/Karl | 
+
+Table 2:
+Material | Copper
+Thickness (µm) | 80
+Spacing (m) | 0.0067
+ΔP (Pa) | 29.08
+Number of Fins | 35
+Efficiency | 29.94%
+
+Table 3:
+Material | Copper
+Thickness (µm) | 160
+Spacing (m) | 0.001
+ΔP (Pa) | 104.9
+Number of Fins | 42
+Efficiency | 79.38%
+
+============================================================
+PAGE 14 of 16
+============================================================
+Cost
+Aluminum, 350 µm Aluminum, 700 µm Copper, 80 µm Copper, 160 µm
+Weight (kg) 0.74 0.99 0.59 1.15
+Cost ($) 1.58 2.10 3.75 7.29
+Conclusion 1: Copper is far too expensive.
+
+--- TABLES ON PAGE 14 ---
+
+Table 1:
+ | 
+Cost | 
+
+Table 2:
+ | Aluminum, 350 µm | Aluminum, 700 µm | Copper, 80 µm | Copper, 160 µm
+Weight (kg) | 0.74 | 0.99 | 0.59 | 1.15
+Cost ($) | 1.58 | 2.10 | 3.75 | 7.29
+
+============================================================
+PAGE 15 of 16
+============================================================
+Table Values
+Material Aluminum Aluminum Copper Copper
+Thickness (µm) 350 700 80 160
+Spacing (m) 0.0068 0.0102 0.0067 0.001
+ΔP (Pa) 627.62 201.05 29.08 104.9
+Number of Fins 33 22 35 42
+Efficiency 73.00% 97.33% 29.94% 79.38%
+Conclusion 2: You get slightly
+Al_350 = 0.73/1.58 = 46.2%/$
+more efficiency per dollar with the
+Al_700 = 0.9733/2.1=46.3%/$
+700 µm aluminum.
+
+--- TABLES ON PAGE 15 ---
+
+Table 1:
+ | 
+Table Values | 
+
+Table 2:
+Material | Aluminum | Aluminum | Copper | Copper
+Thickness (µm) | 350 | 700 | 80 | 160
+Spacing (m) | 0.0068 | 0.0102 | 0.0067 | 0.001
+ΔP (Pa) | 627.62 | 201.05 | 29.08 | 104.9
+Number of Fins | 33 | 22 | 35 | 42
+Efficiency | 73.00% | 97.33% | 29.94% | 79.38%
+
+============================================================
+PAGE 16 of 16
+============================================================
+Results
+ITEM FINAL INFORMATION
+TEAM MEMBERS Alex Suvorov, Karl Jackle, Henry Glover,
+Sean Yamaguchi
+PROJECT UNDERTAKEN Flight Computer Heat Sink
+MATERIAL/TOTAL WEIGHT Aluminum, 0.0901 kg
+NUMBER OF HEAT UNITS 22 fins, thickness of 700 µm,
+21 channels, 0.0102 wide
+COOLANT USAGE 0.0149 kg/s ; $1,029.89/day
+FIN EFFICIENCY η = 97.33 %
+
+--- TABLES ON PAGE 16 ---
+
+Table 1:
+ | 
+Results | 
+
+Table 2:
+ITEM | FINAL INFORMATION
+TEAM MEMBERS | Alex Suvorov, Karl Jackle, Henry Glover,
+Sean Yamaguchi
+PROJECT UNDERTAKEN | Flight Computer Heat Sink
+MATERIAL/TOTAL WEIGHT | Aluminum, 0.0901 kg
+NUMBER OF HEAT UNITS | 22 fins, thickness of 700 µm,
+21 channels, 0.0102 wide
+COOLANT USAGE | 0.0149 kg/s ; $1,029.89/day
+FIN EFFICIENCY | η = 97.33 %
+
+=== EXTRACTION COMPLETE (pdfplumber) ===

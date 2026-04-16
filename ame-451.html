@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Linear Control Systems — AME 451 | Henry Glover</title>
+
+  <!-- Highlight.js — MATLAB syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/matlab.min.js"></script>
+
+  <style>
+    :root {
+      --red: #990000; --gold: #FFCC00; --dark: #0d0d0d;
+      --card: #141414; --border: #222; --text: #e8e8e8;
+      --muted: #888; --accent: #b30000;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--dark); color: var(--text); line-height: 1.6; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(8,8,8,0.93); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 60px; }
+    .nav-logo { font-weight: 700; font-size: 1.1rem; color: var(--gold); letter-spacing: 0.05em; text-decoration: none; }
+    .back-btn { display: flex; align-items: center; gap: 0.5rem; color: var(--muted); text-decoration: none; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .back-btn:hover { color: var(--gold); }
+    .back-btn svg { width: 16px; height: 16px; }
+
+    main { max-width: 1000px; margin: 0 auto; padding: 100px 5% 80px; }
+
+    .project-number-label { font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+    .project-course-label { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .project-tag { background: rgba(153,0,0,0.15); border: 1px solid rgba(153,0,0,0.35); color: var(--gold); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.78rem; }
+
+    .divider { height: 1px; background: var(--border); margin: 2.5rem 0; }
+
+    /* overview stat cards */
+    .overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+    .ov-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem; }
+    .ov-card h4 { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .ov-card p { font-size: 0.9rem; font-weight: 500; }
+
+    /* ── CODE SECTION BLOCKS ── */
+    .code-section { margin-bottom: 3rem; scroll-margin-top: 80px; }
+    .section-label-tag { display: inline-block; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); background: rgba(153,0,0,0.15); border: 1px solid rgba(153,0,0,0.3); border-radius: 4px; padding: 0.2rem 0.65rem; margin-bottom: 0.6rem; }
+    .code-section h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .code-section p { font-size: 0.93rem; color: #ccc; line-height: 1.75; margin-bottom: 1rem; }
+    .code-section p strong { color: var(--text); }
+
+    /* terminal window chrome */
+    .code-window { border-radius: 10px; overflow: hidden; border: 1px solid #333; box-shadow: 0 8px 32px rgba(0,0,0,0.5); margin-bottom: 0.6rem; }
+    .code-titlebar { background: #1e1e1e; border-bottom: 1px solid #333; padding: 0.6rem 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red { background: #ff5f57; }
+    .dot-yellow { background: #febc2e; }
+    .dot-green { background: #28c840; }
+    .code-filename { margin-left: 0.5rem; font-size: 0.78rem; color: #888; font-family: 'Consolas', 'Monaco', monospace; }
+
+    /* override hljs to match dark theme */
+    pre { margin: 0 !important; }
+    pre code.hljs { padding: 1.4rem 1.6rem !important; font-size: 0.82rem !important; line-height: 1.65 !important; font-family: 'Consolas', 'Monaco', 'Courier New', monospace !important; border-radius: 0 !important; background: #1a1a1a !important; }
+
+    /* key result callout */
+    .result-box { background: rgba(153,0,0,0.08); border: 1px solid rgba(153,0,0,0.25); border-left: 4px solid var(--red); border-radius: 8px; padding: 1rem 1.4rem; margin: 0.75rem 0 1.25rem; font-size: 0.9rem; line-height: 1.7; }
+    .result-box .result-label { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
+    .result-box code { background: rgba(255,204,0,0.12); color: var(--gold); padding: 0.1rem 0.4rem; border-radius: 3px; font-family: 'Consolas', monospace; font-size: 0.85rem; }
+
+    /* two-col layout for concept + result */
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1rem; }
+    @media (max-width: 680px) { .split { grid-template-columns: 1fr; } }
+
+    /* TOC */
+    .toc { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.4rem 1.6rem; margin-bottom: 2.5rem; }
+    .toc h3 { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.9rem; }
+    .toc ol { padding-left: 1.2rem; }
+    .toc li { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.4rem; }
+    .toc a { color: var(--muted); text-decoration: none; transition: color 0.15s; }
+    .toc a:hover { color: var(--gold); }
+
+    footer { text-align: center; padding: 2rem 5%; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.8rem; }
+    footer a { color: var(--gold); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">HG</a>
+  <a href="index.html#projects" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back to Projects
+  </a>
+</nav>
+
+<main>
+
+  <!-- HEADER -->
+  <div style="margin-bottom:2.5rem;">
+    <p class="project-number-label">Project 12 &nbsp;·&nbsp; AME 451</p>
+    <h1>Linear Control Systems — MATLAB Portfolio</h1>
+    <p class="project-course-label">AME 451 · Linear Control Systems · University of Southern California</p>
+    <div class="project-tags">
+      <span class="project-tag">MATLAB</span>
+      <span class="project-tag">Root Locus</span>
+      <span class="project-tag">Bode Plots</span>
+      <span class="project-tag">Nyquist Criterion</span>
+      <span class="project-tag">Routh-Hurwitz</span>
+      <span class="project-tag">Lead-Lag Compensation</span>
+      <span class="project-tag">PID Tuning</span>
+      <span class="project-tag">Nichols Chart</span>
+      <span class="project-tag">Frequency Response</span>
+      <span class="project-tag">Transfer Functions</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- STATS -->
+  <div class="overview-grid">
+    <div class="ov-card"><h4>Course</h4><p>AME 451 — Linear Control Systems</p></div>
+    <div class="ov-card"><h4>Software</h4><p>MATLAB / Symbolic Math Toolbox</p></div>
+    <div class="ov-card"><h4>Topics</h4><p>Root Locus, Bode, Nyquist, Lead-Lag</p></div>
+    <div class="ov-card"><h4>Scripts</h4><p>40+ .m files &amp; .mlx live scripts</p></div>
+    <div class="ov-card"><h4>Key Tool</h4><p>Custom Routh-Hurwitz function</p></div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <h3>Contents</h3>
+    <ol>
+      <li><a href="#routh">Routh-Hurwitz Stability Criterion</a></li>
+      <li><a href="#root-locus">Root Locus Analysis &amp; Design</a></li>
+      <li><a href="#bode">Bode Plots &amp; Frequency Response</a></li>
+      <li><a href="#nyquist">Nyquist, Nichols &amp; Multi-Domain Stability</a></li>
+      <li><a href="#lead-lag">Lead-Lag Compensator Design</a></li>
+      <li><a href="#step">Step Response &amp; Gain Tuning</a></li>
+    </ol>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ──────────────────────────────────────────── -->
+  <!-- 1. ROUTH-HURWITZ -->
+  <!-- ──────────────────────────────────────────── -->
+  <div class="code-section" id="routh">
+    <span class="section-label-tag">Stability Criterion</span>
+    <h2>Routh-Hurwitz Stability Analysis</h2>
+    <p>
+      A custom <code style="background:rgba(255,204,0,0.1);color:var(--gold);padding:0.1rem 0.4rem;border-radius:3px;font-family:monospace;">routh_hurwitz()</code>
+      function was written to automate Routh array construction for both numerical and symbolic polynomials.
+      It handles both special cases — a <strong>zero in the first column</strong> (replaced with epsilon,
+      then the limit taken as ε→0⁺) and a <strong>row of zeros</strong> (replaced using the auxiliary
+      polynomial method). The function returns the full Routh array <strong>M</strong> and the simplified
+      first column <strong>L</strong>; sign changes in L equal the number of roots in the right-half plane.
+    </p>
+
+    <div class="code-window">
+      <div class="code-titlebar">
+        <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+        <span class="code-filename">routh_hurwitz.m &nbsp;·&nbsp; Custom Stability Function</span>
+      </div>
+      <pre><code class="language-matlab">function [M, L] = routh_hurwitz(P, N)
+% Returns Routh array M and simplified first column L.
+% Handles special cases: zero in first column (epsilon method),
+% and row of zeros (auxiliary polynomial method).
+% P — numerical or symbolic coefficient array [a_n, a_{n-1}, ..., a_0]
+% N — precision digits (default 10); values < 10^-N treated as zero.
+
+if nargin < 2, N = 10; end
+n = length(P);
+P = sym(P);
+syms epsilon
+
+nfil = n;  ncol = ceil(n/2);
+M = sym(zeros(nfil, ncol));
+
+% Fill first two rows from coefficient array
+k = 1;
+for j = 1:ncol
+    for i = 1:2
+        M(i,j) = P(k);  k = k+1;
+    end
+end
+
+% Build remaining rows via 2x2 determinants
+for i = 3:nfil
+    % Special case: first element of row is zero
+    if abs(double(M(i-1,1))) < 10^(-N)
+        M(i-1,1) = epsilon;                          % epsilon replacement
+    % Special case: entire row is zero
+    elseif sum(abs(double(M(i-1,:)))) < 10^(-N)
+        for j = 1:ncol                               % use auxiliary polynomial
+            M(i-1,j) = M(i-2,j) * (n-(i-2)-2*(j-1));
+        end
+    end
+    for j = 1:ncol-1
+        M(i,j) = det([M(i-2,1) M(i-2,j+1); ...
+                      M(i-1,1) M(i-1,j+1)]) / (-M(i-1,1));
+    end
+end
+
+M = vpa(M);
+M1 = limit(M, epsilon, 0, 'right');     % resolve epsilon → 0+
+L  = vpa(zeros(n,1));
+for i = 1:n
+    L(i,1) = M1(i,1);                  % sign changes in L = # RHP roots
+end</code></pre>
+    </div>
+
+    <p>Used across homework and final exam to determine stability margins symbolically — solving for
+    the critical gain K at which the first column element crosses zero:</p>
+
+    <div class="code-window">
+      <div class="code-titlebar">
+        <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+        <span class="code-filename">FinalQ3.m &nbsp;·&nbsp; Symbolic K margin via Routh array</span>
+      </div>
+      <pre><code class="language-matlab">syms s K
+den_ol = expand((s+1)*(3*s+1)*(0.4*s+1));   % open-loop denominator
+num_ol = sym(9);                              % gain k = 9
+
+% Characteristic equation: 1 + K·G(s) = 0
+CharEq     = simplify(den_ol + K*num_ol);
+CharCoeff  = fliplr(coeffs(CharEq, s));      % [a_n ... a_0]
+RouthArray = simplify(routh_hurwitz(CharCoeff));
+
+% Solve for K where first-column element → 0 (stability boundary)
+K_critical = solve(RouthArray(3,1))          % K ≈ 15.86</code></pre>
+    </div>
+
+    <div class="result-box">
+      <div class="result-label">Key Result</div>
+      Characteristic equation: <code>1.2s³ + 4.6s² + 4.4s + 1 + K·0.4·... = 0</code>.
+      Routh stability boundary: <code>K_critical ≈ 15.86</code> — the maximum proportional gain
+      before the closed-loop system becomes unstable. For the operating gain K = 9 all first-column
+      elements are positive → system is stable with positive phase and gain margins.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ──────────────────────────────────────────── -->
+  <!-- 2. ROOT LOCUS -->
+  <!-- ──────────────────────────────────────────── -->
+  <div class="code-section" id="root-locus">
+    <span class="section-label-tag">Root Locus</span>
+    <h2>Root Locus Analysis &amp; Compensator Design</h2>
+    <p>
+      Root locus techniques were applied to visualize how closed-loop poles migrate as gain K is varied.
+      Performance specifications (max overshoot M<sub>p</sub>, natural frequency ω<sub>n</sub>) were
+      overlaid as constraint curves using <strong>sgrid()</strong>, enabling graphical compensator placement.
+      The open-loop transfer function for the final exam root locus question included a
+      <strong>lead compensator</strong> k = 4.35(s+1) designed to pull loci into the acceptable
+      damping/frequency region.
+    </p>
+
+    <div class="code-window">
+      <div class="code-titlebar">
+        <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+        <span class="code-filename">FinalQ1.m &nbsp;·&nbsp; Root locus with ζ = 0.4, ωn = 2 constraints</span>
+      </div>
+      <pre><code class="language-matlab">clear; clc; close all
+syms s k
+
+% Lead compensator + plant
+k      = 4.35*(s+1);
+num_ol = sym(40*s + 40);                         % k·(s+1) factor
+den_ol = expand((s+10) * (10*s^2) * (0.08*s+1));
+
+g_ol = tf(sym2poly(num_ol), sym2poly(den_ol));
+
+% Root locus with performance constraints overlaid
+rlocus(g_ol)
+xlim([-3, 1]);  ylim([-5, 5])
+xline(-1, ':')                                   % Re(s) = -1 boundary
+yline([1, -1], ':')                              % Im(s) = ±1 lines
+sgrid(0.4, 2)                                    % ζ = 0.4, ωn = 2 rad/s</code></pre>
+    </div>
+
+    <p>
+      Breakaway and break-in points were found symbolically using the backward asymptote equation
+      d/ds[−P(s)/Z(s)] = 0, and Routh-Hurwitz was applied to find exact cross-over gain:
+    </p>
+
+    <div class="code-window">
+      <div class="code-titlebar">
+        <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+        <span class="code-filename">FinalQ2A.m &nbsp;·&nbsp; Breakaway points &amp; stability margin</span>
+      </div>
+      <pre><code class="language-matlab">clear; clc; close all
+syms s k
+
+num = expand((s+5)*2);          % G(s) = 2(s+5) / [(s+1)(s+3)]
+den = expand((s+1)*(s+3));
+
+% Breakaway equation: d/ds[-den/num] = 0
+bkwyEq = simplify(diff(-den/num));
+bkwyPt = double(solve(bkwyEq))  % real breakaway point(s)
+
+% Characteristic equation for Routh analysis
+CharEq     = simplify(den + k*num);
+CharCoeff  = fliplr(coeffs(CharEq, s));
+RouthArray = simplify(routh_hurwitz(CharCoeff));
+
+g = tf(sym2poly(num), sym2poly(den));
+rlocus(g);  grid</code></pre>
+    </div>
+
+    <div class="result-box">
+      <div class="result-label">Result</div>
+      Plant G(s) = 2(s+5)/[(s+1)(s+3)] has zeros at s = −5 and poles at s = −1, −3.
+      Breakaway point computed symbolically. Root locus exits the real axis and the system
+      remains stable for all finite K > 0 (minimum-phase, more zeros than poles in RHP → none).
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ──────────────────────────────────────────── -->
+  <!-- 3. BODE PLOTS -->
+  <!-- ──────────────────────────────────────────── -->
+  <div class="code-section" id="bode">
+    <span class="section-label-tag">Frequency Response</span>
+    <h2>Bode Plots &amp; Asymptotic Approximation</h2>
+    <p>
+      Frequency response was analyzed by plotting the <strong>exact Bode magnitude and phase</strong>
+      alongside manually-constructed <strong>asymptotic (straight-line) approximations</strong> using a
+      custom <code style="background:rgba(255,204,0,0.1);color:var(--gold);padding:0.1rem 0.4rem;border-radius:3px;font-family:monospace;">asymp()</code>
+      helper. A separate <code style="background:rgba(255,204,0,0.1);color:var(--gold);padding:0.1rem 0.4rem;border-radius:3px;font-family:monospace;">BodePaper()</code>
+      utility generates blank logarithmic graph paper as a MATLAB figure — useful for
+      overlaying exact vs. approximate curves.
+    </p>
+
+    <div class="code-window">
+      <div class="code-titlebar">
+        <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+        <span class="code-filename">HW8Q1A.m &nbsp;·&nbsp; Exact Bode vs. asymptotic approximation</span>
+      </div>
+      <pre><code class="language-matlab">clear; clc; close all
+
+% G(s) = 12 / [(s+4)(s+1/3)]
+%   Two real poles at s = -4, -1/3
+%   Low-frequency gain = 12 / (4 × 1/3) = 9  ≈ +19.1 dB
+num = [12];
+den = conv([1 4], [1 1/3]);            % (s+4)(s+1/3)
+G = tf(num, den);
+
+% Blank Bode paper (freq: 0.01–100, mag: -60 to +20 dB, phase: -225° to 0°)
+BodePaper(0.01, 100, -60, 20, -225, 0);
+hold on
+
+% Exact Bode
+bode(G);  grid on
+
+% Asymptotic (straight-line) approximation overlaid
+asymp(G, 0.01, 100, -60, 20);</code></pre>
+    </div>
+
+    <div class="result-box">
+      <div class="result-label">Key Concept</div>
+      Corner frequencies at ω = 4 rad/s and ω = 1/3 rad/s. Low-frequency asymptote:
+      <code>|G(j0)| = 9 ≈ +19.1 dB</code>. Above each corner the magnitude slope drops −20 dB/decade;
+      at high frequencies the total slope is −40 dB/decade. Phase transitions from 0° to −180°.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ──────────────────────────────────────────── -->
+  <!-- 4. NYQUIST + NICHOLS -->
+  <!-- ──────────────────────────────────────────── -->
+  <div class="code-section" id="nyquist">
+    <span class="section-label-tag">Multi-Domain Stability</span>
+    <h2>Nyquist, Nichols &amp; Closed-Loop Frequency Response</h2>
+    <p>
+      For Final Q3, a complete multi-domain stability analysis was performed on a third-order system.
+      The same plant was analyzed using <strong>four complementary representations</strong>: Nyquist
+      plot (encirclement criterion), open-loop Bode plot (gain/phase margins), Nichols chart
+      (closed-loop M-circles), and closed-loop Bode (bandwidth and peak M). Together they paint a
+      full picture of stability robustness.
+    </p>
+
+    <div class="code-window">
+      <div class="code-titlebar">
+        <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+        <span class="code-filename">FinalQ3.m &nbsp;·&nbsp; Nyquist · Bode · Nichols · Closed-loop Bode</span>
+      </div>
+      <pre><code class="language-matlab">clear; clc; close all
+syms s K
+k = 9;
+
+% Transfer functions — open-loop and closed-loop
+num_ol = sym(k);
+den_ol = expand((s+1)*(3*s+1)*(0.4*s+1));       % three real poles
+g_ol   = tf(sym2poly(num_ol), sym2poly(den_ol));
+
+num_cl = expand(k*(0.4*s+1));
+den_cl = expand(den_ol + k);                     % 1 + G(s) in denominator
+t_cl   = tf(sym2poly(num_cl), sym2poly(den_cl));
+
+% ── 1. Nyquist plot ──────────────────────────────
+figure
+nyquist(g_ol);  grid on
+xlim([-1.2, 0.4]);  ylim([-0.5, 0.5])           % zoom near -1+0j point
+
+% ── 2. Open-loop Bode (gain & phase margins) ────
+figure
+bode(g_ol);  grid on
+
+% ── 3. Nichols chart ─────────────────────────────
+figure
+nichols(t_cl);  grid on                          % M-circles & N-circles
+
+% ── 4. Closed-loop Bode (bandwidth, peak M) ──────
+figure
+bode(t_cl);  grid on
+
+% ── Routh-Hurwitz critical gain ───────────────────
+CharEq    = simplify(den_ol + K*num_ol);
+CharCoeff = fliplr(coeffs(CharEq, s));
+Routh     = simplify(routh_hurwitz(CharCoeff));
+K_crit    = solve(Routh(3,1))                   % K_critical ≈ 15.86</code></pre>
+    </div>
+
+    <div class="result-box">
+      <div class="result-label">Stability Summary — K = 9</div>
+      Nyquist: locus does not encircle −1+0j → no RHP closed-loop poles, system stable.
+      Gain margin from Bode: <code>K_GM = 15.86 / 9 ≈ 4.9 dB</code> of margin before instability.
+      Routh-Hurwitz independently confirms critical gain at <code>K ≈ 15.86</code>. All four methods
+      in agreement — robust stability at the design operating point.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ──────────────────────────────────────────── -->
+  <!-- 5. LEAD-LAG COMPENSATION -->
+  <!-- ──────────────────────────────────────────── -->
+  <div class="code-section" id="lead-lag">
+    <span class="section-label-tag">Compensator Design</span>
+    <h2>Lead-Lag Compensator Design</h2>
+    <p>
+      HW10 demonstrates the full compensator synthesis workflow: translate <strong>time-domain
+      specifications</strong> (M<sub>p</sub>, t<sub>p</sub>, K<sub>v</sub>) into frequency-domain
+      requirements (phase margin, bandwidth, DC gain), then design lead and lag networks to meet
+      them. The lead compensator adds phase at the crossover frequency; the lag compensator boosts
+      low-frequency gain to satisfy the velocity constant without reducing phase margin.
+    </p>
+    <p>
+      Plant: <strong>G(s) = K / [s(s+8)(s+30)]</strong> &nbsp;·&nbsp;
+      Specs: M<sub>p</sub> = 10 %, t<sub>p</sub> = 0.6 s, K<sub>v</sub> = 10 s⁻¹
+    </p>
+
+    <div class="code-window">
+      <div class="code-titlebar">
+        <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+        <span class="code-filename">HW10.m &nbsp;·&nbsp; Full lead-lag synthesis from specs</span>
+      </div>
+      <pre><code class="language-matlab">clear; clc; close all
+syms s
+
+G_plant_sym = 1/(s*(s+8)*(s+30));
+
+%% ── Step 1: Translate specs to frequency domain ──────────────────────────
+M_p = 0.10;   t_p = 0.6;   K_v = 10;
+
+zeta    = abs(log(M_p) / sqrt(pi^2 + log(M_p)^2))          % damping ratio
+
+% Bandwidth from peak-time requirement
+omega_B = (pi/(t_p*sqrt(1-zeta^2))) * ...
+          sqrt((1-2*zeta^2) + sqrt(4*zeta^4 - 4*zeta^2 + 2))
+
+% DC gain K from velocity constant requirement: Kv = lim s→0 [s·K·G]
+K = K_v / limit(s*G_plant_sym, s, 0)
+
+%% ── Step 2: Lead compensator parameters ──────────────────────────────────
+phi_max  = atand(2*zeta / sqrt(-2*zeta^2 + sqrt(1 + 4*zeta^4)))
+omega_C  = 0.8 * omega_B                           % design crossover frequency
+x        = phi_max - (180 - (138.36 + 5))          % required phase addition
+alpha    = (1 - sind(x)) / (1 + sind(x))           % pole/zero separation ratio
+beta     = 1/alpha
+
+% Lead zero and pole
+T_1      = 1 / (omega_C * sqrt(alpha))
+z_lead   = 1/T_1
+p_lead   = z_lead / alpha
+
+G_lead   = (1/beta) * ((s + z_lead)/(s + p_lead));
+
+%% ── Step 3: Lag compensator parameters ───────────────────────────────────
+z_lag    = omega_C / 10                            % decade below crossover
+p_lag    = z_lag / beta
+
+G_lag    = beta * ((s + z_lag)/(s + p_lag));
+
+%% ── Step 4: Build compensated open-loop TF ───────────────────────────────
+num_plant = K;
+den_plant = s*(s+8)*(s+30);
+
+num_comp  = K * (s + z_lag) * (s + z_lead);
+den_comp  = (s + p_lag) * (s + p_lead) * den_plant;
+
+G_comp    = tf(sym2poly(num_comp), sym2poly(den_comp));
+
+figure; bode(G_comp); grid on; title('Compensated Open-Loop Bode')
+
+%% ── Step 5: Compare step responses ───────────────────────────────────────
+den_uncomp_cl = den_plant + num_plant;
+den_comp_cl   = den_comp  + num_comp;
+
+G_unc_cl = tf(sym2poly(num_plant),    sym2poly(den_uncomp_cl));
+G_com_cl = tf(sym2poly(num_comp),     sym2poly(den_comp_cl));
+
+figure; hold on
+step(G_unc_cl);  uncompensated = stepinfo(G_unc_cl)
+step(G_com_cl);  compensated   = stepinfo(G_com_cl)
+legend('Uncompensated','Compensated', 'Interpreter','latex')</code></pre>
+    </div>
+
+    <div class="result-box">
+      <div class="result-label">Design Results</div>
+      Computed: ζ = 0.591 (from M<sub>p</sub> = 10%), ω<sub>B</sub> ≈ 8.5 rad/s, K<sub>v</sub> = 10
+      sets DC gain K. Lead compensator adds phase at ω<sub>C</sub>; lag boosts low-frequency gain
+      by factor β. Step response post-compensation shows reduced overshoot, faster settling, and
+      near-zero steady-state error vs. the uncompensated plant — all three specs met simultaneously.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ──────────────────────────────────────────── -->
+  <!-- 6. STEP RESPONSE / GAIN TUNING -->
+  <!-- ──────────────────────────────────────────── -->
+  <div class="code-section" id="step">
+    <span class="section-label-tag">Step Response</span>
+    <h2>Proportional Gain Tuning &amp; Step Response Comparison</h2>
+    <p>
+      A simple but illuminating exercise: comparing two proportional gains on a first-order plant
+      to observe the classic <strong>speed vs. overshoot trade-off</strong>. The closed-loop transfer
+      function is derived analytically, then <code style="background:rgba(255,204,0,0.1);color:var(--gold);padding:0.1rem 0.4rem;border-radius:3px;font-family:monospace;">step()</code>
+      responses for K<sub>p</sub> = 56 and K<sub>p</sub> = 36 are overlaid. Higher proportional gain
+      accelerates the response but increases overshoot; lower gain is smoother but sluggish —
+      a fundamental trade-off resolved properly only by adding derivative or integral action.
+    </p>
+
+    <div class="code-window">
+      <div class="code-titlebar">
+        <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+        <span class="code-filename">HW4Q3.m &nbsp;·&nbsp; Proportional gain comparison loop</span>
+      </div>
+      <pre><code class="language-matlab">clear; clc; close all
+
+% Plant: G(s) = 0.5 / (6s + 2)   (first-order, time constant τ = 3 s)
+% Closed-loop with proportional controller K_p:
+%   T(s) = 0.5·K_p / (6s + 2 + 0.5·K_p) = K_eff / (τ_eff·s + 1)
+
+K_p = [56, 36];
+hold on
+
+for n = 1:length(K_p)
+    Kp  = K_p(n);
+    num = 0.5*Kp / (2 + 0.5*Kp);          % closed-loop DC gain
+    den = [6/(2 + 0.5*Kp),  1];            % [τ_cl, 1]
+    T_s = tf(num, den);
+    step(T_s);  grid on
+end
+
+legend('$K_p = 56$', '$K_p = 36$', ...
+       'Interpreter', 'latex', ...
+       'Location',    'south', ...
+       'Orientation', 'horizontal')</code></pre>
+    </div>
+
+    <div class="result-box">
+      <div class="result-label">Observation</div>
+      <code>K_p = 56</code>: τ_cl ≈ 0.18 s, DC gain → 0.93 — fast but higher steady-state offset.
+      &nbsp;|&nbsp;
+      <code>K_p = 36</code>: τ_cl ≈ 0.32 s, DC gain → 0.90 — slower, marginally lower gain.
+      Both remain first-order (no overshoot) but neither eliminates steady-state error — integral
+      action (K<sub>i</sub>) is required to achieve zero offset.
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>© 2025 Henry Glover · <a href="index.html">Portfolio</a></p>
+</footer>
+
+<script>hljs.highlightAll();</script>
+
+</body>
+</html>

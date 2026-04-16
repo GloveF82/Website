@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Design &amp; Development — AME 410 | Henry Glover</title>
+  <style>
+    :root {
+      --red: #990000; --gold: #FFCC00; --dark: #0d0d0d;
+      --card: #141414; --border: #222; --text: #e8e8e8;
+      --muted: #888; --accent: #b30000;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--dark); color: var(--text); line-height: 1.6; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(8,8,8,0.93); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 60px; }
+    .nav-logo { font-weight: 700; font-size: 1.1rem; color: var(--gold); letter-spacing: 0.05em; text-decoration: none; }
+    .back-btn { display: flex; align-items: center; gap: 0.5rem; color: var(--muted); text-decoration: none; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .back-btn:hover { color: var(--gold); }
+    .back-btn svg { width: 16px; height: 16px; }
+
+    main { max-width: 1000px; margin: 0 auto; padding: 100px 5% 80px; }
+
+    .project-number-label { font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+    .project-course-label { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .project-tag { background: rgba(153,0,0,0.15); border: 1px solid rgba(153,0,0,0.35); color: var(--gold); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.78rem; }
+
+    .divider { height: 1px; background: var(--border); margin: 2.5rem 0; }
+
+    .overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+    .ov-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem; }
+    .ov-card h4 { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .ov-card p { font-size: 0.9rem; font-weight: 500; }
+
+    /* key result callout */
+    .callout { background: rgba(153,0,0,0.08); border: 1px solid rgba(153,0,0,0.25); border-left: 4px solid var(--gold); border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 2.5rem; }
+    .callout-label { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .callout p { font-size: 0.93rem; line-height: 1.75; margin-bottom: 0; }
+
+    /* section blocks */
+    .phase { margin-bottom: 2.5rem; scroll-margin-top: 80px; }
+    .phase-label { display: inline-block; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); background: rgba(153,0,0,0.15); border: 1px solid rgba(153,0,0,0.3); border-radius: 4px; padding: 0.2rem 0.65rem; margin-bottom: 0.6rem; }
+    .phase h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.7rem; }
+    .phase p { font-size: 0.93rem; color: #ccc; line-height: 1.75; margin-bottom: 0.6rem; }
+    .phase p:last-child { margin-bottom: 0; }
+    .phase ul { padding-left: 1.4rem; margin-bottom: 0.6rem; }
+    .phase li { font-size: 0.91rem; color: #ccc; line-height: 1.7; margin-bottom: 0.25rem; }
+    .phase li strong { color: var(--text); }
+
+    /* two-column bullet split */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.5rem; }
+    @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* process flow strip */
+    .process-flow { display: flex; flex-wrap: wrap; gap: 0; margin-bottom: 2rem; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .flow-step { flex: 1; min-width: 110px; padding: 0.85rem 1rem; background: var(--card); border-right: 1px solid var(--border); text-align: center; position: relative; }
+    .flow-step:last-child { border-right: none; }
+    .flow-step .step-num { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); margin-bottom: 0.2rem; }
+    .flow-step .step-name { font-size: 0.8rem; font-weight: 600; color: var(--text); }
+    .flow-step.active { background: rgba(153,0,0,0.12); }
+    .flow-step.active .step-name { color: var(--gold); }
+
+    /* TOC */
+    .toc { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.4rem 1.6rem; margin-bottom: 2.5rem; }
+    .toc h3 { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.9rem; }
+    .toc ol { padding-left: 1.2rem; }
+    .toc li { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.4rem; }
+    .toc a { color: var(--muted); text-decoration: none; transition: color 0.15s; }
+    .toc a:hover { color: var(--gold); }
+
+    /* download block */
+    .pdf-block { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .pdf-info { display: flex; align-items: center; gap: 1rem; }
+    .pdf-icon { width: 44px; height: 44px; background: rgba(153,0,0,0.2); border: 1px solid rgba(153,0,0,0.4); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .pdf-icon svg { width: 22px; height: 22px; fill: var(--gold); }
+    .pdf-info h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.2rem; }
+    .pdf-info p { font-size: 0.8rem; color: var(--muted); }
+    .download-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.4rem; background: linear-gradient(135deg, var(--red), var(--accent)); color: #fff; text-decoration: none; border-radius: 6px; font-size: 0.85rem; font-weight: 600; transition: opacity 0.2s, transform 0.15s; white-space: nowrap; }
+    .download-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .download-btn svg { width: 16px; height: 16px; }
+
+    footer { text-align: center; padding: 2rem 5%; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.8rem; }
+    footer a { color: var(--gold); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">HG</a>
+  <a href="index.html#projects" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back to Projects
+  </a>
+</nav>
+
+<main>
+
+  <!-- HEADER -->
+  <div style="margin-bottom:2.5rem;">
+    <p class="project-number-label">Project 13 &nbsp;·&nbsp; AME 410</p>
+    <h1>Product Design &amp; Development — QuickPark</h1>
+    <p class="project-course-label">AME 410 · Product Design &amp; Development · University of Southern California · Fall 2024</p>
+    <div class="project-tags">
+      <span class="project-tag">Product Planning</span>
+      <span class="project-tag">Market Analysis</span>
+      <span class="project-tag">Conceptual Design</span>
+      <span class="project-tag">Embodiment Design</span>
+      <span class="project-tag">Design for X</span>
+      <span class="project-tag">Functional Design</span>
+      <span class="project-tag">Customer Needs</span>
+      <span class="project-tag">Routh-Hurwitz</span>
+      <span class="project-tag">Systems Engineering</span>
+      <span class="project-tag">Urban Mobility</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- STATS -->
+  <div class="overview-grid">
+    <div class="ov-card"><h4>Course</h4><p>AME 410 — Product Design &amp; Dev.</p></div>
+    <div class="ov-card"><h4>Project</h4><p>QuickPark — Smart Urban Parking</p></div>
+    <div class="ov-card"><h4>Team</h4><p>Team 4 · 6 Members</p></div>
+    <div class="ov-card"><h4>Deliverable</h4><p>78-page Final Report</p></div>
+    <div class="ov-card"><h4>Semester</h4><p>Fall 2024</p></div>
+  </div>
+
+  <!-- KEY RESULT CALLOUT -->
+  <div class="callout">
+    <div class="callout-label">Project — QuickPark</div>
+    <p>
+      A smart automated urban parking structure for Los Angeles combining a <strong>mobile reservation app</strong>,
+      <strong>hydraulic vehicle lifts</strong> (7,000 lb rated), vehicle-size-based floor assignment,
+      QR code / printed-ticket entry, 24/7 surveillance, rooftop solar panels, and EV charging stations.
+      The system reduces time-to-park to <strong>under 3 minutes</strong> and increases parking capacity
+      by up to <strong>25%</strong> through intelligent vehicle grouping by size.
+    </p>
+  </div>
+
+  <!-- PROCESS FLOW -->
+  <div class="process-flow">
+    <div class="flow-step active"><div class="step-num">Phase 1</div><div class="step-name">Product Planning</div></div>
+    <div class="flow-step active"><div class="step-num">Phase 2</div><div class="step-name">Functional Design</div></div>
+    <div class="flow-step active"><div class="step-num">Phase 3</div><div class="step-name">Conceptual Design</div></div>
+    <div class="flow-step active"><div class="step-num">Phase 4</div><div class="step-name">Concept Evaluation</div></div>
+    <div class="flow-step active"><div class="step-num">Phase 5</div><div class="step-name">Embodiment Design</div></div>
+    <div class="flow-step active"><div class="step-num">Phase 6</div><div class="step-name">Product Evaluation</div></div>
+    <div class="flow-step active"><div class="step-num">Phase 7</div><div class="step-name">Detail Design</div></div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <h3>Report Sections</h3>
+    <ol>
+      <li><a href="#planning">Product Planning — market analysis, customer needs, requirements</a></li>
+      <li><a href="#functional">Functional Design — problem abstraction, function structure diagram</a></li>
+      <li><a href="#conceptual">Conceptual Design — variants, screening &amp; scoring matrices</a></li>
+      <li><a href="#embodiment">Embodiment Design — clusters, interfaces, layout drawings, BOM</a></li>
+      <li><a href="#evaluation">Product Evaluation — P-diagrams, performance modeling</a></li>
+      <li><a href="#detail">Detail Design — DFX analysis, final drawings, final BOM</a></li>
+      <li><a href="#download">Full Report Download</a></li>
+    </ol>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ──────────────────── PHASE 1: PRODUCT PLANNING ──────────────────── -->
+  <div class="phase" id="planning">
+    <span class="phase-label">Phase 1</span>
+    <h2>Product Planning</h2>
+    <p>
+      Product planning established the foundation for the entire design effort. The team began with a
+      <strong>market analysis</strong> benchmarking four competing solutions — Park Plus / Wohr automated
+      systems, LAZ Parking's app-based management, standard garages, and street meters — scoring each
+      against convenience, cost, availability, and safety. The central design problem was defined as:
+      <em>"Design a parking solution that optimizes existing spaces in congested urban areas, prioritizing
+      convenience, affordability, and safety for drivers while maximizing occupancy and profitability
+      for operators."</em>
+    </p>
+    <p>
+      <strong>Customer needs identification</strong> drew on six in-depth interviews with long-term
+      Los Angeles residents. A key finding: 62% of people spend 10–20 minutes searching for parking.
+      17 customer needs were distilled and ranked by importance, spanning locating a spot quickly,
+      affordable pricing, seamless mobile payment, clean facilities, advance reservations, safety,
+      emergency access, and integration with public transit.
+    </p>
+    <p>
+      <strong>Requirements development</strong> translated those needs into 14 measurable engineering
+      metrics with marginal and ideal targets — for example:
+    </p>
+    <ul class="two-col">
+      <li><strong>Time to locate spot:</strong> &lt;3 min (marginal), &lt;2 min (ideal)</li>
+      <li><strong>Reservation success rate:</strong> &gt;80% marginal, 90% ideal</li>
+      <li><strong>Lift speed:</strong> 2 m/s marginal, 0.1 m/s (controlled) ideal</li>
+      <li><strong>Emergency response time:</strong> &lt;60 s marginal, &lt;30 s ideal</li>
+      <li><strong>Parking space width:</strong> 2.4 m marginal, 2.5 m ideal</li>
+      <li><strong>Customer support response:</strong> &lt;5 min marginal, &lt;3 min ideal</li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ──────────────────── PHASE 2: FUNCTIONAL DESIGN ──────────────────── -->
+  <div class="phase" id="functional">
+    <span class="phase-label">Phase 2</span>
+    <h2>Functional Design</h2>
+    <p>
+      Functional design abstracted the parking problem into energy, mass, and signal flows using an
+      <strong>EMS (Energy-Mass-Signal) diagram</strong> covering three operational phases:
+      <strong>Setup</strong>, <strong>Usage</strong>, and <strong>Wrap-Up</strong>.
+    </p>
+    <p>
+      A <strong>Function Structure Diagram (FSD)</strong> — iterated five times through the design
+      process — mapped every input and output transformation the system must perform:
+      receiving a vehicle, measuring its dimensions, assigning a floor and spot, transporting via
+      hydraulic lift, guiding the driver to an exit elevator, and managing all associated signal
+      flows (parking location, secure-entry codes, space-occupied status, QR identifiers).
+      The FSD served as the blueprint linking customer needs to physical subsystems.
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ──────────────────── PHASE 3 & 4: CONCEPTUAL DESIGN + EVALUATION ──────────────────── -->
+  <div class="phase" id="conceptual">
+    <span class="phase-label">Phase 3 &amp; 4</span>
+    <h2>Conceptual Design &amp; Concept Evaluation</h2>
+    <p>
+      A <strong>Concept Combination Table</strong> generated design variants by mixing solution
+      principles across key functions (security, user interface, vehicle measurement, allocation
+      logic, transportation method). Five distinct variants emerged:
+    </p>
+    <ul>
+      <li><strong>Design 1 — Low-Cost:</strong> basic app + traditional ramps, minimal automation</li>
+      <li><strong>Design 2 — Fully Automated:</strong> full sensor suite + hydraulic lifts + AI allocation</li>
+      <li><strong>Design 3 — Labor-Intensive:</strong> valet-based, maximum human involvement</li>
+      <li><strong>Design 4 — AI-Powered Autonomous:</strong> self-driving vehicle integration</li>
+      <li><strong>Design 5 — Long-Term Use:</strong> modular, expandable subscription-focused structure</li>
+    </ul>
+    <p>
+      Concept evaluation used a two-stage process: a <strong>Concept Screening Matrix</strong> eliminated
+      weaker options, and a <strong>Concept Scoring Matrix</strong> weighted 14 customer criteria to rank
+      finalists. The hybrid <strong>Design 1 + 2 combination</strong> scored highest (4.66 / 5) —
+      combining a mobile app and hydraulic lifts while remaining cost-feasible.
+    </p>
+    <p>
+      Feasibility was assessed via Technology Readiness Level (TRL) scoring, confirming that all
+      key technologies (hydraulic lifts, QR scanning, mobile apps, CCTV) are at TRL 8–9 — mature
+      and ready for deployment.
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ──────────────────── PHASE 5: EMBODIMENT DESIGN ──────────────────── -->
+  <div class="phase" id="embodiment">
+    <span class="phase-label">Phase 5</span>
+    <h2>Embodiment Design</h2>
+    <p>
+      Embodiment design decomposed the selected concept into <strong>six functional clusters</strong>
+      and defined all interfaces between them:
+    </p>
+    <ul>
+      <li><strong>Security Chunk:</strong> CCTV cameras, video analytics, on-site guards, entry gate</li>
+      <li><strong>User Interface Chunk:</strong> display kiosks, ticket printer, QR code scanner, mobile app</li>
+      <li><strong>Logic Chunk:</strong> vehicle sensors + cameras for size measurement, Information Storage File (ISF), parking allocation algorithm</li>
+      <li><strong>Drive Path Chunk:</strong> one-way lanes, lift staging area, per-floor navigation</li>
+      <li><strong>Automated Lift Chunk:</strong> two hydraulic lifts (7,000 lb capacity each), gated boundary, steel-beam guide rails</li>
+      <li><strong>User Exit Chunk:</strong> wide elevators, escalators, secured exit door</li>
+    </ul>
+    <p>
+      <strong>Layout drawings</strong> (iterated three times) placed the structure at 220 ft × 50 ft.
+      Vehicle floors are segregated by type — compact vehicles together, SUVs together — increasing
+      overall capacity by an estimated <strong>20–25%</strong>. Long-term parkers are placed on
+      upper floors; short-term near exits. A <strong>Bill of Materials</strong> covered structural
+      concrete, hydraulic lift hardware, LED lighting (720 kW facility load), rooftop solar, and
+      EV charging stations. Average vehicle assumptions: 4,904 lb weight, 14.7 ft length, 6.8 ft width.
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ──────────────────── PHASE 6: PRODUCT EVALUATION ──────────────────── -->
+  <div class="phase" id="evaluation">
+    <span class="phase-label">Phase 6</span>
+    <h2>Product Evaluation</h2>
+    <p>
+      <strong>P-diagrams (Parameter Diagrams)</strong> were constructed for the two major subsystems —
+      the hydraulic lift and the mobile app / allocation logic — mapping control signals, noise factors
+      (vehicle weight variance, network latency, emergency events), and response metrics (lift cycle
+      time, allocation accuracy, user wait time).
+    </p>
+    <p>
+      <strong>Performance modeling</strong> verified that two hydraulic lifts operating in parallel
+      can service the expected peak demand without a queue exceeding the 3-minute target. Lift energy
+      consumption was estimated at ~200 kW/day for both units combined, offset by rooftop solar generation.
+      Robustness and reliability were evaluated against noise factors: backup generators cover power
+      failures; treated-steel reinforcements handle weather exposure; redundant surveillance covers
+      camera blind spots.
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ──────────────────── PHASE 7: DETAIL DESIGN ──────────────────── -->
+  <div class="phase" id="detail">
+    <span class="phase-label">Phase 7</span>
+    <h2>Detail Design &amp; Design for X</h2>
+    <p>
+      Detail design applied a full <strong>Design for X (DFX)</strong> analysis across six dimensions:
+    </p>
+    <ul>
+      <li><strong>Design for Manufacturing (DFM):</strong> Primary structure in reinforced concrete with standardized precast components; auxiliary hardware uses eco-friendly/recyclable materials; solar panels and LED systems sourced for low manufacturing impact.</li>
+      <li><strong>Design for Assembly (DFA):</strong> Modular construction phasing; standardized bolt patterns and fittings throughout; maintenance-accessible placement of lift components and electrical panels.</li>
+      <li><strong>Design for Cost (DFC):</strong> High-cost items (hydraulic lifts, app development) justified by long-term ROI and reduced labor; solar panels reduce ~30% of operational electricity costs.</li>
+      <li><strong>Design for Reliability (DFR):</strong> Treated-steel reinforcements, weather-resistant coatings, backup generator with automatic transfer switch, redundant camera coverage.</li>
+      <li><strong>Design for Environment (DFE):</strong> Rooftop solar array, LED lighting throughout, recyclable steel framing, reduced vehicle emissions from faster parking.</li>
+      <li><strong>Design for Ergonomics:</strong> Intuitive app UI with accessibility mode (large fonts, voice commands); wide elevators compliant with ADA; anti-slip staircases with handrails; clear wayfinding signage at every decision point.</li>
+    </ul>
+    <p>
+      Final layout drawings and a complete Bill of Materials were produced. The
+      <strong>Design Portfolio Entry</strong> (pages 56–63) compiled the full design narrative
+      in condensed form. A final functional and performance evaluation confirmed all 14 engineering
+      metrics were met at or above marginal targets, with eight of fourteen reaching ideal values.
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DOWNLOAD -->
+  <div id="download">
+    <p style="font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">Full Report</p>
+    <div class="pdf-block">
+      <div class="pdf-info">
+        <div class="pdf-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8" style="fill:none;stroke:var(--gold);stroke-width:1.5"/><line x1="16" y1="13" x2="8" y2="13" style="fill:none;stroke:var(--gold);stroke-width:1.5"/><line x1="16" y1="17" x2="8" y2="17" style="fill:none;stroke:var(--gold);stroke-width:1.5"/><polyline points="10 9 9 9 8 9" style="fill:none;stroke:var(--gold);stroke-width:1.5"/></svg>
+        </div>
+        <div>
+          <h4>AME 410 — Final Report</h4>
+          <p>QuickPark · Team 4 · 78 pages · Fall 2024</p>
+        </div>
+      </div>
+      <a href="media/AME_410_Final_Report.pdf" class="download-btn" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PDF
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>© 2025 Henry Glover · <a href="index.html">Portfolio</a></p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enhancing PLA Strength via Salt Remelting | Henry Glover</title>
+  <style>
+    :root {
+      --red: #990000; --gold: #FFCC00; --dark: #0d0d0d;
+      --card: #141414; --border: #222; --text: #e8e8e8;
+      --muted: #888; --accent: #b30000;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--dark); color: var(--text); line-height: 1.6; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(8,8,8,0.93); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 60px; }
+    .nav-logo { font-weight: 700; font-size: 1.1rem; color: var(--gold); letter-spacing: 0.05em; text-decoration: none; }
+    .back-btn { display: flex; align-items: center; gap: 0.5rem; color: var(--muted); text-decoration: none; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .back-btn:hover { color: var(--gold); }
+    .back-btn svg { width: 16px; height: 16px; }
+
+    main { max-width: 1000px; margin: 0 auto; padding: 100px 5% 80px; }
+
+    .project-number-label { font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+    .project-course-label { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .project-tag { background: rgba(153,0,0,0.15); border: 1px solid rgba(153,0,0,0.35); color: var(--gold); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.78rem; }
+
+    .divider { height: 1px; background: var(--border); margin: 2.5rem 0; }
+
+    .result-callout { background: rgba(153,0,0,0.12); border: 1px solid rgba(153,0,0,0.35); border-left: 4px solid var(--red); border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .result-num { font-size: 2.4rem; font-weight: 800; color: var(--gold); line-height: 1; white-space: nowrap; }
+    .result-desc { font-size: 0.92rem; color: var(--text); line-height: 1.6; }
+    .result-desc strong { color: var(--gold); }
+
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; margin-bottom: 2rem; }
+    .stat-chip { background: rgba(153,0,0,0.1); border: 1px solid rgba(153,0,0,0.3); border-radius: 8px; padding: 0.9rem 1rem; text-align: center; }
+    .stat-chip .val { font-size: 1.2rem; font-weight: 800; color: var(--gold); display: block; }
+    .stat-chip .lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    .overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+    .ov-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem; }
+    .ov-card h4 { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .ov-card p { font-size: 0.9rem; font-weight: 500; }
+
+    .toc { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 2.5rem; }
+    .toc h4 { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+    .toc ol { padding-left: 1.2rem; }
+    .toc li { margin-bottom: 0.3rem; }
+    .toc a { color: var(--muted); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+    .toc a:hover { color: var(--gold); }
+
+    .section-label { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; scroll-margin-top: 80px; }
+    .description-block p { font-size: 0.97rem; color: var(--text); line-height: 1.8; margin-bottom: 1rem; }
+    .description-block p:last-child { margin-bottom: 0; }
+
+    .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.85rem; margin-bottom: 0.5rem; }
+    .gallery-item { background: #111; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; cursor: pointer; transition: border-color 0.2s, transform 0.15s; position: relative; }
+    .gallery-item:hover { border-color: rgba(153,0,0,0.6); transform: translateY(-2px); }
+    .gallery-item img { width: 100%; height: 220px; object-fit: contain; object-position: center; display: block; background: #fff; padding: 8px; }
+    .gallery-item img.photo { object-fit: cover; background: #1a1a1a; padding: 0; }
+    .img-overlay { position: absolute; inset: 0; background: rgba(153,0,0,0); display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+    .gallery-item:hover .img-overlay { background: rgba(153,0,0,0.18); }
+    .zoom-icon { opacity: 0; transition: opacity 0.2s; color: #fff; }
+    .gallery-item:hover .zoom-icon { opacity: 1; }
+    .zoom-icon svg { width: 28px; height: 28px; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.8)); }
+    .gallery-caption { font-size: 0.8rem; color: var(--muted); margin-bottom: 2rem; }
+
+    .pdf-block { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .pdf-info { display: flex; align-items: center; gap: 1rem; }
+    .pdf-icon { width: 44px; height: 44px; background: rgba(153,0,0,0.2); border: 1px solid rgba(153,0,0,0.4); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .pdf-icon svg { width: 22px; height: 22px; fill: var(--gold); }
+    .pdf-icon.excel { background: rgba(0,100,0,0.2); border-color: rgba(0,150,0,0.4); }
+    .pdf-icon.excel svg { fill: #4CAF50; }
+    .pdf-icon.pptx { background: rgba(180,60,0,0.2); border-color: rgba(200,80,0,0.4); }
+    .pdf-icon.pptx svg { fill: #FF6B35; }
+    .pdf-info h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.2rem; }
+    .pdf-info p { font-size: 0.8rem; color: var(--muted); }
+    .download-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.4rem; background: linear-gradient(135deg, var(--red), var(--accent)); color: #fff; text-decoration: none; border-radius: 6px; font-size: 0.85rem; font-weight: 600; transition: opacity 0.2s, transform 0.15s; white-space: nowrap; }
+    .download-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .download-btn svg { width: 16px; height: 16px; }
+
+    #lightbox { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.92); align-items: center; justify-content: center; flex-direction: column; cursor: zoom-out; }
+    #lightbox.open { display: flex; }
+    #lightbox img { max-width: 92vw; max-height: 88vh; object-fit: contain; border-radius: 6px; box-shadow: 0 20px 80px rgba(0,0,0,0.7); cursor: default; }
+    #lightbox-close { position: absolute; top: 1rem; right: 1.5rem; color: #fff; font-size: 2rem; cursor: pointer; background: none; border: none; padding: 0.25rem 0.5rem; opacity: 0.7; transition: opacity 0.15s; }
+    #lightbox-close:hover { opacity: 1; }
+    #lightbox-prev, #lightbox-next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #fff; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.15s; }
+    #lightbox-prev:hover, #lightbox-next:hover { background: rgba(153,0,0,0.5); }
+    #lightbox-prev { left: 1.5rem; } #lightbox-next { right: 1.5rem; }
+    #lightbox-prev svg, #lightbox-next svg { width: 20px; height: 20px; }
+    #lightbox-caption { color: rgba(255,255,255,0.5); font-size: 0.82rem; margin-top: 0.75rem; text-align: center; }
+
+    footer { text-align: center; padding: 2rem 5%; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.8rem; }
+    footer a { color: var(--gold); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">HG</a>
+  <a href="index.html#projects" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back to Projects
+  </a>
+</nav>
+
+<div id="lightbox">
+  <button id="lightbox-close">&times;</button>
+  <button id="lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <img id="lightbox-img" src="" alt="" />
+  <p id="lightbox-caption"></p>
+  <button id="lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+</div>
+
+<main>
+
+  <!-- HEADER -->
+  <div style="margin-bottom:2.5rem;">
+    <p class="project-number-label">Project 10 &nbsp;·&nbsp; Mechops E15</p>
+    <h1>Enhancing PLA Strength: Exploring the Power of Salt Remelting</h1>
+    <p class="project-course-label">Mechanical Operations Lab (E15) &nbsp;·&nbsp; University of Southern California &nbsp;·&nbsp; 2024</p>
+    <div class="project-tags">
+      <span class="project-tag">FDM 3D Printing</span>
+      <span class="project-tag">Salt Remelting</span>
+      <span class="project-tag">Tensile Testing</span>
+      <span class="project-tag">Load Cell / Strain Gauge</span>
+      <span class="project-tag">Uncertainty Analysis</span>
+      <span class="project-tag">Materials Science</span>
+      <span class="project-tag">PLA</span>
+      <span class="project-tag">Dimensional Analysis</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- KEY RESULT -->
+  <div class="result-callout">
+    <div class="result-num">58 ± 2 MPa</div>
+    <div class="result-desc">
+      <strong>Ultimate tensile strength of salt-remelted PLA at 180 °C</strong> — nearly matching
+      the XY-printed baseline of ~60 MPa and far exceeding the untreated Z-direction control
+      at ~39 MPa. Salt remelting at 180 °C fully eliminated visible layer lines and produced
+      a near-<strong>isotropic fracture</strong>, confirming complete inter-layer fusion.
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-chip"><span class="val">58 MPa</span><span class="lbl">180 °C Salt UTS</span></div>
+    <div class="stat-chip"><span class="val">~39 MPa</span><span class="lbl">Z-Control UTS</span></div>
+    <div class="stat-chip"><span class="val">175 °C</span><span class="lbl">PLA Melt Temp</span></div>
+    <div class="stat-chip"><span class="val">100%</span><span class="lbl">Print Infill</span></div>
+    <div class="stat-chip"><span class="val">5 Methods</span><span class="lbl">Tested (70–180 °C)</span></div>
+  </div>
+
+  <div class="overview-grid">
+    <div class="ov-card"><h4>Course</h4><p>Mechops Lab — E15</p></div>
+    <div class="ov-card"><h4>Partners</h4><p>Henry Glover &amp; Aidan Janowitz</p></div>
+    <div class="ov-card"><h4>Material</h4><p>PLA — 100% infill, 0.2 mm layers</p></div>
+    <div class="ov-card"><h4>Equipment</h4><p>Chemistry Furnace, Breaker Bridge, Load Cell</p></div>
+    <div class="ov-card"><h4>Analysis</h4><p>Tensile Strength + Dimensional Deflection</p></div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <h4>Contents</h4>
+    <ol>
+      <li><a href="#background">Background &amp; Motivation</a></li>
+      <li><a href="#methods">Methods &amp; Materials</a></li>
+      <li><a href="#results">Results — Tensile Strength</a></li>
+      <li><a href="#dimensional">Results — Dimensional Analysis</a></li>
+      <li><a href="#discussion">Discussion &amp; Conclusions</a></li>
+      <li><a href="#downloads">Downloads</a></li>
+    </ol>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- BACKGROUND -->
+  <p id="background" class="section-label">Background &amp; Motivation</p>
+  <div class="description-block" style="margin-bottom:1.5rem;">
+    <p>
+      Fused Deposition Modeling (FDM) 3D printing has become widely accessible — the Creality
+      Ender 3 can be purchased for under $90 — but all FDM parts share a fundamental structural
+      weakness: <strong>Z-axis anisotropy</strong>. Because each layer is deposited on top of the
+      previous one, inter-layer bonding relies on thermal fusion during printing. When the nozzle
+      moves to a new layer, the previous layer has already cooled, leaving partially fused
+      interfaces. The result is that Z-direction tensile strength is significantly lower than
+      XY-direction strength, limiting FDM parts in load-bearing applications.
+    </p>
+    <p>
+      This experiment evaluated two post-processing strategies to close that gap:
+      <strong>oven annealing</strong> (heating parts to 70, 90, or 110 °C — near but below the
+      60–65 °C glass transition temperature of PLA) and <strong>salt remelting</strong>
+      (packing parts in fine-grain salt and heating to 140 or 180 °C, just past PLA's
+      ~175 °C melt temperature). The salt bath provides uniform heat transfer while
+      supporting the part externally to prevent gross deformation during melting.
+    </p>
+  </div>
+  <div class="gallery">
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/annealing/image1.jpeg" alt="Creality Ender 3 FDM 3D printer — used to print all PLA dog-bone specimens" class="photo" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/annealing/image6.jpeg" alt="3D printed red PLA dog-bone tensile specimen — 100% infill, 0.2mm layers" class="photo" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/annealing/image19.png" alt="3D printed dog-bone tab connector piece — mounting interface for breaker bridge" class="photo" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+  </div>
+  <p class="gallery-caption">FDM printer and dog-bone specimens printed at 100% infill, 0.2 mm layers, 240 °C nozzle, 55 °C bed</p>
+
+  <div class="divider"></div>
+
+  <!-- METHODS -->
+  <p id="methods" class="section-label">Methods &amp; Materials</p>
+  <div class="description-block" style="margin-bottom:1.5rem;">
+    <p>
+      Dog-bone specimens were printed in <strong>PLA at 100% infill</strong> with consistent
+      parameters: 0.2 mm layer height, 240 °C nozzle, 55 °C bed, 6 mm³/s flow rate. Specimens
+      were printed in two orientations — flat (XY) and on-edge (Z) — to establish baseline
+      anisotropy. Post-processing treatments included:
+    </p>
+    <p>
+      <strong>Oven annealing:</strong> specimens placed in a chemistry furnace preheated to
+      70 °C, 90 °C, or 110 °C for one hour — targeting temperatures near PLA's glass transition
+      zone (60–65 °C) to promote chain mobility without full melting.
+    </p>
+    <p>
+      <strong>Salt remelting:</strong> specimens packed in fine-grain salt inside a container,
+      then heated in the chemistry furnace until an internal temperature of 140 °C or 180 °C
+      was reached (measured with a food thermometer). At 180 °C — above PLA's ~175 °C melt
+      temperature — the polymer fully re-fuses across layer boundaries. Fine-grain salt was
+      chosen over coarse grain to improve dimensional accuracy of the finished surface.
+    </p>
+    <p>
+      Tensile testing was performed on a custom <strong>breaker bridge</strong> equipped with a
+      load cell. The load cell uses a strain gauge whose resistance changes under deformation
+      (R = ρL/A); the change is amplified via a Wheatstone bridge and op-amp circuit and
+      converted to a force value (F = mg). Tensile strength was then calculated as
+      <strong>σ = F/A</strong>, where A is the cross-sectional area of the dog-bone neck.
+      Dimensional change (warping/deflection) was measured with calipers and a micrometer
+      across all three axes.
+    </p>
+  </div>
+  <div class="gallery">
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/annealing/image9.png" alt="Breaker bridge tensile tester diagram — load cell, motor drive, and dog-bone specimen mount" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/annealing/image11.png" alt="Tensile tester characteristic graph — force vs. displacement with breakage point highlighted at ~720 N, 2.3 mm (180 °C salt sample)" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/annealing/image22.png" alt="Dog-bone dimensional analysis diagram — ΔX, ΔY, ΔZ deflection measurement axes" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+  </div>
+  <p class="gallery-caption">Breaker bridge setup · Force-displacement curve at breakage · ΔX/ΔY/ΔZ dimensional measurement scheme</p>
+
+  <div class="divider"></div>
+
+  <!-- RESULTS: TENSILE -->
+  <p id="results" class="section-label">Results — Ultimate Tensile Strength</p>
+  <div class="description-block" style="margin-bottom:1.5rem;">
+    <p>
+      The UTS bar chart tells the key story of this experiment. The <strong>XY-printed control</strong>
+      sets the upper bound at ~60 MPa — the best achievable strength with conventional FDM.
+      The <strong>Z-direction control</strong> (unmodified, layer-by-layer) drops to ~39 MPa,
+      confirming the well-known anisotropy problem.
+    </p>
+    <p>
+      <strong>Oven annealing at 70–110 °C</strong> produced modest or no improvement —
+      the 70 °C sample reached ~40 MPa while 90 °C and 110 °C actually trended downward
+      toward ~37 and ~35 MPa respectively. These temperatures are insufficient to fully
+      re-fuse layer interfaces; instead, excessive heat near the glass transition causes
+      some chain disordering without true bonding.
+    </p>
+    <p>
+      <strong>Salt remelting at 140 °C</strong> performed worst overall at ~23 MPa. This
+      temperature sits between glass transition and full melt — causing deformation and
+      partial softening without complete inter-layer fusion. <strong>Salt remelting at
+      180 °C</strong>, however, achieved <strong>58 ± 2 MPa</strong> — nearly matching the XY
+      baseline. At this temperature, PLA fully melts and re-solidifies as a continuous
+      isotropic mass, with layer lines completely eliminated in post-fracture inspection.
+    </p>
+  </div>
+  <div class="gallery">
+    <div class="gallery-item" onclick="openLightbox(this)" style="grid-column: span 1;">
+      <img src="media/annealing/image13.png" alt="Ultimate Tensile Strength by treatment — XY (~60 MPa), Z-Control (~39 MPa), 70C, 90C, 110C oven anneal, 140C salt (~23 MPa), 180C salt (~58 MPa)" loading="lazy" style="height:260px;" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+  </div>
+  <p class="gallery-caption">UTS across all 7 conditions — 180 °C salt remelting matches the XY baseline, closing the Z-axis strength gap</p>
+
+  <div class="divider"></div>
+
+  <!-- RESULTS: DIMENSIONAL -->
+  <p id="dimensional" class="section-label">Results — Dimensional Analysis</p>
+  <div class="description-block" style="margin-bottom:1.5rem;">
+    <p>
+      A key concern with any high-temperature post-process is dimensional distortion. Warping,
+      shrinkage, and residual stresses from uneven cooling can render a part dimensionally
+      inaccurate even if its strength improves. Deflection was measured along all three axes
+      (X, Y, Z) as a percentage change from the as-printed dimensions.
+    </p>
+    <p>
+      Oven-annealed samples at 70–110 °C show modest X and Y expansion (up to ~2.5%) likely
+      from mild thermal relaxation, with Z remaining near zero. The <strong>180 °C salt sample
+      shows the largest Z-axis displacement (~+5%)</strong> — the material fully melted and
+      re-solidified under its own weight and the salt pressure, causing measurable but bounded
+      growth in the Z direction. However, because fine-grain salt was used and the part was
+      fully supported on all sides, X and Y dimensions remained near zero change — demonstrating
+      that the salt bath effectively constrains lateral deformation during melting.
+    </p>
+    <p>
+      The conclusion is that 180 °C salt remelting is viable for isotropic parts, provided
+      the print is at <strong>100% infill</strong> (air gaps cause cavitation during melting)
+      and extruder flow rate is tuned slightly higher to eliminate internal voids.
+    </p>
+  </div>
+  <div class="gallery">
+    <div class="gallery-item" onclick="openLightbox(this)">
+      <img src="media/annealing/image24.png" alt="Dimensional displacement (%) across X, Y, Z axes for all annealing temperatures — 180C salt shows +5% Z-axis growth" loading="lazy" />
+      <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+    </div>
+  </div>
+  <p class="gallery-caption">X/Y/Z dimensional displacement (%) vs. treatment temperature — fine-grain salt constrains X/Y while Z grows ~5% at 180 °C</p>
+
+  <div class="divider"></div>
+
+  <!-- DISCUSSION -->
+  <p id="discussion" class="section-label">Discussion &amp; Conclusions</p>
+  <div class="description-block" style="margin-bottom:2.5rem;">
+    <p>
+      The experiment confirmed that <strong>salt remelting at 180 °C is the only tested method
+      that effectively closes the Z-axis strength gap</strong> in FDM-printed PLA. Oven annealing
+      below the melt temperature does not achieve inter-layer fusion and offers no consistent
+      strength improvement. Salt annealing at 140 °C is counterproductive, sitting in a
+      destructive transition zone.
+    </p>
+    <p>
+      Two defects were observed in the 180 °C samples: <strong>surface cavities</strong> caused
+      by internal air pockets expanding and popping as the part melted, and <strong>warping</strong>
+      from residual stresses and uneven cooling. Both can be mitigated: cavities by increasing
+      extruder flow rate to eliminate air gaps; warping by controlling cooling rate and salt
+      grain size. Real-world application of this technique could enable FDM parts with truly
+      isotropic mechanical properties — useful for structural components currently limited by
+      Z-axis weakness.
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DOWNLOADS -->
+  <p id="downloads" class="section-label">Downloads</p>
+  <div class="pdf-block">
+    <div class="pdf-info">
+      <div class="pdf-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+      </div>
+      <div>
+        <h4>Enhancing PLA Strength — Full Presentation (PDF)</h4>
+        <p>15-slide deck · Background, methods, tensile results, dimensional analysis, discussion · Glover &amp; Janowitz</p>
+      </div>
+    </div>
+    <a href="media/Annealing_Presentation.pdf" target="_blank" class="download-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      View PDF
+    </a>
+  </div>
+  <div class="pdf-block">
+    <div class="pdf-info">
+      <div class="pdf-icon pptx">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+      </div>
+      <div>
+        <h4>Enhancing PLA Strength — Presentation (PowerPoint)</h4>
+        <p>Original editable slide deck · Mechops E15 · University of Southern California</p>
+      </div>
+    </div>
+    <a href="media/Annealing_Presentation.pptx" download class="download-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      Download PPTX
+    </a>
+  </div>
+  <div class="pdf-block">
+    <div class="pdf-info">
+      <div class="pdf-icon excel">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+      </div>
+      <div>
+        <h4>Annealing Data Analysis (Excel)</h4>
+        <p>Raw tensile force data, UTS calculations, dimensional measurements, uncertainty analysis — all conditions</p>
+      </div>
+    </div>
+    <a href="media/Annealing_Data_Analysis.xlsx" download class="download-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      Download Excel
+    </a>
+  </div>
+
+</main>
+
+<footer>
+  <p><a href="index.html">← Back to Portfolio</a> &nbsp;·&nbsp; Henry Glover &nbsp;·&nbsp; University of Southern California</p>
+</footer>
+
+<script>
+  let allImgs = [], currentIdx = 0;
+  function buildImageList() { allImgs = Array.from(document.querySelectorAll('.gallery-item img')); }
+  function openLightbox(item) {
+    buildImageList();
+    const img = item.querySelector('img');
+    currentIdx = allImgs.indexOf(img);
+    showImage(currentIdx);
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function showImage(idx) {
+    const img = allImgs[idx];
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox-img').alt = img.alt;
+    document.getElementById('lightbox-caption').textContent = img.alt + ' · ' + (idx+1) + ' of ' + allImgs.length;
+  }
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+  document.getElementById('lightbox').addEventListener('click', function(e) { if(e.target===this) closeLightbox(); });
+  document.getElementById('lightbox-prev').addEventListener('click', function(e) { e.stopPropagation(); currentIdx=(currentIdx-1+allImgs.length)%allImgs.length; showImage(currentIdx); });
+  document.getElementById('lightbox-next').addEventListener('click', function(e) { e.stopPropagation(); currentIdx=(currentIdx+1)%allImgs.length; showImage(currentIdx); });
+  document.addEventListener('keydown', function(e) {
+    const lb = document.getElementById('lightbox');
+    if(!lb.classList.contains('open')) return;
+    if(e.key==='Escape') closeLightbox();
+    if(e.key==='ArrowLeft') { currentIdx=(currentIdx-1+allImgs.length)%allImgs.length; showImage(currentIdx); }
+    if(e.key==='ArrowRight') { currentIdx=(currentIdx+1)%allImgs.length; showImage(currentIdx); }
+  });
+  buildImageList();
+</script>
+</body>
+</html>

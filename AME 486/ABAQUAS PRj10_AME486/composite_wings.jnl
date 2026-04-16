@@ -1,0 +1,8 @@
+# Save by haglover on 2025_04_23-23.57.40; build 2023 2022_09_28-11.11.55 183150
+from abaqus import *
+upgradeMdb('Z:/Desktop/ABAQUAS PRj10_AME486/composite_wings-2020.cae', 
+    'Z:/Desktop/ABAQUAS PRj10_AME486/composite_wings.cae')
+# Save by haglover on 2025_04_23-23.57.42; build 2023 2022_09_28-11.11.55 183150
+# Save by haglover on 2025_04_23-23.58.16; build 2023 2022_09_28-11.11.55 183150
+# Save by haglover on 2025_04_24-00.08.46; build 2023 2022_09_28-11.11.55 183150
+# Save by haglover on 2025_04_24-00.39.59; build 2023 2022_09_28-11.11.55 183150
