@@ -1424,17 +1424,19 @@
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-links a');
 
-    const navObserver = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          navLinks.forEach(a => a.style.color = '');
-          const link = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
-          if (link) link.style.color = '#FFCC00';
-        }
+    function updateActiveNav() {
+      let current = '';
+      sections.forEach(s => {
+        const top = s.getBoundingClientRect().top;
+        if (top <= 80) current = s.id;
       });
-    }, { threshold: 0.4 });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current ? '#FFCC00' : '';
+      });
+    }
 
-    sections.forEach(s => navObserver.observe(s));
+    window.addEventListener('scroll', updateActiveNav, { passive: true });
+    updateActiveNav();
   </script>
 
 </body>
