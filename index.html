@@ -1426,10 +1426,15 @@
 
     function updateActiveNav() {
       let current = '';
-      sections.forEach(s => {
-        const top = s.getBoundingClientRect().top;
-        if (top <= 80) current = s.id;
-      });
+      const atBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 10;
+      if (atBottom) {
+        current = 'contact';
+      } else {
+        sections.forEach(s => {
+          const top = s.getBoundingClientRect().top;
+          if (top <= 80) current = s.id;
+        });
+      }
       navLinks.forEach(a => {
         a.style.color = a.getAttribute('href') === '#' + current ? '#FFCC00' : '';
       });
