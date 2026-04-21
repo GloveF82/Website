@@ -355,6 +355,73 @@
       text-align: center;
     }
 
+    /* ── PROBLEM STATEMENT BANNER ── */
+    .ps-banner {
+      background: rgba(153,0,0,0.08);
+      border: 1px solid rgba(153,0,0,0.3);
+      border-left: 4px solid var(--red);
+      border-radius: 8px;
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .ps-banner svg { flex-shrink: 0; width: 20px; height: 20px; stroke: var(--gold); margin-top: 2px; }
+    .ps-banner p { font-size: 0.9rem; color: var(--text); line-height: 1.65; }
+    .ps-banner p strong { color: var(--gold); }
+
+    /* ── DOWNLOADS SECTION ── */
+    .dl-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 0.85rem;
+    }
+    .dl-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: border-color 0.2s;
+    }
+    .dl-card:hover { border-color: rgba(153,0,0,0.5); }
+    .dl-card-info { display: flex; align-items: center; gap: 0.85rem; flex: 1; min-width: 0; }
+    .dl-num-badge {
+      background: rgba(153,0,0,0.2);
+      border: 1px solid rgba(153,0,0,0.4);
+      border-radius: 5px;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .dl-card-info h4 { font-size: 0.88rem; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .dl-card-info p { font-size: 0.75rem; color: var(--muted); }
+    .dl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 1rem;
+      background: linear-gradient(135deg, var(--red), var(--accent));
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      transition: opacity 0.2s, transform 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .dl-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .dl-btn svg { width: 13px; height: 13px; }
+
     /* ── FOOTER ── */
     footer {
       text-align: center;
@@ -441,6 +508,17 @@
     </div>
   </div>
 
+  <!-- PROBLEM STATEMENT NOTICE -->
+  <div class="ps-banner">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    <p>
+      <strong>Problem Statements Available Below —</strong> Each assignment was completed against a formal problem statement
+      specifying geometry, material properties, loading conditions, boundary conditions, and required deliverables.
+      To view the complete problem statements, constraints, and performance requirements for each project,
+      see the downloadable presentation files in the <a href="#downloads" style="color:var(--gold);text-decoration:underline;text-underline-offset:3px;">Documentation &amp; Downloads</a> section at the bottom of this page.
+    </p>
+  </div>
+
   <!-- TABLE OF CONTENTS -->
   <div class="toc">
     <h3>Jump to Assignment</h3>
@@ -456,6 +534,7 @@
       <li><a href="#hw09">09 — Bolted Joints Analysis</a></li>
       <li><a href="#hw10">10 — Weld Analysis</a></li>
       <li><a href="#hw11">11 — Structural Dynamics &amp; Modal Analysis</a></li>
+      <li><a href="#downloads">↓ Documentation &amp; Downloads</a></li>
     </ul>
   </div>
 
@@ -892,6 +971,129 @@
         <img src="media/ame-585/hw11/image60.png" alt="HW11 FEA Result" loading="lazy" />
         <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
       </div>
+    </div>
+  </div>
+
+  <!-- DOWNLOADS -->
+  <div class="divider"></div>
+  <div id="downloads" style="scroll-margin-top:80px;">
+    <p class="section-label">Documentation &amp; Downloads</p>
+    <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1.5rem;max-width:700px;line-height:1.7;">
+      Final presentation files for all 11 assignments. Each file includes the full problem statement, given constraints,
+      loading and boundary conditions, analysis methodology, and results.
+    </p>
+    <div class="dl-grid">
+
+      <div class="dl-card">
+        <div class="dl-card-info">
+          <span class="dl-num-badge">01</span>
+          <div><h4>Heat Transfer Analysis</h4><p>ANSYS thermal simulation · aerospace TPS</p></div>
+        </div>
+        <a href="media/ame-585/AME585_Project_1_Final.pptx" download class="dl-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Download
+        </a>
+      </div>
+
+      <div class="dl-card">
+        <div class="dl-card-info">
+          <span class="dl-num-badge">02</span>
+          <div><h4>Composite Pressure Vessels</h4><p>Filament winding · CLT · failure criteria</p></div>
+        </div>
+        <a href="media/ame-585/AME585_Project_2_Final.pptx" download class="dl-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Download
+        </a>
+      </div>
+
+      <div class="dl-card">
+        <div class="dl-card-info">
+          <span class="dl-num-badge">03</span>
+          <div><h4>Buckling Analysis</h4><p>Euler buckling · ANSYS eigenvalue · post-buckling</p></div>
+        </div>
+        <a href="media/ame-585/AME585_Project_3_Final.pptx" download class="dl-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Download
+        </a>
+      </div>
+
+      <div class="dl-card">
+        <div class="dl-card-info">
+          <span class="dl-num-badge">04</span>
+          <div><h4>FEA Design Problems</h4><p>Structural FEA · mesh convergence · stress analysis</p></div>
+        </div>
+        <a href="media/ame-585/AME585_Project_4_Final.pptx" download class="dl-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Download
+        </a>
+      </div>
+
+      <div class="dl-card">
+        <div class="dl-card-info">
+          <span class="dl-num-badge">05</span>
+          <div><h4>Fatigue Analysis</h4><p>S-N curves · fatigue life prediction · Miner's rule</p></div>
+        </div>
+        <a href="media/ame-585/AME585_Project_5_Final.pptx" download class="dl-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Download
+        </a>
+      </div>
+
+      <div class="dl-card">
+        <div class="dl-card-info">
+          <span class="dl-num-badge">06</span>
+          <div><h4>Bellows Structural Analysis</h4><p>Pressure vessel · geometric nonlinearity · FEA</p></div>
+        </div>
+        <a href="media/ame-585/AME585_Project_6_Final.pptx" download class="dl-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Download
+        </a>
+      </div>
+
+      <div class="dl-card">
+        <div class="dl-card-info">
+          <span class="dl-num-badge">07</span>
+          <div><h4>Fracture Mechanics (NASGRO)</h4><p>Critical crack size · fatigue life · NASA-STD-5019A</p></div>
+        </div>
+        <a href="media/ame-585/AME585_Project_7_Final.pptx" download class="dl-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Download
+        </a>
+      </div>
+
+      <div class="dl-card">
+        <div class="dl-card-info">
+          <span class="dl-num-badge">08</span>
+          <div><h4>Honeycomb Sandwich Structures</h4><p>Core shear · face sheet stress · ANSYS layered shell</p></div>
+        </div>
+        <a href="media/ame-585/AME585_Project_8_Final.pptx" download class="dl-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Download
+        </a>
+      </div>
+
+      <div class="dl-card">
+        <div class="dl-card-info">
+          <span class="dl-num-badge">09</span>
+          <div><h4>Bolted Joints Analysis</h4><p>Margin of safety · preload · shear/bearing/tension</p></div>
+        </div>
+        <a href="media/ame-585/AME585_Project_9_Final.pptx" download class="dl-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Download
+        </a>
+      </div>
+
+      <div class="dl-card">
+        <div class="dl-card-info">
+          <span class="dl-num-badge">10</span>
+          <div><h4>Weld Analysis</h4><p>Weld stress · throat area · combined loading</p></div>
+        </div>
+        <a href="media/ame-585/AME585_Project_10_Final.pptx" download class="dl-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Download
+        </a>
+      </div>
+
+      <div class="dl-card">
+        <div class="dl-card-info">
+          <span class="dl-num-badge">11</span>
+          <div><h4>Structural Dynamics &amp; Modal Analysis</h4><p>Natural frequencies · mode shapes · ANSYS modal</p></div>
+        </div>
+        <a href="media/ame-585/AME585_Project_11_Final.pptx" download class="dl-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Download
+        </a>
+      </div>
+
     </div>
   </div>
 
