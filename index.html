@@ -716,13 +716,6 @@
         document.addEventListener('DOMContentLoaded', function() {
           window.scrollTo(0, parseInt(y));
         });
-      } else {
-        var hy = sessionStorage.getItem('homeScrollY');
-        if (hy !== null) {
-          document.addEventListener('DOMContentLoaded', function() {
-            window.scrollTo(0, parseInt(hy));
-          });
-        }
       }
     })();
   </script>
@@ -731,7 +724,7 @@
 
   <!-- NAV -->
   <nav>
-    <a href="/" class="nav-logo" onclick="sessionStorage.removeItem('projScrollY');sessionStorage.removeItem('homeScrollY')">HG</a>
+    <a href="/" class="nav-logo" onclick="sessionStorage.removeItem('projScrollY')">HG</a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
@@ -1501,10 +1494,6 @@
       });
     });
 
-    // Save scroll position on every scroll so refresh restores your spot
-    window.addEventListener('scroll', function() {
-      sessionStorage.setItem('homeScrollY', window.scrollY);
-    }, { passive: true });
   </script>
 
 </body>
