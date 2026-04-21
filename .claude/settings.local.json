@@ -60,7 +60,13 @@
       "Bash(py scripts/office/soffice.py --headless --convert-to pdf \"C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\Mechops\\\\Windtunnel report.docx\" --outdir \"C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\media\")",
       "Bash(py -c \"from docx2pdf import convert; convert\\(r'C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\Mechops\\\\Windtunnel report.docx', r'C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\media\\\\Windtunnel_Report.pdf'\\)\")",
       "Bash(dir \"C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\media\" /b)",
-      "Bash(dir \"C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\media\\\\ame-485\" /s /b)"
+      "Bash(dir \"C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\media\\\\ame-485\" /s /b)",
+      "Bash(cp \"AME 486/AME 486 PRJ 1 & PRJ 2_Henry GLover_Raul Torres Jr..pdf\" \"media/ame-486/AME_486_Project_1_2.pdf\")",
+      "Bash(cp \"AME 486/AME 486 PRJ3.pdf\" \"media/ame-486/AME_486_Project_3.pdf\")",
+      "Bash(cp \"AME 486/AME_486_PRJ4&5.pdf\" \"media/ame-486/AME_486_Project_4_5.pdf\")",
+      "Bash(cp \"AME 486/AME486_PRJ7_Glover_Torres.pdf\" \"media/ame-486/AME_486_Project_7.pdf\")",
+      "Bash(cp \"AME 486/AME486_PRJ8_Torres&Glover.pdf\" \"media/ame-486/AME_486_Project_8.pdf\")",
+      "Bash(python -c ' *)"
     ]
   }
 }

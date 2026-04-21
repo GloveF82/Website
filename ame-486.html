@@ -69,6 +69,16 @@
     #lightbox-prev svg, #lightbox-next svg { width: 20px; height: 20px; }
     #lightbox-caption { color: rgba(255,255,255,0.5); font-size: 0.82rem; margin-top: 0.75rem; text-align: center; }
 
+    .pdf-block { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: nowrap; margin-bottom: 0.75rem; }
+    .pdf-info { display: flex; align-items: center; gap: 1rem; }
+    .pdf-icon { width: 40px; height: 40px; background: rgba(153,0,0,0.2); border: 1px solid rgba(153,0,0,0.4); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .pdf-icon svg { width: 20px; height: 20px; fill: var(--gold); }
+    .pdf-info h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.15rem; }
+    .pdf-info p { font-size: 0.78rem; color: var(--muted); }
+    .view-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1.2rem; background: linear-gradient(135deg, var(--red), var(--accent)); color: #fff; text-decoration: none; border-radius: 6px; font-size: 0.82rem; font-weight: 600; transition: opacity 0.2s, transform 0.15s; white-space: nowrap; flex-shrink: 0; }
+    .view-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .view-btn svg { width: 15px; height: 15px; }
+
     footer { text-align: center; padding: 2rem 5%; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.8rem; }
     footer a { color: var(--gold); text-decoration: none; }
   </style>
@@ -391,6 +401,91 @@
         <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
       </div>
     </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DOCUMENTATION -->
+  <p style="font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">Documentation &amp; Downloads</p>
+
+  <div class="pdf-block">
+    <div class="pdf-info">
+      <div class="pdf-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg></div>
+      <div><h4>Projects 1 &amp; 2 — Composite Systems &amp; FEA Intro</h4><p>Composite material systems · failure modes · introductory FEA</p></div>
+    </div>
+    <a href="media/ame-486/AME_486_Project_1_2.pdf" target="_blank" class="view-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View PDF
+    </a>
+  </div>
+
+  <div class="pdf-block">
+    <div class="pdf-info">
+      <div class="pdf-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg></div>
+      <div><h4>Project 3 — Prepreg Testing &amp; Cure Cycle Analysis</h4><p>Chromatography · DSC · viscosity · cure stage failure modes</p></div>
+    </div>
+    <a href="media/ame-486/AME_486_Project_3.pdf" target="_blank" class="view-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View PDF
+    </a>
+  </div>
+
+  <div class="pdf-block">
+    <div class="pdf-info">
+      <div class="pdf-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg></div>
+      <div><h4>Projects 4 &amp; 5 — Classical Laminate Theory</h4><p>ABD matrix · ply-level stress &amp; strain · Tsai-Wu failure criterion</p></div>
+    </div>
+    <a href="media/ame-486/AME_486_Project_4_5.pdf" target="_blank" class="view-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View PDF
+    </a>
+  </div>
+
+  <div class="pdf-block">
+    <div class="pdf-info">
+      <div class="pdf-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg></div>
+      <div><h4>Project 7 — Composite Plate Theory &amp; Laminate FEA</h4><p>Kirchhoff-Love plate theory · interlaminar stress · Abaqus CAE</p></div>
+    </div>
+    <a href="media/ame-486/AME_486_Project_7.pdf" target="_blank" class="view-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View PDF
+    </a>
+  </div>
+
+  <div class="pdf-block">
+    <div class="pdf-info">
+      <div class="pdf-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg></div>
+      <div><h4>Project 8 — Composite Structural Optimization</h4><p>GRG optimization · fiber angle &amp; ply thickness · Abaqus FEA</p></div>
+    </div>
+    <a href="media/ame-486/AME_486_Project_8.pdf" target="_blank" class="view-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View PDF
+    </a>
+  </div>
+
+  <div class="pdf-block">
+    <div class="pdf-info">
+      <div class="pdf-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg></div>
+      <div><h4>Project 9 — Sandwich Structures (Team Report)</h4><p>Face sheets · core materials · bending &amp; shear · Abaqus FEA</p></div>
+    </div>
+    <a href="media/ame-486/AME_486_Project_9_Team.pdf" target="_blank" class="view-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View PDF
+    </a>
+  </div>
+
+  <div class="pdf-block">
+    <div class="pdf-info">
+      <div class="pdf-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg></div>
+      <div><h4>Project 9 — Sandwich Structures (Individual Report)</h4><p>Individual analysis · margin of safety · fiber strain constraints</p></div>
+    </div>
+    <a href="media/ame-486/AME_486_Project_9_Individual.pdf" target="_blank" class="view-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View PDF
+    </a>
+  </div>
+
+  <div class="pdf-block">
+    <div class="pdf-info">
+      <div class="pdf-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg></div>
+      <div><h4>Bonus — Abaqus Composite Cylinder Shell FEA</h4><p>Cutout stress concentration · shell elements · laminate failure indices</p></div>
+    </div>
+    <a href="media/ame-486/AME_486_Bonus.pdf" target="_blank" class="view-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View PDF
+    </a>
   </div>
 
 </main>
