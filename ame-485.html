@@ -81,6 +81,16 @@
     #lightbox-prev svg, #lightbox-next svg { width: 20px; height: 20px; }
     #lightbox-caption { color: rgba(255,255,255,0.5); font-size: 0.82rem; margin-top: 0.75rem; text-align: center; }
 
+    .pdf-block { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: nowrap; }
+    .pdf-info { display: flex; align-items: center; gap: 1rem; }
+    .pdf-icon { width: 44px; height: 44px; background: rgba(153,0,0,0.2); border: 1px solid rgba(153,0,0,0.4); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .pdf-icon svg { width: 22px; height: 22px; fill: var(--gold); }
+    .pdf-info h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.2rem; }
+    .pdf-info p { font-size: 0.8rem; color: var(--muted); }
+    .view-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.4rem; background: linear-gradient(135deg, var(--red), var(--accent)); color: #fff; text-decoration: none; border-radius: 6px; font-size: 0.85rem; font-weight: 600; transition: opacity 0.2s, transform 0.15s; white-space: nowrap; flex-shrink: 0; }
+    .view-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .view-btn svg { width: 16px; height: 16px; }
+
     footer { text-align: center; padding: 2rem 5%; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.8rem; }
     footer a { color: var(--gold); text-decoration: none; }
   </style>
@@ -139,6 +149,7 @@
       <li><a href="#project2">Project 2 — Satellite FEA (10g Launch Loads)</a></li>
       <li><a href="#project3">Project 3 — Fuselage Pressure Analysis</a></li>
       <li><a href="#project4">Project 4 — Valve Component FEA</a></li>
+      <li><a href="#project5">Project 5 — Aircraft Wing FEA</a></li>
     </ul>
   </div>
 
@@ -178,6 +189,16 @@
         <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
       </div>
     </div>
+    <div class="pdf-block" style="margin-top:1.25rem;">
+      <div class="pdf-info">
+        <div class="pdf-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg></div>
+        <div><h4>AME 485 — Project 2 Full Report</h4><p>Satellite structure FEA · 10g launch loads · ANSYS Workbench</p></div>
+      </div>
+      <a href="media/ame-485/AME_485_Project_2.pdf" target="_blank" class="view-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        View PDF
+      </a>
+    </div>
   </div>
 
   <!-- PROJECT 3 -->
@@ -213,6 +234,16 @@
         <img src="media/ame-485/project3/page16.png" alt="Fishbone failure diagram" loading="lazy" />
         <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
       </div>
+    </div>
+    <div class="pdf-block" style="margin-top:1.25rem;">
+      <div class="pdf-info">
+        <div class="pdf-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg></div>
+        <div><h4>AME 485 — Project 3 Full Report</h4><p>Fuselage pressure differential FEA · Fishbone failure analysis · ANSYS</p></div>
+      </div>
+      <a href="media/ame-485/AME_485_Project_3.pdf" target="_blank" class="view-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        View PDF
+      </a>
     </div>
   </div>
 
@@ -254,6 +285,65 @@
         <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
       </div>
     </div>
+  </div>
+
+  <!-- PROJECT 5 -->
+  <div class="assignment" id="project5">
+    <div class="assignment-header">
+      <span class="hw-num">Project 05</span>
+      <h2>Aircraft Wing Structural Analysis — ANSYS Static FEA</h2>
+    </div>
+    <p class="assignment-desc">
+      Performed static structural FEA in ANSYS on an aircraft wing geometry under aerodynamic lift loading.
+      The wing was fixed at the root (simulating attachment to the fuselage) and a 1,000 Pa pressure load
+      was applied to the underside. Results showed a maximum total deformation of 0.0071 m at the trailing
+      edge tip and a maximum principal stress of 3.4154 MPa on the underside near the root attachment.
+      Using Aluminum 6061-T6 with a factor of safety of 1.4, the allowable stress was determined to be
+      8.782 MPa (5.4985 MPa with a 15% pocket margin). The maximum lift pressure the wing can withstand
+      before exceeding the adjusted allowable is approximately 1,609 Pa.
+    </p>
+    <div class="gallery">
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-485/project5/page12.png" alt="ANSYS setup — wing fixed support at root edge, static structural" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-485/project5/page13.png" alt="ANSYS pressure load — 1000 Pa applied to underside of wing" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-485/project5/page14.png" alt="ANSYS total deformation — max 0.0071 m at trailing edge tip" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-485/project5/page15.png" alt="ANSYS max principal stress — 3.4154 MPa at root underside, -1.0833 MPa near trailing edge" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="media/ame-485/project5/page16.png" alt="ANSYS failure load analysis — max lift pressure 1609 Pa, Al 6061-T6 with F.S. 1.4" loading="lazy" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- VIEW PDF -->
+  <p style="font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;">Documentation</p>
+  <div class="pdf-block">
+    <div class="pdf-info">
+      <div class="pdf-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+      </div>
+      <div>
+        <h4>AME 485 — Project 5 Full Report</h4>
+        <p>Aircraft wing static structural FEA · ANSYS simulation data · Al 6061-T6 · Spring 2025</p>
+      </div>
+    </div>
+    <a href="media/ame-485/AME_485_Project_5.pdf" target="_blank" class="view-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      View PDF
+    </a>
   </div>
 
 </main>

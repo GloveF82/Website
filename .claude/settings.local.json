@@ -58,7 +58,9 @@
       "Bash(C:/Users/henry/AppData/Local/Programs/Python/Python313/python.exe -c ':*)",
       "Read(//c/Users/henry/AppData/Roaming/Claude/local-agent-mode-sessions/skills-plugin/1b056bb1-14b4-419d-a7b5-ecd73ea8f2a5/70d0a058-da6d-43b4-8497-8ac2a0e0b05a/skills/docx/**)",
       "Bash(py scripts/office/soffice.py --headless --convert-to pdf \"C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\Mechops\\\\Windtunnel report.docx\" --outdir \"C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\media\")",
-      "Bash(py -c \"from docx2pdf import convert; convert\\(r'C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\Mechops\\\\Windtunnel report.docx', r'C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\media\\\\Windtunnel_Report.pdf'\\)\")"
+      "Bash(py -c \"from docx2pdf import convert; convert\\(r'C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\Mechops\\\\Windtunnel report.docx', r'C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\media\\\\Windtunnel_Report.pdf'\\)\")",
+      "Bash(dir \"C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\media\" /b)",
+      "Bash(dir \"C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\media\\\\ame-485\" /s /b)"
     ]
   }
 }
