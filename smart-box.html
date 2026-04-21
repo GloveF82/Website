@@ -207,7 +207,11 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      transition: border-color 0.2s, transform 0.15s;
     }
+    .gallery-item:hover { border-color: rgba(153,0,0,0.6); transform: translateY(-2px); }
 
     .gallery-item img {
       width: 100%;
@@ -223,6 +227,24 @@
       color: var(--muted);
       border-top: 1px solid var(--border);
     }
+
+    .img-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(153,0,0,0); display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+    .gallery-item:hover .img-overlay { background: rgba(153,0,0,0.18); }
+    .zoom-icon { opacity: 0; transition: opacity 0.2s; color: #fff; }
+    .gallery-item:hover .zoom-icon { opacity: 1; }
+    .zoom-icon svg { width: 28px; height: 28px; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.8)); }
+
+    /* ── LIGHTBOX ── */
+    #lightbox { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.92); align-items: center; justify-content: center; flex-direction: column; cursor: zoom-out; }
+    #lightbox.open { display: flex; }
+    #lightbox img { max-width: 92vw; max-height: 88vh; object-fit: contain; border-radius: 6px; box-shadow: 0 20px 80px rgba(0,0,0,0.7); cursor: default; }
+    #lightbox-close { position: absolute; top: 1rem; right: 1.5rem; color: #fff; font-size: 2rem; cursor: pointer; background: none; border: none; padding: 0.25rem 0.5rem; opacity: 0.7; transition: opacity 0.15s; }
+    #lightbox-close:hover { opacity: 1; }
+    #lightbox-prev, #lightbox-next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #fff; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.15s; }
+    #lightbox-prev:hover, #lightbox-next:hover { background: rgba(153,0,0,0.5); }
+    #lightbox-prev { left: 1.5rem; } #lightbox-next { right: 1.5rem; }
+    #lightbox-prev svg, #lightbox-next svg { width: 20px; height: 20px; }
+    #lightbox-caption { color: rgba(255,255,255,0.5); font-size: 0.82rem; margin-top: 0.75rem; text-align: center; }
 
     /* ── PDF DOWNLOAD ── */
     .pdf-block {
@@ -342,6 +364,15 @@
     </a>
   </nav>
 
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <button id="lightbox-close">&times;</button>
+    <button id="lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <img id="lightbox-img" src="" alt="" />
+    <p id="lightbox-caption"></p>
+    <button id="lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+  </div>
+
   <!-- MAIN -->
   <main>
 
@@ -438,24 +469,29 @@
     <!-- IMAGE GALLERY -->
     <p class="section-label">Screenshots &amp; Diagrams</p>
     <div class="gallery">
-      <figure class="gallery-item">
+      <figure class="gallery-item" onclick="openLightbox(this)">
         <img src="media/smart-box/wiring-diagram-1.jpg" alt="Sensor Module Wiring Diagram" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
         <figcaption>Sensor module wiring — magnetic switch, ultrasonic sensor, PIR, Particle Photon 2</figcaption>
       </figure>
-      <figure class="gallery-item">
+      <figure class="gallery-item" onclick="openLightbox(this)">
         <img src="media/smart-box/wiring-diagram-2.png" alt="Desk Module Wiring Diagram" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
         <figcaption>Desk notification module wiring — OLED display, RGB LED, buzzer, button</figcaption>
       </figure>
-      <figure class="gallery-item">
+      <figure class="gallery-item" onclick="openLightbox(this)">
         <img src="media/smart-box/blynk-datastreams.png" alt="Blynk Datastream Configuration" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
         <figcaption>Blynk datastream configuration — virtual pins mapped to mailbox status outputs</figcaption>
       </figure>
-      <figure class="gallery-item">
+      <figure class="gallery-item" onclick="openLightbox(this)">
         <img src="media/smart-box/initial-state-dashboard.png" alt="Initial State Live Dashboard" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
         <figcaption>Initial State dashboard — door events, mail delivery history, and distance data streams</figcaption>
       </figure>
-      <figure class="gallery-item">
+      <figure class="gallery-item" onclick="openLightbox(this)">
         <img src="media/smart-box/particle-webhook.png" alt="Particle Webhook Integration" />
+        <div class="img-overlay"><span class="zoom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span></div>
         <figcaption>Particle webhook integration — event forwarding to cloud services</figcaption>
       </figure>
     </div>
@@ -541,6 +577,37 @@
   </main>
 
   <script src="media/smart-box/smartbox-code.js"></script>
+
+  <script>
+    let allImgs = [], currentIdx = 0;
+    function buildImageList() { allImgs = Array.from(document.querySelectorAll('.gallery-item img')); }
+    function openLightbox(item) {
+      const img = item.querySelector('img');
+      currentIdx = allImgs.indexOf(img);
+      showImage(currentIdx);
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function showImage(idx) {
+      const img = allImgs[idx];
+      document.getElementById('lightbox-img').src = img.src;
+      const cap = img.closest('.gallery-item').querySelector('figcaption');
+      document.getElementById('lightbox-caption').textContent = (cap ? cap.textContent : '') + '  ·  ' + (idx+1) + ' of ' + allImgs.length;
+    }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    document.getElementById('lightbox').addEventListener('click', function(e) { if (e.target===this) closeLightbox(); });
+    document.getElementById('lightbox-prev').addEventListener('click', function(e) { e.stopPropagation(); currentIdx=(currentIdx-1+allImgs.length)%allImgs.length; showImage(currentIdx); });
+    document.getElementById('lightbox-next').addEventListener('click', function(e) { e.stopPropagation(); currentIdx=(currentIdx+1)%allImgs.length; showImage(currentIdx); });
+    document.addEventListener('keydown', function(e) {
+      const lb = document.getElementById('lightbox');
+      if (!lb.classList.contains('open')) return;
+      if (e.key==='Escape') closeLightbox();
+      if (e.key==='ArrowLeft') { currentIdx=(currentIdx-1+allImgs.length)%allImgs.length; showImage(currentIdx); }
+      if (e.key==='ArrowRight') { currentIdx=(currentIdx+1)%allImgs.length; showImage(currentIdx); }
+    });
+    buildImageList();
+  </script>
 
   <!-- FOOTER -->
   <footer>
