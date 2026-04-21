@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pitot Tube Turbulent Jet — Henry Glover</title>
+  <title>AME 341B Lab Experiments — Henry Glover</title>
   <style>
     :root {
       --red: #990000; --gold: #FFCC00; --dark: #0d0d0d;
@@ -101,21 +101,29 @@
   <!-- HEADER -->
   <div style="margin-bottom:2.5rem;">
     <p class="project-number-label">Project 05 &nbsp;·&nbsp; AME 341B · Mechoptronics Lab</p>
-    <h1>Pitot Tube Turbulent Jet — Velocity Profile Analysis</h1>
+    <h1>AME 341B Lab Experiments — Fluid Mechanics & Aerodynamics</h1>
     <p class="project-course-label">AME 341B &nbsp;·&nbsp; Mechoptronics Lab &nbsp;·&nbsp; University of Southern California</p>
     <div class="project-tags">
       <span class="project-tag">Pitot Tube</span>
       <span class="project-tag">Turbulent Jet</span>
-      <span class="project-tag">Fluid Mechanics</span>
       <span class="project-tag">Self-Similarity</span>
+      <span class="project-tag">Wind Tunnel</span>
+      <span class="project-tag">NACA0010 Airfoil</span>
+      <span class="project-tag">Lift &amp; Drag</span>
       <span class="project-tag">Reynolds Number</span>
-      <span class="project-tag">Velocity Profiling</span>
+      <span class="project-tag">Force Balance</span>
+      <span class="project-tag">Momentum Balance</span>
+      <span class="project-tag">Fluid Mechanics</span>
       <span class="project-tag">Data Acquisition</span>
-      <span class="project-tag">Python / Excel</span>
     </div>
   </div>
 
-  <div class="divider"></div>
+  <!-- EXPERIMENT 1 LABEL -->
+  <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+    <div style="background:rgba(153,0,0,0.2);border:1px solid rgba(153,0,0,0.4);border-radius:6px;padding:0.3rem 0.9rem;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);white-space:nowrap;">Experiment 01</div>
+    <div style="flex:1;height:1px;background:var(--border);"></div>
+    <span style="font-size:0.85rem;color:var(--muted);white-space:nowrap;">Pitot Tube — Turbulent Jet Velocity Profiling</span>
+  </div>
 
   <div class="overview-grid">
     <div class="ov-card"><h4>Course</h4><p>AME 341B — Mechoptronics</p></div>
@@ -227,6 +235,79 @@
       </div>
     </div>
     <a href="media/E13_Tuesday_Glover_Henry_5836380483.pdf" download class="download-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      Download PDF
+    </a>
+  </div>
+
+
+  <div class="divider"></div>
+
+  <!-- EXPERIMENT 2 LABEL -->
+  <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+    <div style="background:rgba(153,0,0,0.2);border:1px solid rgba(153,0,0,0.4);border-radius:6px;padding:0.3rem 0.9rem;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);white-space:nowrap;">Experiment 02</div>
+    <div style="flex:1;height:1px;background:var(--border);"></div>
+    <span style="font-size:0.85rem;color:var(--muted);white-space:nowrap;">Wind Tunnel — Airfoil Lift &amp; Drag Analysis</span>
+  </div>
+
+  <!-- WIND TUNNEL HEADER -->
+  <div style="margin-bottom:2rem;">
+    <h2 style="font-size:clamp(1.3rem,3vw,1.9rem);font-weight:700;line-height:1.25;margin-bottom:0.5rem;">
+      Airfoil Dynamics: Lift &amp; Drag via Force and Momentum Balance
+    </h2>
+    <p style="font-size:0.9rem;color:var(--muted);">AME 341B &nbsp;·&nbsp; Mechoptronics Lab &nbsp;·&nbsp; University of Southern California</p>
+  </div>
+
+  <!-- WIND TUNNEL OVERVIEW CARDS -->
+  <div class="overview-grid" style="margin-bottom:2.5rem;">
+    <div class="ov-card"><h4>Airfoil</h4><p>NACA0010</p></div>
+    <div class="ov-card"><h4>Velocities</h4><p>10 m/s &amp; 20 m/s</p></div>
+    <div class="ov-card"><h4>Reynolds No.</h4><p>61,200 / 122,000</p></div>
+    <div class="ov-card"><h4>Methods</h4><p>Force Balance &amp; Momentum Balance</p></div>
+    <div class="ov-card"><h4>Tools</h4><p>LabVIEW · Pitot Tube DAQ</p></div>
+  </div>
+
+  <!-- WIND TUNNEL DESCRIPTION -->
+  <p class="section-label">Experiment Overview</p>
+  <div class="description-block" style="margin-bottom:2.5rem;">
+    <p>
+      This experiment evaluated the aerodynamic performance of a <strong>NACA0010 airfoil</strong> placed inside
+      a wind tunnel at steady freestream velocities of <strong>10 m/s and 20 m/s</strong>. The primary goal was
+      to compare two independent methods — the <strong>force balance method</strong> and the
+      <strong>momentum balance method</strong> — for calculating lift and drag coefficients across a range of
+      angles of attack.
+    </p>
+    <p>
+      Reynolds numbers were calculated to characterize the flow regime:
+      <strong>Re = 61,200 ± 1,100</strong> at 10 m/s and <strong>Re = 122,000 ± 600</strong> at 20 m/s, both
+      confirming fully turbulent, inertia-dominated conditions. A pitot tube traversed the wake behind the
+      airfoil with data acquired through LabVIEW VI software. Lift and drag forces were also directly measured
+      using an integrated force balance mounted in the tunnel.
+    </p>
+    <p>
+      Results showed lift coefficient increasing consistently with angle of attack, with higher Reynolds number
+      yielding greater lift — consistent with theory. The force balance drag plots revealed a slight asymmetry
+      at low angles, while the <strong>momentum balance approach</strong> provided more accurate and stable drag
+      estimates by integrating the wake velocity deficit. Both methods were compared and sources of discrepancy
+      discussed in the full report.
+    </p>
+  </div>
+
+  <!-- WIND TUNNEL DOWNLOAD -->
+  <p class="section-label">Report Download</p>
+  <div class="pdf-block">
+    <div class="pdf-info">
+      <div class="pdf-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6zm3.5-5.5h1.25c.69 0 1.25-.56 1.25-1.25v-.5c0-.69-.56-1.25-1.25-1.25H9v4h.5v-1zm0-2.5h.75c.41 0 .75.34.75.75v.5c0 .41-.34.75-.75.75H9.5v-2zm4.5 4h1c.83 0 1.5-.67 1.5-1.5v-1c0-.83-.67-1.5-1.5-1.5H14v4zm.5-3.5h.5c.55 0 1 .45 1 1v1c0 .55-.45 1-1 1h-.5v-3zm3 0h2v.5h-2v1h1.5v.5H17v1.5h-.5v-3.5z"/>
+        </svg>
+      </div>
+      <div>
+        <h4>Airfoil Dynamics: Lift &amp; Drag with Force and Moment Balance Methods</h4>
+        <p>Full lab report — NACA0010 wind tunnel analysis, CL &amp; CD vs. angle of attack, force vs. momentum balance comparison</p>
+      </div>
+    </div>
+    <a href="media/Windtunnel_Report.pdf" download class="download-btn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
       Download PDF
     </a>
