@@ -384,20 +384,24 @@
     <p class="section-label">Project Overview</p>
     <div class="description-block">
       <p>
-        The Smart Box is an IoT-enabled smart monitoring system built around the <strong>Particle Photon 2</strong> microcontroller platform.
-        The device was designed to monitor a physical mailbox — detecting new mail delivery events, tracking environmental conditions,
-        and streaming live data to cloud dashboards in real time.
+        The Smart Box is a two-module IoT smart mailbox notification system built around the <strong>Particle Photon 2</strong>
+        microcontroller platform. The system automatically detects when the mailbox door is opened and whether new mail has been
+        deposited, then notifies the user in real time through visual indicators and digital dashboard updates — eliminating
+        unnecessary trips to the mailbox and logging a complete history of every delivery event.
       </p>
       <p>
-        Sensor integration includes a <strong>DHT20 temperature and humidity sensor</strong>, an <strong>ultrasonic distance sensor</strong>
-        for proximity detection (mail detection), and a <strong>0.96" OLED display</strong> for on-device readouts.
-        A <strong>pulse sensor wearable</strong> was also implemented with a smartwatch-style UI showing live heart rate data on the OLED.
+        The <strong>sensor module</strong>, mounted inside the mailbox, uses three sensing modalities: a <strong>magnetic reed switch</strong>
+        on the door edge to detect open/close events, an <strong>ultrasonic distance sensor</strong> to measure distance changes
+        indicating mail presence, and a <strong>PIR passive infrared motion sensor</strong> as a redundant confirmation method.
+        The sensor module is powered by a portable power bank and LiPo battery, and communicates over Particle Cloud via a
+        <code>mailbox_status</code> publish event.
       </p>
       <p>
-        On the software side, the firmware was written in <strong>C++ (Arduino-style)</strong> using the Particle device OS.
-        Data is published via <strong>Particle webhooks</strong> that forward events to <strong>Initial State</strong> for historical
-        charting and to a <strong>Blynk dashboard</strong> for real-time mobile visualization. Blynk datastreams were configured
-        for temperature, humidity, distance, and a mail-received event flag.
+        The <strong>desk notification module</strong> subscribes to sensor events and drives a <strong>0.96" OLED display</strong>,
+        an <strong>RGB LED</strong>, and a <strong>buzzer</strong> to alert the user when mail arrives. Firmware was written in
+        <strong>C++ on Particle Device OS 6.3.4</strong>. Live data is forwarded via <strong>Particle webhooks</strong> to a
+        <strong>Blynk mobile dashboard</strong> (door status, mail present, time in box, lifetime mail counter) and to
+        <strong>Initial State</strong> for historical trend tracking and delivery analytics.
       </p>
     </div>
 
@@ -409,11 +413,11 @@
       </div>
       <div class="detail-card">
         <h4>Sensors</h4>
-        <p>DHT20, Ultrasonic, Pulse</p>
+        <p>Magnetic Switch, Ultrasonic, PIR</p>
       </div>
       <div class="detail-card">
-        <h4>Display</h4>
-        <p>0.96" OLED (SSD1306)</p>
+        <h4>Desk Module</h4>
+        <p>OLED Display, RGB LED, Buzzer</p>
       </div>
       <div class="detail-card">
         <h4>Cloud</h4>
@@ -435,12 +439,20 @@
     <p class="section-label">Screenshots &amp; Diagrams</p>
     <div class="gallery">
       <figure class="gallery-item">
+        <img src="media/smart-box/wiring-diagram-1.jpg" alt="Sensor Module Wiring Diagram" />
+        <figcaption>Sensor module wiring — magnetic switch, ultrasonic sensor, PIR, Particle Photon 2</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="media/smart-box/wiring-diagram-2.png" alt="Desk Module Wiring Diagram" />
+        <figcaption>Desk notification module wiring — OLED display, RGB LED, buzzer, button</figcaption>
+      </figure>
+      <figure class="gallery-item">
         <img src="media/smart-box/blynk-datastreams.png" alt="Blynk Datastream Configuration" />
-        <figcaption>Blynk datastream configuration — virtual pins mapped to sensor outputs</figcaption>
+        <figcaption>Blynk datastream configuration — virtual pins mapped to mailbox status outputs</figcaption>
       </figure>
       <figure class="gallery-item">
         <img src="media/smart-box/initial-state-dashboard.png" alt="Initial State Live Dashboard" />
-        <figcaption>Initial State real-time dashboard — temperature, humidity, and distance data streams</figcaption>
+        <figcaption>Initial State dashboard — door events, mail delivery history, and distance data streams</figcaption>
       </figure>
       <figure class="gallery-item">
         <img src="media/smart-box/particle-webhook.png" alt="Particle Webhook Integration" />
