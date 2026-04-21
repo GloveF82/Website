@@ -706,6 +706,19 @@
       .btn-primary, .btn-outline { text-align: center; }
     }
   </style>
+  <!-- Restore scroll position when returning from a project page -->
+  <script>
+    (function() {
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      var y = sessionStorage.getItem('projScrollY');
+      if (y !== null) {
+        sessionStorage.removeItem('projScrollY');
+        document.addEventListener('DOMContentLoaded', function() {
+          window.scrollTo(0, parseInt(y));
+        });
+      }
+    })();
+  </script>
 </head>
 <body>
 
@@ -1488,6 +1501,13 @@
 
     window.addEventListener('scroll', updateActiveNav, { passive: true });
     updateActiveNav();
+
+    // Save scroll position when a project card is clicked
+    document.querySelectorAll('.project-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        sessionStorage.setItem('projScrollY', window.scrollY);
+      });
+    });
   </script>
 
 </body>
