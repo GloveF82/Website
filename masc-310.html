@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MASC 310 — Materials Behavior and Processing | Henry Glover</title>
+  <style>
+    :root {
+      --red: #990000; --gold: #FFCC00; --dark: #0d0d0d;
+      --card: #141414; --border: #222; --text: #e8e8e8;
+      --muted: #888; --accent: #b30000;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--dark); color: var(--text); line-height: 1.6; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(8,8,8,0.93); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 60px; }
+    .nav-logo { font-weight: 700; font-size: 1.1rem; color: var(--gold); letter-spacing: 0.05em; text-decoration: none; }
+    .back-btn { display: flex; align-items: center; gap: 0.5rem; color: var(--muted); text-decoration: none; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .back-btn:hover { color: var(--gold); }
+    .back-btn svg { width: 16px; height: 16px; }
+
+    main { max-width: 1000px; margin: 0 auto; padding: 100px 5% 80px; }
+
+    .project-number-label { font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+    .project-course-label { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .project-tag { background: rgba(153,0,0,0.15); border: 1px solid rgba(153,0,0,0.35); color: var(--gold); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.78rem; }
+
+    .divider { height: 1px; background: var(--border); margin: 2.5rem 0; }
+
+    .overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+    .ov-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem; }
+    .ov-card h4 { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .ov-card p { font-size: 0.9rem; font-weight: 500; }
+
+    .section-label { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
+
+    .description-block p { font-size: 0.97rem; color: var(--text); line-height: 1.8; margin-bottom: 1rem; }
+
+    /* Lab Report Cards */
+    .lab-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1.75rem; margin-bottom: 1.25rem; }
+    .lab-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .lab-number-badge { background: rgba(153,0,0,0.2); border: 1px solid rgba(153,0,0,0.4); border-radius: 6px; padding: 0.3rem 0.85rem; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); white-space: nowrap; flex-shrink: 0; }
+    .lab-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .lab-card .lab-meta { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.85rem; }
+    .lab-card p { font-size: 0.92rem; color: var(--text); line-height: 1.75; margin-bottom: 1.25rem; }
+    .lab-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
+    .lab-tag { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--muted); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; }
+
+    /* PDF Download button */
+    .download-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.4rem; background: linear-gradient(135deg, var(--red), var(--accent)); color: #fff; text-decoration: none; border-radius: 6px; font-size: 0.85rem; font-weight: 600; transition: opacity 0.2s, transform 0.15s; white-space: nowrap; }
+    .download-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .download-btn svg { width: 16px; height: 16px; }
+
+    footer { text-align: center; padding: 2rem 5%; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.8rem; }
+    footer a { color: var(--gold); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">HG</a>
+  <a href="index.html#projects" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back to Projects
+  </a>
+</nav>
+
+<main>
+
+  <!-- HEADER -->
+  <div style="margin-bottom:2.5rem;">
+    <p class="project-number-label">Project 17 &nbsp;·&nbsp; MASC 310 · Materials Behavior and Processing</p>
+    <h1>Materials Behavior and Processing — Lab Reports</h1>
+    <p class="project-course-label">MASC 310 &nbsp;·&nbsp; Materials Behavior and Processing Lab &nbsp;·&nbsp; University of Southern California</p>
+    <div class="project-tags">
+      <span class="project-tag">Tensile Testing</span>
+      <span class="project-tag">Vickers Hardness</span>
+      <span class="project-tag">Cold Working</span>
+      <span class="project-tag">Annealing</span>
+      <span class="project-tag">Composite Manufacturing</span>
+      <span class="project-tag">Three-Point Bending</span>
+      <span class="project-tag">Stress-Strain Analysis</span>
+      <span class="project-tag">Materials Science</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- OVERVIEW CARDS -->
+  <div class="overview-grid">
+    <div class="ov-card"><h4>Course</h4><p>MASC 310 — Materials Lab</p></div>
+    <div class="ov-card"><h4>Materials</h4><p>Al 2024-T3, Brass 360, Steel 1018, Epoxy Composites</p></div>
+    <div class="ov-card"><h4>Testing Methods</h4><p>Tensile, Shear, Vickers, 3-Point Bend</p></div>
+    <div class="ov-card"><h4>Processes</h4><p>Cold Working, Annealing, Composite Layup</p></div>
+    <div class="ov-card"><h4>Tools</h4><p>PASCO Capstone · Load Frame · Rolling Mill</p></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- OVERVIEW -->
+  <p class="section-label">Course Overview</p>
+  <div class="description-block" style="margin-bottom:2.5rem;">
+    <p>
+      MASC 310 — Materials Behavior and Processing is a hands-on laboratory course at USC focused on
+      characterizing the mechanical behavior of engineering materials through experimental testing. Over
+      three lab reports, the course covered a broad range of materials — aluminum, brass, steel, and
+      fiber-reinforced epoxy composites — using industry-standard testing methods including tensile
+      testing, Vickers hardness indentation, shear testing, rolling/cold-working, annealing, and
+      three-point bend testing.
+    </p>
+    <p>
+      Each report involved full experimental execution, data reduction, stress-strain analysis, and
+      written technical documentation comparing measured results against theoretical material behavior.
+    </p>
+  </div>
+
+  <!-- LAB REPORTS -->
+  <p class="section-label">Lab Reports</p>
+
+  <!-- LAB 1 -->
+  <div class="lab-card">
+    <div class="lab-card-header">
+      <div>
+        <div class="lab-number-badge" style="display:inline-block;margin-bottom:0.6rem;">Lab Report 01</div>
+        <h3>Mechanical Properties of Brass and Aluminum: Tensile, Shear &amp; Hardness Testing</h3>
+        <p class="lab-meta">Aluminum 2024-T3 &amp; Brass 360 &nbsp;·&nbsp; MASC 310 Lab &nbsp;·&nbsp; Fall 2024</p>
+      </div>
+    </div>
+    <p>
+      Experimental characterization of <strong>Aluminum 2024-T3</strong> and <strong>Brass 360</strong>
+      through three complementary mechanical tests. Tensile dog-bone specimens were loaded to failure
+      on a load frame with PASCO Capstone data acquisition, producing full stress-strain curves from
+      which elastic modulus, 0.2% offset yield strength, ultimate tensile strength, percent elongation,
+      and work of fracture were extracted. Shear testing provided shear strength values and the
+      shear-to-tensile ratio. Vickers hardness indentation (with optical microscope measurement of
+      indent diagonals) yielded estimated hardness numbers (HV) and yield strength approximations for
+      both materials. Results showed aluminum had higher yield and ultimate strength, while brass
+      demonstrated greater hardness and resistance to permanent deformation.
+    </p>
+    <div class="lab-tags">
+      <span class="lab-tag">Tensile Testing</span>
+      <span class="lab-tag">Stress-Strain Curve</span>
+      <span class="lab-tag">Vickers Hardness</span>
+      <span class="lab-tag">Shear Testing</span>
+      <span class="lab-tag">Young's Modulus</span>
+      <span class="lab-tag">Al 2024-T3</span>
+      <span class="lab-tag">Brass 360</span>
+    </div>
+    <a href="media/masc-310/MASC310_Lab_Report_1.pdf" download class="download-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      Download Lab Report 1
+    </a>
+  </div>
+
+  <!-- LAB 2 -->
+  <div class="lab-card">
+    <div class="lab-card-header">
+      <div>
+        <div class="lab-number-badge" style="display:inline-block;margin-bottom:0.6rem;">Lab Report 02</div>
+        <h3>Cold Working &amp; Annealing: Mechanical Properties of Brass 360 and Steel 1018</h3>
+        <p class="lab-meta">Brass 360 &amp; Steel 1018 &nbsp;·&nbsp; MASC 310 Lab &nbsp;·&nbsp; Fall 2024</p>
+      </div>
+    </div>
+    <p>
+      Investigation of how <strong>work hardening</strong> and <strong>annealing</strong> alter the
+      mechanical properties of <strong>Brass 360</strong> and <strong>Steel 1018</strong>. Brass bar
+      stock was cold-worked on a rolling mill at 2, 4, and 6 turns, with percent reduction and true
+      strain calculated at each step. Vickers hardness tests (300 gf, optical micrometer measurement)
+      were performed on as-received, cold-worked, and annealed brass samples to track yield strength
+      evolution. Results confirmed increasing yield strength with cold-working due to dislocation
+      density buildup, and strength recovery following annealing at 500 °C. Two 1018 steel dog-bone
+      specimens — one cold-worked, one fully annealed — were tensile tested to failure, producing
+      stress-strain curves that quantified the reduction in strength and increase in ductility from
+      the annealing process.
+    </p>
+    <div class="lab-tags">
+      <span class="lab-tag">Cold Working</span>
+      <span class="lab-tag">Annealing</span>
+      <span class="lab-tag">Vickers Hardness</span>
+      <span class="lab-tag">Tensile Testing</span>
+      <span class="lab-tag">Dislocation Density</span>
+      <span class="lab-tag">Brass 360</span>
+      <span class="lab-tag">Steel 1018</span>
+    </div>
+    <a href="media/masc-310/MASC310_Lab_Report_2.pdf" download class="download-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      Download Lab Report 2
+    </a>
+  </div>
+
+  <!-- LAB 3 -->
+  <div class="lab-card">
+    <div class="lab-card-header">
+      <div>
+        <div class="lab-number-badge" style="display:inline-block;margin-bottom:0.6rem;">Lab Report 03</div>
+        <h3>Composite Material Manufacturing and Testing — Epoxy Resin &amp; Fiberglass</h3>
+        <p class="lab-meta">Polymer Matrix Composites &nbsp;·&nbsp; MASC 310 Lab &nbsp;·&nbsp; Fall 2024</p>
+      </div>
+    </div>
+    <p>
+      End-to-end manufacturing and mechanical testing of five <strong>polymer matrix composite</strong>
+      beam specimens: one neat epoxy resin control, two reinforced with 8 layers of woven continuous
+      fiberglass fabric, and two with randomly distributed chopped glass fibers. Samples were hand
+      laid up in a 5-cavity mold, cured, and sanded to ~9×9×50 mm rectangular prisms.
+      <strong>Three-point bend testing</strong> was performed on a load frame (PASCO Capstone),
+      yielding full force-displacement curves for each sample. Flexural modulus and bending strength
+      were calculated using beam theory. Continuous fiber sample 3 achieved the highest flexural
+      strength at <strong>148.1 MPa</strong>; chopped fiber sample 4 achieved the highest flexural
+      modulus at <strong>6.156 GPa</strong>. Failure modes — brittle fracture (neat resin) vs.
+      gradual ductile failure (fiber-reinforced) — were documented and discussed.
+    </p>
+    <div class="lab-tags">
+      <span class="lab-tag">Composite Manufacturing</span>
+      <span class="lab-tag">Three-Point Bending</span>
+      <span class="lab-tag">Flexural Modulus</span>
+      <span class="lab-tag">Flexural Strength</span>
+      <span class="lab-tag">Epoxy / Fiberglass</span>
+      <span class="lab-tag">PMC</span>
+      <span class="lab-tag">Failure Analysis</span>
+    </div>
+    <a href="media/masc-310/MASC310_Lab_Report_3.pdf" download class="download-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      Download Lab Report 3
+    </a>
+  </div>
+
+</main>
+
+<footer>
+  <p><a href="index.html">← Back to Portfolio</a> &nbsp;·&nbsp; Henry Glover &nbsp;·&nbsp; University of Southern California</p>
+</footer>
+
+</body>
+</html>
