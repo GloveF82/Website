@@ -175,6 +175,8 @@
 
     .hero-resume-link svg { width: 15px; height: 15px; flex-shrink: 0; }
 
+    .hero-resume-badge { display: none; }
+
     .btn-primary {
       background: var(--red);
       color: #fff;
@@ -725,10 +727,26 @@
 
     @media (max-width: 480px) {
       .nav-links { display: none; }
+      #hero { align-items: flex-start; padding-top: 5rem; }
       .hero-btns { flex-direction: column; }
       .btn-primary, .btn-outline { text-align: center; }
-      .hero-resume-link { width: 100%; margin-top: 0; }
+      .hero-resume-link { display: none; }
       .hero-scroll { display: none; }
+      .hero-resume-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        background: var(--gold);
+        color: #000;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 0.32rem 0.85rem;
+        margin-bottom: 1rem;
+      }
+      .hero-resume-badge svg { width: 12px; height: 12px; flex-shrink: 0; }
     }
   </style>
   <!-- Restore scroll position when returning from a project page -->
@@ -767,6 +785,12 @@
     <div class="hero-content">
       <div class="hero-tag">USC Viterbi · Viterbi Scholar</div>
       <h1 class="hero-name">Henry<br /><span>Glover</span></h1>
+      <a href="media/Henry_Glover_Resume_2026.pdf" target="_blank" class="hero-resume-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+        </svg>
+        View Resume
+      </a>
       <p class="hero-title">Aerospace &amp; Mechanical Engineer</p>
       <p class="hero-sub">FEA · CAD · Composite Structures · Aerospace Design</p>
       <p class="hero-desc">
@@ -1522,6 +1546,18 @@
       card.addEventListener('click', function() {
         sessionStorage.setItem('projScrollY', window.scrollY);
       });
+    });
+
+    // iOS Safari BFCache fix: pageshow fires on back/forward restore where
+    // DOMContentLoaded does not re-run, so we apply projScrollY here too.
+    window.addEventListener('pageshow', function(e) {
+      if (e.persisted) {
+        var y = sessionStorage.getItem('projScrollY');
+        if (y !== null) {
+          sessionStorage.removeItem('projScrollY');
+          window.scrollTo(0, parseInt(y));
+        }
+      }
     });
 
   </script>
