@@ -26,13 +26,14 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
 
     body {
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       background: var(--dark);
       color: var(--text);
       line-height: 1.6;
+      overflow-x: hidden;
     }
 
     /* ── NAV ── */
@@ -80,8 +81,6 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 4rem;
       padding: 0 5%;
       position: relative;
       overflow: hidden;
@@ -107,7 +106,7 @@
       pointer-events: none;
     }
 
-    .hero-content { position: relative; flex: 0 1 600px; min-width: 0; }
+    .hero-content { position: relative; max-width: 700px; }
 
     .hero-tag {
       display: inline-block;
@@ -154,6 +153,25 @@
     }
 
     .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .hero-resume-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.2rem;
+      color: var(--gold);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+
+    .hero-resume-link:hover { opacity: 1; }
+
+    .hero-resume-link svg { width: 14px; height: 14px; flex-shrink: 0; }
 
     .btn-primary {
       background: var(--red);
@@ -216,140 +234,6 @@
       50% { transform: translateX(-50%) translateY(6px); }
     }
 
-    /* ── HERO RIGHT PANEL ── */
-    .hero-right {
-      flex: 0 0 340px;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-resume-card {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,204,0,0.35);
-      border-radius: 8px;
-      padding: 1.1rem 1.3rem;
-      text-decoration: none;
-      color: var(--text);
-      transition: background 0.2s, border-color 0.2s, transform 0.15s;
-    }
-
-    .hero-resume-card:hover {
-      background: rgba(255,204,0,0.06);
-      border-color: var(--gold);
-      transform: translateY(-2px);
-    }
-
-    .hero-resume-icon {
-      width: 44px;
-      height: 44px;
-      background: linear-gradient(135deg, var(--red), var(--accent));
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .hero-resume-icon svg { width: 20px; height: 20px; color: #fff; }
-
-    .hero-resume-text { flex: 1; min-width: 0; }
-
-    .hero-resume-label {
-      display: block;
-      font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: 0.03em;
-    }
-
-    .hero-resume-sub {
-      display: block;
-      font-size: 0.72rem;
-      color: var(--gold);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-top: 0.25rem;
-    }
-
-    .hero-resume-arrow { color: var(--muted); flex-shrink: 0; }
-
-    .hero-car-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      position: relative;
-      transition: border-color 0.2s, transform 0.15s;
-    }
-
-    .hero-car-card:hover { border-color: #444; transform: translateY(-2px); }
-
-    .hero-car-badge {
-      position: absolute;
-      top: 0.75rem;
-      left: 0.75rem;
-      background: rgba(0,0,0,0.72);
-      border: 1px solid rgba(255,204,0,0.45);
-      color: var(--gold);
-      font-size: 0.62rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      padding: 0.22rem 0.65rem;
-      border-radius: 2px;
-      z-index: 2;
-    }
-
-    .hero-car-card img {
-      width: 100%;
-      height: 195px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .hero-car-footer {
-      padding: 0.75rem 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 1px solid var(--border);
-    }
-
-    .hero-car-footer-left { display: flex; flex-direction: column; gap: 0.1rem; }
-
-    .hero-car-name {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .hero-car-role {
-      font-size: 0.7rem;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-    }
-
-    .hero-car-link {
-      font-size: 0.75rem;
-      color: var(--gold);
-      text-decoration: none;
-      letter-spacing: 0.05em;
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      transition: opacity 0.2s;
-    }
-
-    .hero-car-link:hover { opacity: 0.75; }
-
-    @media (max-width: 1050px) {
-      .hero-right { display: none; }
-      .hero-content { flex: 0 1 800px; }
-    }
 
     /* ── SECTIONS ── */
     section { padding: 6rem 5%; }
@@ -890,52 +774,12 @@
         <a href="#projects" class="btn-primary">View My Work</a>
         <a href="#contact" class="btn-outline">Get In Touch</a>
       </div>
-    </div>
-
-    <!-- HERO RIGHT PANEL -->
-    <div class="hero-right">
-
-      <!-- Resume -->
-      <a href="media/Henry_Glover_Resume_2026.pdf" target="_blank" class="hero-resume-card">
-        <div class="hero-resume-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <polyline points="14 2 14 8 20 8"/>
-            <line x1="16" y1="13" x2="8" y2="13"/>
-            <line x1="16" y1="17" x2="8" y2="17"/>
-            <line x1="12" y1="9" x2="8" y2="9"/>
-          </svg>
-        </div>
-        <div class="hero-resume-text">
-          <span class="hero-resume-label">Henry Glover — Resume</span>
-          <span class="hero-resume-sub">2026 · View PDF</span>
-        </div>
-        <svg class="hero-resume-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-          <polyline points="15 3 21 3 21 9"/>
-          <line x1="10" y1="14" x2="21" y2="3"/>
+      <a href="media/Henry_Glover_Resume_2026.pdf" target="_blank" class="hero-resume-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
         </svg>
+        View Resume — PDF
       </a>
-
-      <!-- Formula SAE Car -->
-      <div class="hero-car-card">
-        <div class="hero-car-badge">USC Formula SAE Electric</div>
-        <img src="media/formula-sae/IMG_2280.jpg" alt="USC Formula SAE Electric car #289 in the shop" loading="lazy" />
-        <div class="hero-car-footer">
-          <div class="hero-car-footer-left">
-            <span class="hero-car-name">Formula SAE Electric</span>
-            <span class="hero-car-role">Ergonomics &amp; Suspension Engineer</span>
-          </div>
-          <a href="formula-sae.html" class="hero-car-link">
-            View Project
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <line x1="5" y1="12" x2="19" y2="12"/>
-              <polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-
     </div>
 
     <div class="hero-scroll">Scroll</div>
@@ -1154,54 +998,52 @@
       <div class="projects-grid">
 
         <!-- FEATURED: FEA Drone -->
-        <a href="ame-308.html" class="project-featured project-card" style="text-decoration:none;color:inherit;display:block;cursor:pointer;">
+        <!-- Formula SAE — Featured -->
+        <a href="formula-sae.html" class="project-featured project-card" style="text-decoration:none;color:inherit;display:block;cursor:pointer;">
           <div class="project-featured-content">
             <p class="project-number">01 · Featured</p>
-            <h3 class="project-title">Drone FEA &amp; CAD — Structural Analysis in Siemens NX</h3>
-            <p class="project-course">AME 308 · CAD &amp; Finite Element Analysis</p>
+            <h3 class="project-title">Formula SAE Electric — Ergonomics &amp; Vehicle Dynamics</h3>
+            <p class="project-course">USC Formula SAE Team · 2024–2026</p>
             <p class="project-desc">
-              Designed a full quadcopter drone assembly in Siemens NX, contributing the battery assembly, motion analysis,
-              and project Gantt chart. Conducted FEA on the drone propellers under 15 N·mm torque loading using a cylindrical
-              constraint with fixed radial/axial growth and free rotation.
-              <br /><br />
-              Achieved mesh convergence over 4 iterations (0.4–0.6 mm element sizes, up to 252k elements) with a final
-              convergence rate of 30.74% and max unaveraged Von Mises stress of 1.991 MPa. Max tip displacement was only
-              0.0451 mm — a 0.15% deflection ratio — confirming the polyethylene structure remained in the linear regime.
-              Also performed motion analysis with and without friction to characterize propeller dynamics.
+              Contributing to two concurrent teams on USC's electric Formula SAE vehicle. On the Ergonomics Team,
+              designed and analyzed pedal box, steering wheel, and driver interface assemblies, and manufactured braking
+              system components including rotors, calipers, brake lines, and ABS hardware. On the Vehicle Dynamics Team,
+              performed suspension design, calculated shock absorber requirements from vehicle mass and load transfer data,
+              and designed/manufactured control arms, bushings, and suspension linkages.
             </p>
             <div class="project-tags">
-              <span class="project-tag">Siemens NX</span>
-              <span class="project-tag">FEA</span>
-              <span class="project-tag">Von Mises Stress</span>
-              <span class="project-tag">Mesh Convergence</span>
-              <span class="project-tag">Motion Analysis</span>
-              <span class="project-tag">Engineering Drawings</span>
+              <span class="project-tag">CAD Design</span>
+              <span class="project-tag">Suspension Systems</span>
+              <span class="project-tag">Braking Systems</span>
+              <span class="project-tag">Vehicle Dynamics</span>
+              <span class="project-tag">Manufacturing</span>
+              <span class="project-tag">FSAE Compliance</span>
             </div>
           </div>
           <div class="project-featured-visual">
-            <img src="media/ame-308/Drone front photo.png" alt="Drone FEA — front view" style="width:100%;height:100%;object-fit:cover;object-position:center;border-radius:0 8px 8px 0;display:block;" />
+            <img src="media/formula-sae/IMG_2280.jpg" alt="USC Formula SAE Electric car #289 in the shop" style="width:100%;height:100%;object-fit:cover;object-position:center;border-radius:0 8px 8px 0;display:block;" />
           </div>
         </a>
 
-        <!-- Formula SAE -->
-        <a href="formula-sae.html" class="project-card" style="text-decoration:none;color:inherit;display:block;cursor:pointer;">
+        <!-- Drone FEA -->
+        <a href="ame-308.html" class="project-card" style="text-decoration:none;color:inherit;display:block;cursor:pointer;">
           <p class="project-number">02</p>
-          <h3 class="project-title">Formula SAE Electric — Ergonomics &amp; Vehicle Dynamics</h3>
-          <p class="project-course">USC Formula SAE Team · 2024–Present</p>
+          <h3 class="project-title">Drone FEA &amp; CAD — Structural Analysis in Siemens NX</h3>
+          <p class="project-course">AME 308 · CAD &amp; Finite Element Analysis</p>
           <p class="project-desc">
-            Contributing to two concurrent teams on USC's electric Formula SAE vehicle. On the Ergonomics Team,
-            designed and analyzed pedal box, steering wheel, and driver interface assemblies, and manufactured braking
-            system components including rotors, calipers, brake lines, and ABS hardware. On the Vehicle Dynamics Team,
-            performed suspension design, calculated shock absorber requirements from vehicle mass and load transfer data,
-            and designed/manufactured control arms, bushings, and suspension linkages.
+            Designed a full quadcopter drone assembly in Siemens NX, contributing the battery assembly, motion analysis,
+            and project Gantt chart. Conducted FEA on the drone propellers under 15 N·mm torque loading using a cylindrical
+            constraint with fixed radial/axial growth and free rotation. Achieved mesh convergence over 4 iterations with
+            a final convergence rate of 30.74% and max Von Mises stress of 1.991 MPa. Max tip displacement was only
+            0.0451 mm — confirming the polyethylene structure remained in the linear regime.
           </p>
           <div class="project-tags">
-            <span class="project-tag">CAD Design</span>
-            <span class="project-tag">Suspension Systems</span>
-            <span class="project-tag">Braking Systems</span>
-            <span class="project-tag">Vehicle Dynamics</span>
-            <span class="project-tag">Manufacturing</span>
-            <span class="project-tag">FSAE Compliance</span>
+            <span class="project-tag">Siemens NX</span>
+            <span class="project-tag">FEA</span>
+            <span class="project-tag">Von Mises Stress</span>
+            <span class="project-tag">Mesh Convergence</span>
+            <span class="project-tag">Motion Analysis</span>
+            <span class="project-tag">Engineering Drawings</span>
           </div>
         </a>
 
