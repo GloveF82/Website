@@ -66,7 +66,8 @@
       "Bash(cp \"AME 486/AME_486_PRJ4&5.pdf\" \"media/ame-486/AME_486_Project_4_5.pdf\")",
       "Bash(cp \"AME 486/AME486_PRJ7_Glover_Torres.pdf\" \"media/ame-486/AME_486_Project_7.pdf\")",
       "Bash(cp \"AME 486/AME486_PRJ8_Torres&Glover.pdf\" \"media/ame-486/AME_486_Project_8.pdf\")",
-      "Bash(python -c ' *)"
+      "Bash(python -c ' *)",
+      "PowerShell(Copy-Item \"C:\\\\Users\\\\henry\\\\Desktop\\\\Henry Glover - Resume 2027.pdf\" \"C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\media\\\\Henry_Glover_Resume_2027.pdf\" -Force)"
     ]
   }
 }
