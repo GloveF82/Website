@@ -68,7 +68,13 @@
       "Bash(cp \"AME 486/AME486_PRJ8_Torres&Glover.pdf\" \"media/ame-486/AME_486_Project_8.pdf\")",
       "Bash(python -c ' *)",
       "PowerShell(Copy-Item \"C:\\\\Users\\\\henry\\\\Desktop\\\\Henry Glover - Resume 2027.pdf\" \"C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\media\\\\Henry_Glover_Resume_2027.pdf\" -Force)",
-      "PowerShell(Copy-Item \"C:\\\\Users\\\\henry\\\\Desktop\\\\Henry Glover - Resume 2027.pdf\" \"C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\media\\\\Henry_Glover_Resume_2027b.pdf\" -Force)"
+      "PowerShell(Copy-Item \"C:\\\\Users\\\\henry\\\\Desktop\\\\Henry Glover - Resume 2027.pdf\" \"C:\\\\Users\\\\henry\\\\Desktop\\\\Claude Website\\\\media\\\\Henry_Glover_Resume_2027b.pdf\" -Force)",
+      "PowerShell(python -c \"from PIL import Image; print\\('PIL ok'\\)\" 2>&1)",
+      "PowerShell(python3 --version 2>&1)",
+      "PowerShell(magick --version 2>&1)",
+      "PowerShell(ffmpeg -version 2>&1)",
+      "PowerShell(node --version 2>&1)",
+      "PowerShell(\\(Get-Item \"C:\\\\Users\\\\henry\\\\Downloads\\\\IMG_0161.MOV\"\\).Length / 1MB | ForEach-Object { \"{0:N1} MB\" -f $_ })"
     ]
   }
 }
